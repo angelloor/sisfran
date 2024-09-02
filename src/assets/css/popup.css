@@ -1,0 +1,185 @@
+.btn-abrir-popup {
+	border: none;
+	color: #fff;
+	background: #23376f;
+	border-radius: 3px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 15px;
+	cursor: pointer;
+	transition: 0.3s ease all;
+	cursor: pointer;
+	padding: 6px 12px;
+}
+
+.btn-abrir-popup:hover {
+	background: #ffdb00;
+}
+
+/* POPUP */
+
+.overlay {
+	background: rgba(0, 0, 0, 0.3);
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	visibility: hidden;
+}
+
+.overlay.active {
+	visibility: visible;
+}
+
+.popup {
+	background: #23376f;
+	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+	font-family: 'Montserrat', sans-serif;
+	padding: 20px;
+	text-align: center;
+	width: 40%;
+	transition: 0.3s ease all;
+	transform: scale(0.7);
+	opacity: 0;
+	border-radius: 5px;
+}
+
+.popup .btn-cerrar-popup {
+	font-size: 25px;
+	line-height: 16px;
+	display: block;
+	text-align: right;
+	float: right;
+	padding: 3px;
+	transition: 0.3s ease all;
+	color: white;
+}
+
+.popup .btn-cerrar-popup:hover {
+	color: #ffdb00;
+}
+
+.popup h3 {
+	font-size: 36px;
+	font-weight: 600;
+	margin-bottom: 10px;
+	opacity: 0;
+	color: white;
+}
+
+.popup h4 {
+	font-size: 18px;
+	font-weight: 300;
+	opacity: 0;
+	color: white;
+}
+
+.popup .form .contenedor-inputs {
+	display: flex;
+	flex-direction: column;
+	opacity: 0;
+}
+
+.popup .form .contenedor-inputs input {
+	width: 80%;
+	margin-bottom: 20px;
+	height: 34.5px;
+	font-size: 18px;
+	line-height: 52px;
+	text-align: center;
+	border: 1px solid #bbbbbb;
+}
+
+.popup .form .btn-submit {
+	padding: 0 20px;
+	height: 40px;
+	line-height: 40px;
+	border: none;
+	color: #fff;
+	background: #ffdb00;
+	border-radius: 3px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 16px;
+	cursor: pointer;
+	transition: 0.3s ease all;
+}
+
+.popup .form .btn-submit:hover {
+	background: #162651;
+}
+
+/* ANIMACIONES */
+
+.popup.active {
+	transform: scale(1);
+	opacity: 1;
+}
+
+.popup.active h3 {
+	animation: entradaTitulo 0s ease 0s forwards;
+}
+
+.popup.active h4 {
+	animation: entradaSubtitulo 0s ease 0s forwards;
+}
+
+.popup.active .contenedor-inputs {
+	animation: entradaInputs 0s linear 0s forwards;
+}
+
+@keyframes entradaTitulo {
+	from {
+		opacity: 0;
+		transform: translateY(-25px);
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes entradaSubtitulo {
+	from {
+		opacity: 0;
+		transform: translateY(25px);
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes entradaInputs {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+#popupBodyCategoria > .form > div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#popupBodyActivo > .form > div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#popupBodyFuncionario > .form > div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+body > .overlay > .popup .tmm {
+	width: 80%;
+}
