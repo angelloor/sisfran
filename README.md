@@ -1,4 +1,4 @@
-# SISFRAN
+# SISFRAN asas
 
 ## Descripción de la Aplicación
 
@@ -118,3 +118,5 @@ Para subir la base de datos, primero debe ser creada utilizando herramientas de 
 - La Aplicación Integral de Control de Inventario y Asistencia (SISFRAN) está diseñada para funcionar eficientemente con requerimientos tecnológicos accesibles, tanto en entornos Windows como Linux. Las especificaciones mínimas, que incluyen un procesador Core i3, 4 GB de RAM y 50 GB de almacenamiento para el servidor, aseguran una implementación sin contratiempos y un rendimiento óptimo.
 - La facilidad de acceso mediante una URL desde cualquier navegador y la compatibilidad con infraestructuras modestas garantizan que SISFRAN pueda ser adoptado rápidamente por la empresa. En resumen, SISFRAN ofrece una solución integral y eficiente, adecuada para cualquier organización que busque mejorar su gestión de inventario y control de asistencia con recursos tecnológicos básicos.
 - La Aplicación Integral de Control de Inventario y Asistencia (SISFRAN) ha demostrado ser una solución versátil y eficiente que puede ser instalada en un entorno de hosting compartido utilizando cPanel. Esta capacidad de implementación facilita la accesibilidad y reduce costos, permitiendo a las empresas beneficiarse de sus funcionalidades avanzadas sin necesidad de invertir en infraestructura dedicada.
+
+AIzaSyDuFNTu49oRZu6CoSfW10ocnPQjAvuxlQY

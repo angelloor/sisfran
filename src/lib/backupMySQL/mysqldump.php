@@ -181,7 +181,7 @@ class MySql
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="descriptions" content="Sistema para la generación de actas y control de inventario">
     <meta name="author" content="Cristian Arauz">
-    <link rel="icon" type="image/png" href="../assets/img/logo.png"/>
+    <link rel="icon" type="image/png" href="../../assets/img/logo.png"/>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
     <script src="../../assets/js/jquery.js"></script>
