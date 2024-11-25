@@ -86,8 +86,8 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                 </div>
                 <div class="row">
                     <div class="col-md-6 mt-2">
-                        <label for="idPersona">Funcionario</label>
-                        <select name="idPersona" class="form-control br" id="idPersona">
+                        <label for="personaId">Funcionario</label>
+                        <select name="personaId" class="form-control br" id="personaId">
                         </select>
                     </div>
                     <div class="col-md-6 mt-2">

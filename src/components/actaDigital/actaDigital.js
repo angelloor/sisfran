@@ -75,7 +75,7 @@ function Generar() {
         if (vacio >= 1) {
           MostrarAlerta("", "Complete el usuario y contraseña", "info");
         } else {
-          nombrePersona = getValue("idPersona");
+          idPersona = getValue("idPersona");
           periodo = getValue("periodo");
 
           if (!periodo) {
@@ -86,14 +86,14 @@ function Generar() {
             urlGet +
             "totalSistemas=" +
             checkInput +
-            "&funcionario=" +
-            nombrePersona +
+            "&idPersona=" +
+            idPersona +
             "&periodo=" +
             periodo +
             "&idSistemas=" +
             idSistemas;
           window.open(
-            "../reportes/actaDigital.template.php?" + urlGet,
+            "./actaDigital.template.php?" + urlGet,
             "_blank"
           );
         }

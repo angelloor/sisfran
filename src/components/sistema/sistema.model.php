@@ -118,7 +118,7 @@ class Sistema
     public function cargarSistemas()
     {
         $connection = new MySQLPDO();
-        $stmt = $connection->prepare("select id_sistema, nombre_sistema from sistema order by nombre_sistema asc;");
+        $stmt = $connection->prepare("select id_sistema, nombre_sistema, direccion_sistema from sistema order by nombre_sistema asc;");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }

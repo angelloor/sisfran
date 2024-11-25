@@ -15,7 +15,7 @@ class Usuario
     public function ConsultarPorId($idUsuario)
     {
         $connection = new MySQLPDO();
-        $stmt = $connection->prepare("select u.id_usuario, p.nombre_persona, u.nombre_usuario, u.clave, ru.nombre_rol_usuario from usuario as u inner join persona as p on u.persona_id = p.id_persona inner join rol_usuario as ru on u.rol_usuario_id = ru.id_rol_usuario and id_usuario = :idUsuario");
+        $stmt = $connection->prepare("select u.id_usuario, u.persona_id, p.nombre_persona, u.nombre_usuario, u.clave, ru.nombre_rol_usuario from usuario as u inner join persona as p on u.persona_id = p.id_persona inner join rol_usuario as ru on u.rol_usuario_id = ru.id_rol_usuario and id_usuario = :idUsuario");
         $stmt->bindValue(":idUsuario", $idUsuario, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
@@ -30,7 +30,7 @@ class Usuario
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function Guardar($idPersona, $nombre, $clave, $rol_usuario)
+    public function Guardar($personaId, $nombre, $clave, $rol_usuario)
     {
         $connection = new MySQLPDO();
         $stmt = $connection->prepare("select id_rol_usuario from rol_usuario where nombre_rol_usuario = :rol");
@@ -59,11 +59,11 @@ class Usuario
                                                         `nombre_usuario`,
                                                         `clave`,
                                                         `rol_usuario_id`)
-                                            values (:idPersona,
+                                            values (:personaId,
                                                     :nombre,
                                                     :claveMd5,
                                                     :rol_usuario_id);");
-            $stmt->bindValue(":idPersona", $idPersona, PDO::PARAM_INT);
+            $stmt->bindValue(":personaId", $personaId, PDO::PARAM_INT);
             $stmt->bindValue(":nombre", $nombre, PDO::PARAM_STR);
             $stmt->bindValue(":claveMd5", $clave, PDO::PARAM_STR);
             $stmt->bindValue(":rol_usuario_id", $idr, PDO::PARAM_INT);
@@ -75,7 +75,7 @@ class Usuario
         }
     }
 
-    public function Modificar($idUsuario, $idPersona, $nombre, $clave, $rol_usuario)
+    public function Modificar($idUsuario, $personaId, $nombre, $clave, $rol_usuario)
     {
         $connection = new MySQLPDO();
 
@@ -101,12 +101,12 @@ class Usuario
             if ($idUsuario == 1) {
                 //$claveMd5 = md5($clave);
                 $stmt = $connection->prepare("update `usuario`
-                                set `persona_id` = :idPersona,
+                                set `persona_id` = :personaId,
                                 `nombre_usuario` = :nombre,
                                 `clave` = :claveMd5,
                                 `rol_usuario_id` = :rol_usuario_id
                                 where `id_usuario` = :idUsuario;");
-                $stmt->bindValue(":idPersona", $idPersona, PDO::PARAM_INT);
+                $stmt->bindValue(":personaId", $personaId, PDO::PARAM_INT);
                 $stmt->bindValue(":nombre", $nombre, PDO::PARAM_STR);
                 $stmt->bindValue(":claveMd5", $clave, PDO::PARAM_STR);
                 $stmt->bindValue(":rol_usuario_id", $idr, PDO::PARAM_INT);
@@ -122,12 +122,12 @@ class Usuario
                 } else {
                     //$claveMd5 = md5($clave);
                     $stmt = $connection->prepare("update `usuario`
-                                    set `persona_id` = :idPersona,
+                                    set `persona_id` = :personaId,
                                     `nombre_usuario` = :nombre,
                                     `clave` = :claveMd5,
                                     `rol_usuario_id` = :rol_usuario_id
                                     where `id_usuario` = :idUsuario;");
-                    $stmt->bindValue(":idPersona", $idPersona, PDO::PARAM_INT);
+                    $stmt->bindValue(":personaId", $personaId, PDO::PARAM_INT);
                     $stmt->bindValue(":nombre", $nombre, PDO::PARAM_STR);
                     $stmt->bindValue(":claveMd5", $clave, PDO::PARAM_STR);
                     $stmt->bindValue(":rol_usuario_id", $idr, PDO::PARAM_INT);
@@ -146,12 +146,12 @@ class Usuario
                 if ($idUsuario == 1) {
                     //$claveMd5 = md5($clave);
                     $stmt = $connection->prepare("update `usuario`
-                                    set `persona_id` = :idPersona,
+                                    set `persona_id` = :personaId,
                                     `nombre_usuario` = :nombre,
                                     `clave` = :claveMd5,
                                     `rol_usuario_id` = :rol_usuario_id
                                     where `id_usuario` = :idUsuario;");
-                    $stmt->bindValue(":idPersona", $idPersona, PDO::PARAM_INT);
+                    $stmt->bindValue(":personaId", $personaId, PDO::PARAM_INT);
                     $stmt->bindValue(":nombre", $nombre, PDO::PARAM_STR);
                     $stmt->bindValue(":claveMd5", $clave, PDO::PARAM_STR);
                     $stmt->bindValue(":rol_usuario_id", $idr, PDO::PARAM_INT);
@@ -167,12 +167,12 @@ class Usuario
                     } else {
                         //$claveMd5 = md5($clave);
                         $stmt = $connection->prepare("update `usuario`
-                                        set `persona_id` = :idPersona,
+                                        set `persona_id` = :personaId,
                                         `nombre_usuario` = :nombre,
                                         `clave` = :claveMd5,
                                         `rol_usuario_id` = :rol_usuario_id
                                         where `id_usuario` = :idUsuario;");
-                        $stmt->bindValue(":idPersona", $idPersona, PDO::PARAM_INT);
+                        $stmt->bindValue(":personaId", $personaId, PDO::PARAM_INT);
                         $stmt->bindValue(":nombre", $nombre, PDO::PARAM_STR);
                         $stmt->bindValue(":claveMd5", $clave, PDO::PARAM_STR);
                         $stmt->bindValue(":rol_usuario_id", $idr, PDO::PARAM_INT);

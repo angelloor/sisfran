@@ -6,7 +6,7 @@ require('../../lib/common/utils.php');
 $totalSistemas = $_GET['totalSistemas'];
 $idSistemas = explode(',', $_GET['idSistemas']);
 $periodo = $_GET['periodo'];
-$nombreFuncionario = $_GET['funcionario'];
+$idPersona = $_GET['idPersona'];
 
 //TRAER DATOS DEL FUNCIONARIO QUE ENTREGA
 $stmt = $connection->prepare("select f.denominacion ,p.nombre_persona, c.nombre_cargo from firma f inner join persona p on f.persona_id = p.id_persona inner join cargo c on p.cargo_id = c.id_cargo where f.id_firma = 1;");
@@ -24,12 +24,13 @@ function nombreMasDenominacion($nombreEntregaCompleto, $denominacion)
 
 $nombreEntrega = nombreMasDenominacion($nombreEntregaCompleto, $denominacion);
 
-$stmt = $connection->prepare("select p.cedula, c.nombre_cargo from persona p inner join cargo c on p.cargo_id = c.id_cargo where p.nombre_persona = :nombrePersona;");
-$stmt->bindValue(":nombrePersona", $nombreFuncionario, PDO::PARAM_STR);
+$stmt = $connection->prepare("select p.cedula, c.nombre_cargo, p.nombre_persona from persona p inner join cargo c on p.cargo_id = c.id_cargo where p.id_persona = :idPersona;");
+$stmt->bindValue(":idPersona", $idPersona, PDO::PARAM_STR);
 $stmt->execute();
 $results = $stmt->fetch(PDO::FETCH_ASSOC);
 $cedula = $results['cedula'];
 $nombreCargo = $results['nombre_cargo'];
+$nombrePersona = $results['nombre_persona'];
 
 $sistemas = "";
 $credenciales = "";
@@ -120,9 +121,9 @@ for ($i = 0; $i < $totalSistemas; $i++) {
 }
 
 $pdf->Ln();
-$pdf->parrafo("a $nombreFuncionario con numero de cedula $cedula, cuyo cargo es $nombreCargo para uso laboral del año $periodo, El funcionario receptor de las credenciales está obligado al complimiento de:");
+$pdf->parrafo("a $nombrePersona con numero de cedula $cedula, cuyo cargo es $nombreCargo para uso laboral del año $periodo, El funcionario receptor de las credenciales está obligado al complimiento de:");
 $pdf->Ln();
-$pdf->parrafo("1. Las credenciales entregadas al funcionario para el manejo de los sistemas antes mencionados son para uso institucional e intransferible, y su utilización es de exclusiva responsabilidad del funcionario.\n2. El funcionario $nombreFuncionario, se compromete a la no divulgación y buen uso de la información facilitada por la institución con total confidencialidad, de incumplir con este compromiso será responsable de las consecuencias establecida en el artículo 190.- 'Apropiación fraudulenta por medios electrónicos' del COIP.\n3. En caso de pérdida, olvido o sustracción del usuario y/o clave de acceso para el manejo de los sistemas, el funcionario deberá comunicar al área de tecnología de la Cooperativa De Transporte Touris San Francisco Oriental, de manera inmediata. \n4. Las credenciales de acceso serán entregadas de manera persona al funcionario responsable de la misma.");
+$pdf->parrafo("1. Las credenciales entregadas al funcionario para el manejo de los sistemas antes mencionados son para uso institucional e intransferible, y su utilización es de exclusiva responsabilidad del funcionario.\n2. El funcionario $nombrePersona, se compromete a la no divulgación y buen uso de la información facilitada por la institución con total confidencialidad, de incumplir con este compromiso será responsable de las consecuencias establecida en el artículo 190.- 'Apropiación fraudulenta por medios electrónicos' del COIP.\n3. En caso de pérdida, olvido o sustracción del usuario y/o clave de acceso para el manejo de los sistemas, el funcionario deberá comunicar al área de tecnología de la Cooperativa De Transporte Touris San Francisco Oriental, de manera inmediata. \n4. Las credenciales de acceso serán entregadas de manera persona al funcionario responsable de la misma.");
 $pdf->Ln();
 $pdf->parrafo("Para la constancia de la actuado y en fe de conformidad y aceptación, se suscribe la presente acta en dos originales de igual valor y efecto para las personas que intervienen en esta diligencia, en la ciudad de $ciudad, a los $dia días del mes de $mes del $año.");
 $pdf->SetTextColor(0, 0, 0);
@@ -138,7 +139,7 @@ $pdf->SetFont('Times', 'B', 10);
 $pdf->Cell(0, 10, mb_convert_encoding('RECIBÍ CONFORME', 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
 $pdf->SetFont('Times', '', 10);
 $pdf->ln(10);
-$pdf->MultiCell(0, 5, mb_convert_encoding("$nombreFuncionario \n$nombreCargo", 'ISO-8859-1', 'UTF-8'), 0, 'C');
+$pdf->MultiCell(0, 5, mb_convert_encoding("$nombrePersona \n$nombreCargo", 'ISO-8859-1', 'UTF-8'), 0, 'C');
 
 $nombreReporteTemp = "actaDigital";
 $nombreReporte = nombreReporte($nombreReporteTemp, "pdf");

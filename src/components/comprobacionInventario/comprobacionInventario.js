@@ -32,13 +32,13 @@ function listarFuncionario() {
       var html = "";
       $.each(response, function (index, data) {
         html +=
-        "<option value=" +
-        data.id_persona +
-        ">" +
-        data.nombre_persona +
-        "</option>";
+          "<option value=" +
+          data.id_persona +
+          ">" +
+          data.nombre_persona +
+          "</option>";
       });
-      document.getElementById("funcionario").innerHTML = html;
+      document.getElementById("personaId").innerHTML = html;
     })
     .fail(function (error) {
       console.log(error);
@@ -55,9 +55,14 @@ function listarEstado() {
     .done(function (response) {
       var html = "";
       $.each(response, function (index, data) {
-        html += "<option>" + data.nombre_estado + "</option>";
+        html +=
+          "<option value=" +
+          data.id_estado +
+          ">" +
+          data.nombre_estado +
+          "</option>";
       });
-      document.getElementById("estado").innerHTML = html;
+      document.getElementById("estadoId").innerHTML = html;
     })
     .fail(function (error) {
       console.log(error.responseText);
@@ -76,17 +81,18 @@ function EscucharConsulta() {
         dataType: "json",
       })
         .done(function (response) {
+          console.log(response);
           if (response == false) {
             activoComprobacion = 1;
           } else {
             activoComprobacion = 0;
-            setValue("estado", response.nombre_estado);
-            setValue("funcionario", response.funcionario);
+            setValue("estadoId", response.estado_id);
+            setValue("personaId", response.id_persona);
             setValue("comentario", response.comentario);
           }
         })
         .fail(function (error) {
-          console.log(error);
+          console.log(error.responseText);
         });
     }
   });
@@ -117,7 +123,7 @@ function Guardar() {
           }
         })
         .fail(function (error) {
-          console.log(error);
+          console.log(error.responseText);
         });
     }
   } else {
@@ -172,11 +178,11 @@ function Restablecer() {
 
 function Validar() {
   codigo = getValue("codigo");
-  estado = getValue("estado");
-  funcionario = getValue("funcionario");
+  estadoId = getValue("estadoId");
+  personaId = getValue("personaId");
   comentario = getValue("comentario");
 
-  if (!codigo || !estado || !funcionario || !comentario) {
+  if (!codigo || !estadoId || !personaId || !comentario) {
     return false;
   }
 
@@ -186,8 +192,8 @@ function Validar() {
 function retornarDatos(accion) {
   return {
     codigo: getValue("codigo"),
-    estado: getValue("estado"),
-    funcionario: getValue("funcionario"),
+    estadoId: getValue("estadoId"),
+    personaId: getValue("personaId"),
     comentario: getValue("comentario"),
     accion: accion,
   };
@@ -195,8 +201,8 @@ function retornarDatos(accion) {
 
 function Limpiar() {
   clearInput("codigo");
-  clearInput("estado");
-  clearInput("funcionario");
+  clearInput("estadoId");
+  clearInput("personaId");
   clearInput("comentario");
 }
 
@@ -219,8 +225,8 @@ function BloquearBotones(guardar) {
     disabledInput("guardar");
     disabledInput("cancelar");
     disabledInput("codigo");
-    disabledInput("estado");
-    disabledInput("funcionario");
+    disabledInput("estadoId");
+    disabledInput("personaId");
     disabledInput("comentario");
   } else {
     disabledInput("nuevo");
@@ -229,8 +235,8 @@ function BloquearBotones(guardar) {
     enabledInput("guardar");
     enabledInput("cancelar");
     enabledInput("codigo");
-    enabledInput("estado");
-    enabledInput("funcionario");
+    enabledInput("estadoId");
+    enabledInput("personaId");
     enabledInput("comentario");
     document.getElementById("codigo").focus();
   }

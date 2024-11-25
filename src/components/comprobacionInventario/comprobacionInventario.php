@@ -81,13 +81,13 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                         <input type="text" name="codigo" id="codigo" placeholder="Codigo" class="form-control">
                     </div>
                     <div class="col-md-6 mt-2">
-                        <label for="estado">Estado</label>
-                        <select name="estado" id="estado" class="form-control br">
+                        <label for="estadoId">Estado</label>
+                        <select name="estadoId" id="estadoId" class="form-control br">
                         </select>
                     </div>
                     <div class="col-md-6 mt-2">
-                        <label for="funcionario">Funcionario</label>
-                        <select name="funcionario" id="funcionario" class="form-control br">
+                        <label for="personaId">Funcionario</label>
+                        <select name="personaId" id="personaId" class="form-control br">
                         </select>
                     </div>
                     <div class="col-md-6 mt-2">

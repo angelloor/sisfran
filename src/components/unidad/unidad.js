@@ -240,7 +240,6 @@ function Eliminar(idUnidad) {
 
 function Validar() {
   nombreUnidad = getValue("nombre");
-  console.log(nombreUnidad)
 
   if (!nombreUnidad) {
     return false;

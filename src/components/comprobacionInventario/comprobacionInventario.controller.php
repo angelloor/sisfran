@@ -14,11 +14,11 @@ if ($_POST) {
             break;
         case "GUARDAR":
             $codigo = $_POST['codigo'];
-            $estado = $_POST['estado'];
-            $funcionario = $_POST['funcionario'];
+            $estadoId = $_POST['estadoId'];
+            $personaId = $_POST['personaId'];
             $comentario = $_POST['comentario'];
 
-            $respuesta = $comprobacionInventario->Guardar($codigo, $estado, $funcionario, $comentario);
+            $respuesta = $comprobacionInventario->Guardar($codigo, $estadoId, $personaId, $comentario);
             echo json_encode($respuesta);
             break;
         case "RESTABLECER":

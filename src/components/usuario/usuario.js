@@ -120,7 +120,7 @@ function listarFuncionario() {
         data.nombre_persona +
         "</option>";
       });
-      document.getElementById("idPersona").innerHTML = html;
+      document.getElementById("personaId").innerHTML = html;
     })
     .fail(function (error) {
       console.log(error);
@@ -165,7 +165,7 @@ function ConsultarPorId(idUsuario) {
           dataType: "json",
         })
           .done(function (response) {
-            setValue("idPersona", response.nombre_persona);
+            setValue("personaId", response.persona_id);
             setValue("nombre", response.nombre_usuario);
             setValue("clave", response.clave);
             setValue("rol", response.nombre_rol_usuario);
@@ -286,12 +286,12 @@ function Eliminar(idUsuario) {
 }
 
 function Validar() {
-  idPersona = getValue("idPersona");
+  personaId = getValue("personaId");
   nombre = getValue("nombre");
   clave = getValue("clave");
   rol = getValue("rol");
 
-  if (!idPersona || !nombre || !clave || !rol) {
+  if (!personaId || !nombre || !clave || !rol) {
     return false;
   }
 
@@ -300,7 +300,7 @@ function Validar() {
 
 function retornarDatos(accion) {
   return {
-    idPersona: getValue("idPersona"),
+    personaId: getValue("personaId"),
     nombre: getValue("nombre"),
     clave: getValue("clave"),
     rol: getValue("rol"),
@@ -311,7 +311,6 @@ function retornarDatos(accion) {
 
 function Limpiar() {
   clearInput("idUsuario");
-  clearInput("idPersona");
   clearInput("nombre");
   clearInput("clave");
   clearInput("rol");
