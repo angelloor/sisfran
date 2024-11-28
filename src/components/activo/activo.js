@@ -26,7 +26,48 @@ $(document).ready(function () {
   document
     .getElementById("campoBuscar")
     .addEventListener("change", limpiarIdBuscar, false);
+
+  // Mobile Display Table
+  displayLabels(isMobile);
 });
+
+// Mobile Display Table
+function displayLabels(isMobile) {
+  const codigoLbl = document.getElementById("codigoLbl");
+  const nombreLbl = document.getElementById("nombreLbl");
+  const categoriaIdLbl = document.getElementById("categoriaIdLbl");
+  const caracteristicaLbl = document.getElementById("caracteristicaLbl");
+  const marcaIdLbl = document.getElementById("marcaIdLbl");
+  const modeloLbl = document.getElementById("modeloLbl");
+  const serieLbl = document.getElementById("serieLbl");
+  const estadoIdLbl = document.getElementById("estadoIdLbl");
+  const comprobacionInventarioLbl = document.getElementById(
+    "comprobacionInventarioLbl"
+  );
+
+  if (isMobile) {
+    // Comentar para mantener
+    // codigoLbl.style.display = "none";
+    // nombreLbl.style.display = "none";
+    categoriaIdLbl.style.display = "none";
+    caracteristicaLbl.style.display = "none";
+    marcaIdLbl.style.display = "none";
+    modeloLbl.style.display = "none";
+    serieLbl.style.display = "none";
+    estadoIdLbl.style.display = "none";
+    comprobacionInventarioLbl.style.display = "none";
+  } else {
+    // codigoLbl.style.display = "table-cell";
+    // nombreLbl.style.display = "table-cell";
+    categoriaIdLbl.style.display = "table-cell";
+    caracteristicaLbl.style.display = "table-cell";
+    marcaIdLbl.style.display = "table-cell";
+    modeloLbl.style.display = "table-cell";
+    serieLbl.style.display = "table-cell";
+    estadoIdLbl.style.display = "table-cell";
+    comprobacionInventarioLbl.style.display = "table-cell";
+  }
+}
 
 function listarCategoria() {
   $.ajax({
@@ -48,7 +89,7 @@ function listarCategoria() {
       document.getElementById("categoriaId").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -72,7 +113,7 @@ function listarMarca() {
       document.getElementById("marcaId").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -96,7 +137,7 @@ function listarEstado() {
       document.getElementById("estadoId").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -120,7 +161,7 @@ function listarColor() {
       document.getElementById("colorId").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -144,7 +185,7 @@ function listarBodega() {
       document.getElementById("bodegaId").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -168,29 +209,34 @@ function Consultar() {
         html += "<tr>";
         html += "<td>" + data.codigo + "</td>";
         html += "<td>" + data.nombre_activo + "</td>";
-        html += "<td>" + data.nombre_categoria + "</td>";
-        html += "<td>" + data.caracteristica + "</td>";
-        html += "<td>" + data.nombre_marca + "</td>";
-        html += "<td>" + data.modelo + "</td>";
-        html += "<td>" + data.serie + "</td>";
-        html += "<td>" + data.nombre_estado + "</td>";
-        html += "<td>" + data.comprobacion_inventario + "</td>";
+        html += isMobile ? "" : "<td>" + data.nombre_categoria + "</td>";
+        html += isMobile ? "" : "<td>" + data.caracteristica + "</td>";
+        html += isMobile ? "" : "<td>" + data.nombre_marca + "</td>";
+        html += isMobile ? "" : "<td>" + data.modelo + "</td>";
+        html += isMobile ? "" : "<td>" + data.serie + "</td>";
+        html += isMobile ? "" : "<td>" + data.nombre_estado + "</td>";
+        html += isMobile ? "" : "<td>" + data.comprobacion_inventario + "</td>";
         html += "<td class='btn-center-objet'>";
         html +=
-          "<button class='btn btn-success' onclick='ConsultarPorId(" +
+          "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
           data.id_activo +
           ");'><span class='fa fa-edit'></span></button>";
         html +=
-          "<button style='margin-top: 3px;' class='btn btn-danger' onclick='Eliminar(" +
+          "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
           data.id_activo +
           ");'><span class='fa fa-trash'></span></button>";
+        html += isMobile
+          ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+            JSON.stringify(data) +
+            ");'><span class='fa fa-info'></span></button>"
+          : "";
         html += "</td>";
         html += "</tr>";
       });
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -225,20 +271,20 @@ function EscucharConsulta() {
             html += "<td>" + data.comprobacion_inventario + "</td>";
             html += "<td class='btn-center-objet'>";
             html +=
-              "<button class='btn btn-success' onclick='ConsultarPorId(" +
+              "<button class='btn btn-success min-btn-action' onclick='ConsultarPorId(" +
               data.id_activo +
               ");'><span class='fa fa-edit'></span></button>";
             html +=
-              "<button style='margin-top: 3px;' class='btn btn-danger' onclick='Eliminar(" +
+              "<button class='btn btn-danger min-btn-action' onclick='Eliminar(" +
               data.id_activo +
-              ");'><span class='fa fa-trash'></span></button>";
+              ");'><span class='fa fa-trash min-btn-action'></span></button>";
             html += "</td>";
             html += "</tr>";
           });
           document.getElementById("datos").innerHTML = html;
         })
         .fail(function (error) {
-          console.log(error);
+          console.log(error.responseText);
         });
     }
   });
@@ -285,7 +331,7 @@ function ConsultarPorId(idActivo) {
             BloquearBotones(false);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -311,7 +357,7 @@ function Guardar() {
         Consultar();
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -340,7 +386,7 @@ function Modificar() {
         Consultar();
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -413,7 +459,7 @@ function Eliminar(idActivo) {
                 Consultar();
               })
               .fail(function (error) {
-                console.log(error);
+                console.log(error.responseText);
               });
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -422,7 +468,7 @@ function Eliminar(idActivo) {
       Limpiar();
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 

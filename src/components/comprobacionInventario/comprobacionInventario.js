@@ -41,7 +41,7 @@ function listarFuncionario() {
       document.getElementById("personaId").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -81,7 +81,6 @@ function EscucharConsulta() {
         dataType: "json",
       })
         .done(function (response) {
-          console.log(response);
           if (response == false) {
             activoComprobacion = 1;
           } else {
@@ -167,7 +166,7 @@ function Restablecer() {
             BloquearBotones(true);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");

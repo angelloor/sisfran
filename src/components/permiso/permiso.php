@@ -27,15 +27,16 @@ if (!$_SESSION['user']) {
     <!-- SCRIPTS -->
     <script src="../../assets/js/all.min.js"></script>
     <script src="./permiso.js"></script>
-    <script src="../../lib/common/utils.js"></script>
+    <script src="../../assets/js/utils.js"></script>
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/popup.css">
+    <link rel="stylesheet" href="../../assets/css/popupMobileDisplayTable.css">
 </head>
 
 <body style="height: 100vh;">
     <!-- HEADER -->
     <?php
-  require '../../lib/common/header.php';
+    require '../../lib/common/header.php';
     ?>
     <!-- HEADER -->
     <nav aria-label="breadcrumb bg-light">
@@ -99,15 +100,15 @@ if (!$_SESSION['user']) {
             <table class="table tabled-bordered table-sm" id="tablaPermiso">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Fecha Inicio</th>
-                        <th>Fecha Fin</th>
+                        <th scope="col" id="idPermisoLbl">Id</th>
+                        <th scope="col" id="fechaInicioPermisoLbl">Fecha Inicio</th>
+                        <th scope="col" id="fechaFinPermisoLbl">Fecha Fin</th>
                         <?php if (($_SESSION['rolUsuario'] === "ADMINISTRADOR")) {
-                            echo '<th>Solicitante</th>';
+                            echo '<th scope="col" id="nombrePersonaLbl">Solicitante</th>';
                         } ?>
-                        <th>Estado</th>
-                        <th>Observaciones</th>
-                        <th>Documentación</th>
+                        <th scope="col" id="estadoPermisoLbl">Estado</th>
+                        <th scope="col" id="observacionesPermisoLbl">Observaciones</th>
+                        <th scope="col" id="documentacionPermisoLbl">Documentación</th>
                         <th style='text-align: right;'>Acciones</th>
                     </tr>
                 </thead>
@@ -123,5 +124,10 @@ if (!$_SESSION['user']) {
         </div>
     </div>
 </body>
-
+<!-- Mobile Display Table -->
+<script src="../../assets/js/popupMobileDisplayTable.js"></script>
+<?php
+require '../../lib/common/popupMobileDisplayTable.php';
+?>
+<!-- Mobile Display Table -->
 </html>

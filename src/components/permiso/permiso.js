@@ -16,7 +16,46 @@ $(document).ready(function () {
 
   EscucharConsulta();
   BloquearBotones(true);
+
+  // Mobile Display Table
+  displayLabels(isMobile);
 });
+
+// Mobile Display Table
+function displayLabels(isMobile) {
+  const idPermisoLbl = document.getElementById("idPermisoLbl");
+  const fechaInicioPermisoLbl = document.getElementById(
+    "fechaInicioPermisoLbl"
+  );
+  const fechaFinPermisoLbl = document.getElementById("fechaFinPermisoLbl");
+  const nombrePersonaLbl = document.getElementById("nombrePersonaLbl");
+  const estadoPermisoLbl = document.getElementById("estadoPermisoLbl");
+  const observacionesPermisoLbl = document.getElementById(
+    "observacionesPermisoLbl"
+  );
+  const documentacionPermisoLbl = document.getElementById(
+    "documentacionPermisoLbl"
+  );
+
+  if (isMobile) {
+    // Comentar para mantener
+    idPermisoLbl.style.display = "none";
+    // fechaInicioPermisoLbl.style.display = "none";
+    // fechaFinPermisoLbl.style.display = "none";
+    nombrePersonaLbl.style.display = "none";
+    estadoPermisoLbl.style.display = "none";
+    observacionesPermisoLbl.style.display = "none";
+    documentacionPermisoLbl.style.display = "none";
+  } else {
+    idPermisoLbl.style.display = "table-cell";
+    // fechaInicioPermisoLbl.style.display = "table-cell";
+    // fechaFinPermisoLbl.style.display = "table-cell";
+    nombrePersonaLbl.style.display = "table-cell";
+    estadoPermisoLbl.style.display = "table-cell";
+    observacionesPermisoLbl.style.display = "table-cell";
+    documentacionPermisoLbl.style.display = "table-cell";
+  }
+}
 
 function Consultar() {
   registrosTotales = false;
@@ -36,41 +75,45 @@ function Consultar() {
       var html = "";
       $.each(response, function (index, data) {
         html += "<tr>";
-        html += "<td>" + data.id_permiso + "</td>";
+        html += isMobile ? "" : "<td>" + data.id_permiso + "</td>";
         html += "<td>" + data.fecha_inicio_permiso + "</td>";
         html += "<td>" + data.fecha_fin_permiso + "</td>";
 
         if (rolUsuario === "ADMINISTRADOR") {
-          html += "<td>" + data.nombre_persona + "</td>";
+          html += isMobile ? "" : "<td>" + data.nombre_persona + "</td>";
         }
 
-        html += "<td>" + data.estado_permiso + "</td>";
-        html += "<td>" + data.observaciones_permiso + "</td>";
-        html += "<td>" + data.documentacion_permiso + "</td>";
+        html += isMobile ? "" : "<td>" + data.estado_permiso + "</td>";
+        html += isMobile ? "" : "<td>" + data.observaciones_permiso + "</td>";
+        html += isMobile ? "" : "<td>" + data.documentacion_permiso + "</td>";
         html += "<td style='text-align: right;'>";
         html +=
-          "<button class='btn btn-info mr-1' onclick='descargarDocumentacion(\"" +
+          "<button class='btn btn-info mr-1 min-btn-action' onclick='descargarDocumentacion(\"" +
           String(data.documentacion_permiso) + // Convertir a string
           "\");'><span class='fa fa-download'></span></button>";
 
         if (rolUsuario === "ADMINISTRADOR") {
           html +=
-            "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+            "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
             data.id_permiso +
             ");'><span class='fa fa-edit'></span></button>";
           html +=
-            "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+            "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
             data.id_permiso +
             ");'><span class='fa fa-trash'></span></button>";
         }
-
+        html += isMobile
+          ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+            JSON.stringify(data) +
+            ");'><span class='fa fa-info'></span></button>"
+          : "";
         html += "</td>";
         html += "</tr>";
       });
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -95,41 +138,49 @@ function EscucharConsulta() {
           var html = "";
           $.each(response, function (index, data) {
             html += "<tr>";
-            html += "<td>" + data.id_permiso + "</td>";
+            html += isMobile ? "" : "<td>" + data.id_permiso + "</td>";
             html += "<td>" + data.fecha_inicio_permiso + "</td>";
             html += "<td>" + data.fecha_fin_permiso + "</td>";
 
             if (rolUsuario === "ADMINISTRADOR") {
-              html += "<td>" + data.nombre_persona + "</td>";
+              html += isMobile ? "" : "<td>" + data.nombre_persona + "</td>";
             }
 
-            html += "<td>" + data.estado_permiso + "</td>";
-            html += "<td>" + data.observaciones_permiso + "</td>";
-            html += "<td>" + data.documentacion_permiso + "</td>";
+            html += isMobile ? "" : "<td>" + data.estado_permiso + "</td>";
+            html += isMobile
+              ? ""
+              : "<td>" + data.observaciones_permiso + "</td>";
+            html += isMobile
+              ? ""
+              : "<td>" + data.documentacion_permiso + "</td>";
             html += "<td style='text-align: right;'>";
             html +=
-              "<button class='btn btn-info mr-1' onclick='descargarDocumentacion(\"" +
+              "<button class='btn btn-info mr-1 min-btn-action' onclick='descargarDocumentacion(\"" +
               String(data.documentacion_permiso) + // Convertir a string
               "\");'><span class='fa fa-download'></span></button>";
 
             if (rolUsuario === "ADMINISTRADOR") {
               html +=
-                "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+                "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
                 data.id_permiso +
                 ");'><span class='fa fa-edit'></span></button>";
               html +=
-                "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+                "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
                 data.id_permiso +
                 ");'><span class='fa fa-trash'></span></button>";
             }
-
+            html += isMobile
+              ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+                JSON.stringify(data) +
+                ");'><span class='fa fa-info'></span></button>"
+              : "";
             html += "</td>";
             html += "</tr>";
           });
           document.getElementById("datos").innerHTML = html;
         })
         .fail(function (error) {
-          console.log(error);
+          console.log(error.responseText);
         });
     }
   });
@@ -153,41 +204,45 @@ function ConsultarPorIdPersona(idPersona) {
       var html = "";
       $.each(response, function (index, data) {
         html += "<tr>";
-        html += "<td>" + data.id_permiso + "</td>";
+        html += isMobile ? "" : "<td>" + data.id_permiso + "</td>";
         html += "<td>" + data.fecha_inicio_permiso + "</td>";
         html += "<td>" + data.fecha_fin_permiso + "</td>";
 
         if (rolUsuario === "ADMINISTRADOR") {
-          html += "<td>" + data.nombre_persona + "</td>";
+          html += isMobile ? "" : "<td>" + data.nombre_persona + "</td>";
         }
 
-        html += "<td>" + data.estado_permiso + "</td>";
-        html += "<td>" + data.observaciones_permiso + "</td>";
-        html += "<td>" + data.documentacion_permiso + "</td>";
+        html += isMobile ? "" : "<td>" + data.estado_permiso + "</td>";
+        html += isMobile ? "" : "<td>" + data.observaciones_permiso + "</td>";
+        html += isMobile ? "" : "<td>" + data.documentacion_permiso + "</td>";
         html += "<td style='text-align: right;'>";
         html +=
-          "<button class='btn btn-info mr-1' onclick='descargarDocumentacion(\"" +
+          "<button class='btn btn-info mr-1 min-btn-action' onclick='descargarDocumentacion(\"" +
           String(data.documentacion_permiso) + // Convertir a string
           "\");'><span class='fa fa-download'></span></button>";
 
         if (rolUsuario === "ADMINISTRADOR") {
           html +=
-            "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+            "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
             data.id_permiso +
             ");'><span class='fa fa-edit'></span></button>";
           html +=
-            "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+            "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
             data.id_permiso +
             ");'><span class='fa fa-trash'></span></button>";
         }
-
+        html += isMobile
+          ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+            JSON.stringify(data) +
+            ");'><span class='fa fa-info'></span></button>"
+          : "";
         html += "</td>";
         html += "</tr>";
       });
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -223,7 +278,7 @@ function ConsultarPorId(idPermiso) {
             BloquearBotones(false);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -239,7 +294,7 @@ function Guardar() {
     formData.append("file", file);
     // Enviar el archivo al servidor
     $.ajax({
-      url: "../lib/fileStorage/upload.php", // Ruta al archivo PHP que procesa la subida
+      url: "../../lib/fileStorage/upload.php", // Ruta al archivo PHP que procesa la subida
       type: "POST",
       data: formData,
       processData: false,
@@ -266,11 +321,11 @@ function Guardar() {
             }
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       },
       error: function (error) {
-        alert(error.responseText);
+        alert(error);
       },
     });
   } else {
@@ -304,7 +359,7 @@ function Modificar() {
         }
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -350,7 +405,7 @@ function Eliminar(idPermiso) {
             }
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -359,7 +414,7 @@ function Eliminar(idPermiso) {
 }
 
 function descargarDocumentacion(documentacionPermiso) {
-  window.location.href = `../lib/fileStorage/download.php?file=${encodeURIComponent(
+  window.location.href = `../../lib/fileStorage/download.php?file=${encodeURIComponent(
     documentacionPermiso
   )}`;
 }

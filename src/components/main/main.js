@@ -36,13 +36,18 @@ function cargarCategoria() {
     .done(function (response) {
       var html = "";
       $.each(response, function (index, data) {
-        html += "<option>" + data.nombre_categoria + "</option>";
+        html +=
+        "<option value=" +
+        data.id_categoria +
+        ">" +
+        data.nombre_categoria +
+        "</option>";
       });
       document.getElementById("SelectCategoria").innerHTML = html;
       document.getElementById("SelectCategoriaDos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -58,12 +63,17 @@ function listarFuncionarioPorCategoria() {
     .done(function (response) {
       var html = "";
       $.each(response, function (index, data) {
-        html += "<option>" + data.nombre_persona + "</option>";
+        html +=
+        "<option value=" +
+        data.id_persona +
+        ">" +
+        data.nombre_persona +
+        "</option>";
       });
       document.getElementById("SelectFuncionario").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 

@@ -15,8 +15,8 @@ if ($_POST) {
             $nombreFuncionario = $_POST['nombreFuncionario'];
             $direccionFuncionario = $_POST['direccionFuncionario'];
             $telefonoFuncionario = $_POST['telefonoFuncionario'];
-            $cargoFuncionario = $_POST['cargoFuncionario'];
-            $unidadFuncionario = $_POST['unidadFuncionario'];
+            $cargoId = $_POST['cargoId'];
+            $unidadId = $_POST['unidadId'];
             $tipoContrato = $_POST['tipoContrato'];
             $salarioBase = $_POST['salarioBase'];
 
@@ -36,11 +36,11 @@ if ($_POST) {
                 echo json_encode("Ingrese el número de teléfono");
                 return;
             }
-            if (!$cargoFuncionario) {
+            if (!$cargoId) {
                 echo json_encode("Ingrese el cargo");
                 return;
             }
-            if (!$unidadFuncionario) {
+            if (!$unidadId) {
                 echo json_encode("Ingrese la unidad");
                 return;
             }
@@ -52,7 +52,7 @@ if ($_POST) {
                 echo json_encode("Ingrese el salario base");
                 return;
             }
-            $respuesta = $funcionario->Guardar($cedulaFuncionario, $nombreFuncionario, $direccionFuncionario, $telefonoFuncionario, $cargoFuncionario, $unidadFuncionario, $tipoContrato, $salarioBase);
+            $respuesta = $funcionario->Guardar($cedulaFuncionario, $nombreFuncionario, $direccionFuncionario, $telefonoFuncionario, $cargoId, $unidadId, $tipoContrato, $salarioBase);
             echo json_encode($respuesta);
             break;
         case "MODIFICAR":
@@ -60,8 +60,8 @@ if ($_POST) {
             $nombreFuncionario = $_POST['nombreFuncionario'];
             $direccionFuncionario = $_POST['direccionFuncionario'];
             $telefonoFuncionario = $_POST['telefonoFuncionario'];
-            $cargoFuncionario = $_POST['cargoFuncionario'];
-            $unidadFuncionario = $_POST['unidadFuncionario'];
+            $cargoId = $_POST['cargoId'];
+            $unidadId = $_POST['unidadId'];
             $tipoContrato = $_POST['tipoContrato'];
             $salarioBase = $_POST['salarioBase'];
             $idFuncionario = $_POST['idFuncionario'];
@@ -82,11 +82,11 @@ if ($_POST) {
                 echo json_encode("Ingrese el número de teléfono");
                 return;
             }
-            if (!$cargoFuncionario) {
+            if (!$cargoId) {
                 echo json_encode("Ingrese el cargo");
                 return;
             }
-            if (!$unidadFuncionario) {
+            if (!$unidadId) {
                 echo json_encode("Ingrese la unidad");
                 return;
             }
@@ -98,7 +98,7 @@ if ($_POST) {
                 echo json_encode("Ingrese el salario base");
                 return;
             }
-            $respuesta = $funcionario->Modificar($idFuncionario, $cedulaFuncionario, $nombreFuncionario, $direccionFuncionario, $telefonoFuncionario, $cargoFuncionario, $unidadFuncionario, $tipoContrato, $salarioBase);
+            $respuesta = $funcionario->Modificar($idFuncionario, $cedulaFuncionario, $nombreFuncionario, $direccionFuncionario, $telefonoFuncionario, $cargoId, $unidadId, $tipoContrato, $salarioBase);
             echo json_encode($respuesta);
 
             break;

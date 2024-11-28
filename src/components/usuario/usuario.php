@@ -39,14 +39,15 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
     <!-- SCRIPTS -->
     <script src="../../assets/js/all.min.js"></script>
     <script src="./usuario.js"></script>
-    <script src="../../lib/common/utils.js"></script>
+    <script src="../../assets/js/utils.js"></script>
     <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/popupMobileDisplayTable.css">
 </head>
 
 <body>
     <!-- HEADER -->
     <?php
-  require '../../lib/common/header.php';
+    require '../../lib/common/header.php';
     ?>
     <!-- HEADER -->
     <!-- BREADCRUMB -->
@@ -96,11 +97,11 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                     </div>
                     <div class="col-md-6 mt-2">
                         <label for="clave">Clave</label>
-                        <input type="text" name="clave" id="clave" placeholder="Ingrese la contraseña" class="form-control">
+                        <input type="text" name="clave" id="clave" placeholder="Ingrese tu nueva contraseña" class="form-control">
                     </div>
                     <div class="col-md-6 mt-2">
-                        <label for="rol">Rol de usuario</label>
-                        <select name="rol" class="form-control br" id="rol">
+                        <label for="rolUsuarioId">Rol de usuario</label>
+                        <select name="rolUsuarioId" class="form-control br" id="rolUsuarioId">
                         </select>
                     </div>
                 </div>
@@ -109,10 +110,10 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                 <table class="table tabled-bordered table-sm" id="tablaUsuario">
                     <thead>
                         <tr>
-                            <th>Funcionario</th>
-                            <th>Nombre de usuario</th>
-                            <th>Clave</th>
-                            <th>Rol de usuario</th>
+                            <th scope="col" id="personaIdLbl">Funcionario</th>
+                            <th scope="col" id="nombreLbl">Usuario</th>
+                            <th scope="col" id="claveLbl">Clave</th>
+                            <th scope="col" id="rolUsuarioIdLbl">Rol de usuario</th>
                             <th class="th-text-align-right">Acciones</th>
                         </tr>
                     </thead>
@@ -128,6 +129,10 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
             </div>
         </div>
     </div>
-    <!-- Gestionar  -->
-
+    <!-- Mobile Display Table -->
+    <script src="../../assets/js/popupMobileDisplayTable.js"></script>
+    <?php
+    require '../../lib/common/popupMobileDisplayTable.php';
+    ?>
+    <!-- Mobile Display Table -->
 </html>

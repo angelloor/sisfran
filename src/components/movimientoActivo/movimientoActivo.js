@@ -7,7 +7,33 @@ $(document).ready(function () {
   cargarFechaActual();
   Consultar();
   ocultarAlertaDatos();
+
+  // Mobile Display Table
+  displayLabels(isMobile);
 });
+
+// Mobile Display Table
+function displayLabels(isMobile) {
+  const idMovimientoActivoLbl = document.getElementById(
+    "idMovimientoActivoLbl"
+  );
+  const codigoLbl = document.getElementById("codigoLbl");
+  const nombreFuncionarioLbl = document.getElementById("nombreFuncionarioLbl");
+  const fechaMovimientoLbl = document.getElementById("fechaMovimientoLbl");
+
+  if (isMobile) {
+    // Comentar para mantener
+    idMovimientoActivoLbl.style.display = "none";
+    // codigoLbl.style.display = "none";
+    nombreFuncionarioLbl.style.display = "none";
+    // fechaMovimientoLbl.style.display = "none";
+  } else {
+    idMovimientoActivoLbl.style.display = "table-cell";
+    // codigoLbl.style.display = "table-cell";
+    nombreFuncionarioLbl.style.display = "table-cell";
+    // fechaMovimientoLbl.style.display = "table-cell";
+  }
+}
 
 function pdf() {
   if (comprobarFechas() == 1) {
@@ -40,7 +66,10 @@ function pdf() {
             fechaFinal +
             "&accion=" +
             accion;
-          window.open("../reportes/movimientoActivo.template.php?" + urlGet, "_blank");
+          window.open(
+            "../reportes/movimientoActivo.template.php?" + urlGet,
+            "_blank"
+          );
         }
       }
     }
@@ -78,7 +107,10 @@ function excel() {
             fechaFinal +
             "&accion=" +
             accion;
-          window.open("../reportes/movimientoActivo.template.php?" + urlGet, "_blank");
+          window.open(
+            "../reportes/movimientoActivo.template.php?" + urlGet,
+            "_blank"
+          );
         }
       }
     }
@@ -134,16 +166,24 @@ function ConsultarPorFecha() {
             var html = "";
             $.each(response, function (index, data) {
               html += "<tr>";
-              html += "<td>" + data.id_movimiento_activo + "</td>";
+              html += isMobile
+                ? ""
+                : "<td>" + data.id_movimiento_activo + "</td>";
               html += "<td>" + data.codigo + "</td>";
-              html += "<td>" + data.nombreFuncionario + "</td>";
+              html += isMobile ? "" : "<td>" + data.nombre_funcionario + "</td>";
               html += "<td>" + data.fecha_movimiento + "</td>";
+              html += "<td style='text-align: right;'>";
+              html += isMobile
+                ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+                  JSON.stringify(data) +
+                  ");'><span class='fa fa-info'></span></button>"
+                : "";
               html += "</tr>";
             });
             document.getElementById("datos").innerHTML = html;
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       }
     }
@@ -168,10 +208,16 @@ function Consultar() {
       var html = "";
       $.each(response, function (index, data) {
         html += "<tr>";
-        html += "<td>" + data.id_movimiento_activo + "</td>";
+        html += isMobile ? "" : "<td>" + data.id_movimiento_activo + "</td>";
         html += "<td>" + data.codigo + "</td>";
-        html += "<td>" + data.nombreFuncionario + "</td>";
+        html += isMobile ? "" : "<td>" + data.nombre_funcionario + "</td>";
         html += "<td>" + data.fecha_movimiento + "</td>";
+        html += "<td style='text-align: right;'>";
+        html += isMobile
+          ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+            JSON.stringify(data) +
+            ");'><span class='fa fa-info'></span></button>"
+          : "";
         html += "</tr>";
       });
       document.getElementById("datos").innerHTML = html;

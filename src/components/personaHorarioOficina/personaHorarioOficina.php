@@ -5,8 +5,6 @@ if (!$_SESSION['user']) {
     header('Location: ../');
 }
 
-$displayStyle = ($_SESSION['rolUsuario'] == "ASISTENTE") ? 'style="display:none;"' : '';
-
 ?>
 
 <!doctype html>
@@ -31,15 +29,16 @@ $displayStyle = ($_SESSION['rolUsuario'] == "ASISTENTE") ? 'style="display:none;
     <!-- SCRIPTS -->
     <script src="../../assets/js/all.min.js"></script>
     <script src="./personaHorarioOficina.js"></script>
-    <script src="../../lib/common/utils.js"></script>
+    <script src="../../assets/js/utils.js"></script>
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/popup.css">
+    <link rel="stylesheet" href="../../assets/css/popupMobileDisplayTable.css">
 </head>
 
 <body style="height: 100vh;">
     <!-- HEADER -->
     <?php
-  require '../../lib/common/header.php';
+    require '../../lib/common/header.php';
     ?>
     <!-- HEADER -->
     <nav aria-label="breadcrumb bg-light">
@@ -48,7 +47,12 @@ $displayStyle = ($_SESSION['rolUsuario'] == "ASISTENTE") ? 'style="display:none;
             <li class="breadcrumb-item active">Asistencia</li>
             <li class="breadcrumb-item active">Horarios Funcionario</li>
         </ol>
-        <button class="btn btn-info ml-3 mb-3" id="regresar" onclick="regresarFuncionario();"><span class="fa fa-backward"></span>&nbsp&nbspAtras</button>
+
+        <button class="btn btn-info ml-3 mb-3" id="regresar"
+            onclick="<?php echo ($_SESSION['rolUsuario'] == 'ASISTENTE') ? 'regresarMain();' : 'regresarFuncionario();'; ?>">
+            <span class="fa fa-backward"></span>&nbsp;&nbsp;Atrás
+        </button>
+
 
     </nav>
     </div>
@@ -71,7 +75,7 @@ $displayStyle = ($_SESSION['rolUsuario'] == "ASISTENTE") ? 'style="display:none;
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-xl-4 input-group mt-2">
                         <button class="btn btn-success mr-2" type="submit" onclick="mostrarTodo();"><span class="fa fa-search"></span>&nbsp&nbspMostrar todo</button>
-                        <input class="form-control" id="idPersonaHorarioOficinaQuery" type="date" placeholder="Buscar por fecha" aria-label="Buscar" autofocus>
+                        <input class="form-control" id="idPersonaHorarioOficina" type="date" placeholder="Buscar por fecha" aria-label="Buscar" autofocus>
                     </div>
                 </div>
                 <div class="row">
@@ -99,10 +103,10 @@ $displayStyle = ($_SESSION['rolUsuario'] == "ASISTENTE") ? 'style="display:none;
                 <table class="table tabled-bordered table-sm" id="tablaPersonaHorarioOficina">
                     <thead>
                         <tr>
-                            <th>Fecha</th>
-                            <th>Oficina</th>
-                            <th>Horario</th>
-                            <th>Nota</th>
+                            <th scope="col" id="fechaLbl">Fecha</th>
+                            <th scope="col" id="oficinaLbl">Oficina</th>
+                            <th scope="col" id="horarioLbl">Horario</th>
+                            <th scope="col" id="notaLbl">Nota</th>
                             <th <?php if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                                     echo 'style="display:none;"';
                                 }; {
@@ -122,7 +126,11 @@ $displayStyle = ($_SESSION['rolUsuario'] == "ASISTENTE") ? 'style="display:none;
             </div>
         </div>
     </div>
-    <!-- Gestionar  -->
 </body>
-
+<!-- Mobile Display Table -->
+<script src="../../assets/js/popupMobileDisplayTable.js"></script>
+<?php
+require '../../lib/common/popupMobileDisplayTable.php';
+?>
+<!-- Mobile Display Table -->
 </html>

@@ -16,7 +16,47 @@ $(document).ready(function () {
   document
     .getElementById("telefonoFuncionario")
     .addEventListener("keypress", soloNumeros, false);
+
+  // Mobile Display Table
+  displayLabels(isMobile);
 });
+
+// Mobile Display Table
+function displayLabels(isMobile) {
+  const cedulaFuncionarioLbl = document.getElementById("cedulaFuncionarioLbl");
+  const nombreFuncionarioLbl = document.getElementById("nombreFuncionarioLbl");
+  const direccionFuncionarioLbl = document.getElementById(
+    "direccionFuncionarioLbl"
+  );
+  const telefonoFuncionarioLbl = document.getElementById(
+    "telefonoFuncionarioLbl"
+  );
+  const cargoIdLbl = document.getElementById("cargoIdLbl");
+  const unidadIdLbl = document.getElementById("unidadIdLbl");
+  const tipoContratoLbl = document.getElementById("tipoContratoLbl");
+  const salarioBaseLbl = document.getElementById("salarioBaseLbl");
+
+  if (isMobile) {
+    // Comentar para mantener
+    // cedulaFuncionarioLbl.style.display = "none";
+    // nombreFuncionarioLbl.style.display = "none";
+    direccionFuncionarioLbl.style.display = "none";
+    telefonoFuncionarioLbl.style.display = "none";
+    cargoIdLbl.style.display = "none";
+    unidadIdLbl.style.display = "none";
+    tipoContratoLbl.style.display = "none";
+    salarioBaseLbl.style.display = "none";
+  } else {
+    // cedulaFuncionarioLbl.style.display = "table-cell";
+    // nombreFuncionarioLbl.style.display = "table-cell";
+    direccionFuncionarioLbl.style.display = "table-cell";
+    telefonoFuncionarioLbl.style.display = "table-cell";
+    cargoIdLbl.style.display = "table-cell";
+    unidadIdLbl.style.display = "table-cell";
+    tipoContratoLbl.style.display = "table-cell";
+    salarioBaseLbl.style.display = "table-cell";
+  }
+}
 
 function soloNumeros(e) {
   input = document.getElementById("telefonoFuncionario");
@@ -43,35 +83,44 @@ function Consultar() {
       }
       var html = "";
       $.each(response, function (index, data) {
+        // Mobile Display Table
         html += "<tr>";
         html += "<td>" + data.cedula + "</td>";
         html += "<td>" + data.nombre_persona + "</td>";
-        html += "<td>" + data.direccion + "</td>";
-        html += "<td>" + data.telefono + "</td>";
-        html += "<td>" + data.nombre_cargo + "</td>";
-        html += "<td>" + data.nombre_unidad + "</td>";
-        html += "<td>" + data.tipo_contrato + "</td>";
-        html += "<td>" + data.salario_base + "</td>";
-        html += "<td style='text-align: center;'>";
+        html += isMobile ? "" : "<td>" + data.direccion + "</td>";
+        html += isMobile ? "" : "<td>" + data.telefono + "</td>";
+        html += isMobile ? "" : "<td>" + data.nombre_cargo + "</td>";
+        html += isMobile ? "" : "<td>" + data.nombre_unidad + "</td>";
+        html += isMobile ? "" : "<td>" + data.tipo_contrato + "</td>";
+        html += isMobile ? "" : "<td>" + data.salario_base + "</td>";
+        html += isMobile
+          ? "<td style='text-align: right;'>"
+          : "<td style='text-align: center;'>";
         html +=
-          "<button class='btn btn-info mr-1' onclick='verHorarios(" +
+          "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verHorarios(" +
           data.id_persona +
           ");'><span class='fa fa-calendar'></span></button>";
         html +=
-          "<button class='btn btn-success' onclick='ConsultarPorId(" +
+          "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
           data.id_persona +
           ");'><span class='fa fa-edit'></span></button>";
         html +=
-          "<button style='margin-top: 3px;' class='btn btn-danger' onclick='Eliminar(" +
+          "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
           data.id_persona +
           ");'><span class='fa fa-trash'></span></button>";
+        // Mobile Display Table
+        html += isMobile
+          ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+            JSON.stringify(data) +
+            ");'><span class='fa fa-info'></span></button>"
+          : "";
         html += "</td>";
         html += "</tr>";
       });
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -95,42 +144,52 @@ function EscucharConsulta() {
           }
           var html = "";
           $.each(response, function (index, data) {
+            // Mobile Display Table
             html += "<tr>";
             html += "<td>" + data.cedula + "</td>";
             html += "<td>" + data.nombre_persona + "</td>";
-            html += "<td>" + data.direccion + "</td>";
-            html += "<td>" + data.telefono + "</td>";
-            html += "<td>" + data.nombre_cargo + "</td>";
-            html += "<td>" + data.nombre_unidad + "</td>";
-            html += "<td>" + data.tipo_contrato + "</td>";
-            html += "<td>" + data.salario_base + "</td>";
-            html += "<td style='text-align: center;'>";
+            html += isMobile ? "" : "<td>" + data.direccion + "</td>";
+            html += isMobile ? "" : "<td>" + data.telefono + "</td>";
+            html += isMobile ? "" : "<td>" + data.nombre_cargo + "</td>";
+            html += isMobile ? "" : "<td>" + data.nombre_unidad + "</td>";
+            html += isMobile ? "" : "<td>" + data.tipo_contrato + "</td>";
+            html += isMobile ? "" : "<td>" + data.salario_base + "</td>";
+            html += isMobile
+              ? "<td style='text-align: right;'>"
+              : "<td style='text-align: center;'>";
             html +=
-              "<button class='btn btn-info mr-1' onclick='verHorarios(" +
+              "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verHorarios(" +
               data.id_persona +
               ");'><span class='fa fa-calendar'></span></button>";
             html +=
-              "<button class='btn btn-success' onclick='ConsultarPorId(" +
+              "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
               data.id_persona +
               ");'><span class='fa fa-edit'></span></button>";
             html +=
-              "<button style='margin-top: 3px;' class='btn btn-danger' onclick='Eliminar(" +
+              "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
               data.id_persona +
               ");'><span class='fa fa-trash'></span></button>";
+            // Mobile Display Table
+            html += isMobile
+              ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+                JSON.stringify(data) +
+                ");'><span class='fa fa-info'></span></button>"
+              : "";
             html += "</td>";
             html += "</tr>";
           });
           document.getElementById("datos").innerHTML = html;
         })
         .fail(function (error) {
-          console.log(error);
+          console.log(error.responseText);
         });
     }
   });
 }
 
 function verHorarios(idPersona) {
-  window.location.href = "../personaHorarioOficina/personaHorarioOficina.php?idPersona=" + idPersona;
+  window.location.href =
+    "../personaHorarioOficina/personaHorarioOficina.php?idPersona=" + idPersona;
 }
 
 function listarCargo() {
@@ -143,12 +202,17 @@ function listarCargo() {
     .done(function (response) {
       var html = "";
       $.each(response, function (index, data) {
-        html += "<option>" + data.nombre_cargo + "</option>";
+        html +=
+          "<option value=" +
+          data.id_cargo +
+          ">" +
+          data.nombre_cargo +
+          "</option>";
       });
-      document.getElementById("cargoFuncionario").innerHTML = html;
+      document.getElementById("cargoId").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -162,12 +226,17 @@ function listarUnidad() {
     .done(function (response) {
       var html = "";
       $.each(response, function (index, data) {
-        html += "<option>" + data.nombre_unidad + "</option>";
+        html +=
+          "<option value=" +
+          data.id_unidad +
+          ">" +
+          data.nombre_unidad +
+          "</option>";
       });
-      document.getElementById("unidadFuncionario").innerHTML = html;
+      document.getElementById("unidadId").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -190,12 +259,13 @@ function ConsultarPorId(idFuncionario) {
           dataType: "json",
         })
           .done(function (response) {
+            console.log(response);
             setValue("cedulaFuncionario", response.cedula);
             setValue("nombreFuncionario", response.nombre_persona);
             setValue("direccionFuncionario", response.direccion);
             setValue("telefonoFuncionario", response.telefono);
-            setValue("cargoFuncionario", response.nombre_cargo);
-            setValue("unidadFuncionario", response.nombre_unidad);
+            setValue("cargoId", response.cargo_id);
+            setValue("unidadId", response.unidad_id);
             setValue("tipoContrato", response.tipo_contrato);
             setValue("salarioBase", response.salario_base);
             setValue("idFuncionario", response.id_persona);
@@ -203,7 +273,7 @@ function ConsultarPorId(idFuncionario) {
             BloquearBotones(false);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -229,7 +299,7 @@ function Guardar() {
         Consultar();
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -258,7 +328,7 @@ function Modificar() {
         Consultar();
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -313,7 +383,7 @@ function Eliminar(idFuncionario) {
                 Consultar();
               })
               .fail(function (error) {
-                console.log(error);
+                console.log(error.responseText);
               });
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -322,7 +392,7 @@ function Eliminar(idFuncionario) {
       Limpiar();
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -331,18 +401,18 @@ function Validar() {
   nombreFuncionario = getValue("nombreFuncionario");
   direccionFuncionario = getValue("direccionFuncionario");
   telefonoFuncionario = getValue("telefonoFuncionario");
-  cargoFuncionario = getValue("cargoFuncionario");
-  unidadFuncionario = getValue("unidadFuncionario");
-  tipoContrato = getValue("unidadFuncionario");
-  salarioBase = getValue("unidadFuncionario");
+  cargoId = getValue("cargoId");
+  unidadId = getValue("unidadId");
+  tipoContrato = getValue("tipoContrato");
+  salarioBase = getValue("salarioBase");
 
   if (
     !cedulaFuncionario ||
     !nombreFuncionario ||
     !direccionFuncionario ||
     !telefonoFuncionario ||
-    !cargoFuncionario ||
-    !unidadFuncionario ||
+    !cargoId ||
+    !unidadId ||
     !tipoContrato ||
     !salarioBase
   ) {
@@ -358,8 +428,8 @@ function retornarDatos(accion) {
     nombreFuncionario: getValue("nombreFuncionario").toUpperCase(),
     direccionFuncionario: getValue("direccionFuncionario").toUpperCase(),
     telefonoFuncionario: getValue("telefonoFuncionario"),
-    cargoFuncionario: getValue("cargoFuncionario"),
-    unidadFuncionario: getValue("unidadFuncionario"),
+    cargoId: getValue("cargoId"),
+    unidadId: getValue("unidadId"),
     tipoContrato: getValue("tipoContrato"),
     salarioBase: getValue("salarioBase"),
     idFuncionario: getValue("idFuncionario"),
@@ -373,9 +443,8 @@ function Limpiar() {
   clearInput("nombreFuncionario");
   clearInput("direccionFuncionario");
   clearInput("telefonoFuncionario");
-  clearInput("cargoFuncionario");
-  clearInput("unidadFuncionario");
-  clearInput("tipoContrato");
+  clearInput("cargoId");
+  clearInput("unidadId");
   clearInput("salarioBase");
   listarCargo();
   listarUnidad();
@@ -400,6 +469,7 @@ function BloquearBotones(guardar) {
 }
 
 function mostrarTodo() {
+  Limpiar();
   Consultar();
   clearInput("idFuncionario");
 }

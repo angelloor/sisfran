@@ -10,7 +10,31 @@ $(document).ready(function () {
   EscucharConsulta();
   listarFuncionario();
   listarRoles();
+
+  // Mobile Display Table
+  displayLabels(isMobile);
 });
+
+// Mobile Display Table
+function displayLabels(isMobile) {
+  const personaIdLbl = document.getElementById("personaIdLbl");
+  const nombreLbl = document.getElementById("nombreLbl");
+  const claveLbl = document.getElementById("claveLbl");
+  const rolUsuarioIdLbl = document.getElementById("rolUsuarioIdLbl");
+
+  if (isMobile) {
+    // Comentar para mantener
+    personaIdLbl.style.display = "none";
+    // nombreLbl.style.display = "none";
+    claveLbl.style.display = "none";
+    rolUsuarioIdLbl.style.display = "none";
+  } else {
+    personaIdLbl.style.display = "table-cell";
+    // nombreLbl.style.display = "table-cell";
+    claveLbl.style.display = "table-cell";
+    rolUsuarioIdLbl.style.display = "table-cell";
+  }
+}
 
 function Consultar() {
   registrosTotales = false;
@@ -30,27 +54,33 @@ function Consultar() {
       var html = "";
       $.each(response, function (index, data) {
         html += "<tr>";
-        html += "<td>" + data.nombre_persona + "</td>";
+        html += isMobile ? "" : "<td>" + data.nombre_persona + "</td>";
         html += "<td>" + data.nombre_usuario + "</td>";
-        html +=
-          "<td style='-webkit-text-security: disc;'>" + data.clave + "</td>";
-        html += "<td>" + data.nombre_rol_usuario + "</td>";
+        html += isMobile
+          ? ""
+          : "<td style='-webkit-text-security: disc;'>" + data.clave + "</td>";
+        html += isMobile ? "" : "<td>" + data.nombre_rol_usuario + "</td>";
         html += "<td style='text-align: right;'>";
         html +=
-          "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+          "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
           data.id_usuario +
           ");'><span class='fa fa-edit'></span></button>";
         html +=
-          "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+          "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
           data.id_usuario +
           ");'><span class='fa fa-trash'></span></button>";
+        html += isMobile
+          ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+            JSON.stringify(data) +
+            ");'><span class='fa fa-info'></span></button>"
+          : "";
         html += "</td>";
         html += "</tr>";
       });
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -75,29 +105,35 @@ function EscucharConsulta() {
           var html = "";
           $.each(response, function (index, data) {
             html += "<tr>";
-            html += "<td>" + data.nombre_persona + "</td>";
+            html += isMobile ? "" : "<td>" + data.nombre_persona + "</td>";
             html += "<td>" + data.nombre_usuario + "</td>";
-            html +=
-              "<td style='-webkit-text-security: disc;'>" +
-              data.clave +
-              "</td>";
-            html += "<td>" + data.nombre_rol_usuario + "</td>";
+            html += isMobile
+              ? ""
+              : "<td style='-webkit-text-security: disc;'>" +
+                data.clave +
+                "</td>";
+            html += isMobile ? "" : "<td>" + data.nombre_rol_usuario + "</td>";
             html += "<td style='text-align: right;'>";
             html +=
-              "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+              "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
               data.id_usuario +
               ");'><span class='fa fa-edit'></span></button>";
             html +=
-              "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+              "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
               data.id_usuario +
               ");'><span class='fa fa-trash'></span></button>";
+            html += isMobile
+              ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+                JSON.stringify(data) +
+                ");'><span class='fa fa-info'></span></button>"
+              : "";
             html += "</td>";
             html += "</tr>";
           });
           document.getElementById("datos").innerHTML = html;
         })
         .fail(function (error) {
-          console.log(error);
+          console.log(error.responseText);
         });
     }
   });
@@ -114,16 +150,16 @@ function listarFuncionario() {
       var html = "";
       $.each(response, function (index, data) {
         html +=
-        "<option value=" +
-        data.id_persona +
-        ">" +
-        data.nombre_persona +
-        "</option>";
+          "<option value=" +
+          data.id_persona +
+          ">" +
+          data.nombre_persona +
+          "</option>";
       });
       document.getElementById("personaId").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -137,12 +173,17 @@ function listarRoles() {
     .done(function (response) {
       var html = "";
       $.each(response, function (index, data) {
-        html += "<option>" + data.nombre_rol_usuario + "</option>";
+        html +=
+          "<option value=" +
+          data.id_rol_usuario +
+          ">" +
+          data.nombre_rol_usuario +
+          "</option>";
       });
-      document.getElementById("rol").innerHTML = html;
+      document.getElementById("rolUsuarioId").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -167,23 +208,26 @@ function ConsultarPorId(idUsuario) {
           .done(function (response) {
             setValue("personaId", response.persona_id);
             setValue("nombre", response.nombre_usuario);
-            setValue("clave", response.clave);
-            setValue("rol", response.nombre_rol_usuario);
+
+            // contraseña temporal
+            // setValue("clave", "12345");
+
+            setValue("rolUsuarioId", response.rol_usuario_id);
             setValue("idUsuario", response.id_usuario);
 
             if (response.nombre_rol_usuario == "ADMINISTRADOR") {
-              document.getElementById("rol").disabled = true;
+              disabledInput("rolUsuarioId");
             }
             BloquearBotones(false);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
       }
     });
-  document.getElementById("rol").disabled = false;
+  enabledInput("rolUsuarioId");
 }
 
 function Guardar() {
@@ -242,7 +286,7 @@ function Modificar() {
       "warning"
     );
   }
-  document.getElementById("rol").disabled = false;
+  enabledInput("rolUsuarioId");
 }
 
 function Eliminar(idUsuario) {
@@ -276,7 +320,7 @@ function Eliminar(idUsuario) {
             Consultar();
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -289,9 +333,9 @@ function Validar() {
   personaId = getValue("personaId");
   nombre = getValue("nombre");
   clave = getValue("clave");
-  rol = getValue("rol");
+  rolUsuarioId = getValue("rolUsuarioId");
 
-  if (!personaId || !nombre || !clave || !rol) {
+  if (!personaId || !nombre || !clave || !rolUsuarioId) {
     return false;
   }
 
@@ -303,7 +347,7 @@ function retornarDatos(accion) {
     personaId: getValue("personaId"),
     nombre: getValue("nombre"),
     clave: getValue("clave"),
-    rol: getValue("rol"),
+    rolUsuarioId: getValue("rolUsuarioId"),
     accion: accion,
     idUsuario: getValue("idUsuario"),
   };
@@ -313,7 +357,7 @@ function Limpiar() {
   clearInput("idUsuario");
   clearInput("nombre");
   clearInput("clave");
-  clearInput("rol");
+  clearInput("rolUsuarioId");
   listarRoles();
   BloquearBotones(true);
 }
@@ -322,7 +366,7 @@ function Cancelar() {
   BloquearBotones(false);
   Limpiar();
   listarFuncionario();
-  document.getElementById("rol").disabled = false;
+  enabledInput("rolUsuarioId");
 }
 
 function BloquearBotones(guardar) {

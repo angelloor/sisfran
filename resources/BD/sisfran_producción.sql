@@ -9,7 +9,7 @@
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET time_zone = '-05:00';
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -753,8 +753,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`ID_USUARIO`, `PERSONA_ID`, `NOMBRE_USUARIO`, `CLAVE`, `ROL_USUARIO_ID`) VALUES
-(1, 1, 'ADMIN', 'sysadmin24.', 1),
-(2, 3, 'CARAUZ', 'CARAUZ', 5);
+(1, 1, 'ADMIN', '$2y$10$/s.Qe.gT8mZVDeFTbQLTg.VFNkdUm8FE3MwoaHZxh.mGR1HEgbq7q', 1),
+(2, 3, 'CARAUZ', '$2y$10$8lFL1UlcUsnyoDgIUJ9o3eaofrwHhkqdN7BX/d.fe8guic71frZh6', 5);
 
 --
 -- Índices para tablas volcadas

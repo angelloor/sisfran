@@ -34,14 +34,15 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
     <!-- SCRIPTS -->
     <script src="../../assets/js/all.min.js"></script>
     <script src="./historico.js"></script>
-    <script src="../../lib/common/utils.js"></script>
+    <script src="../../assets/js/utils.js"></script>
     <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/popupMobileDisplayTable.css">
 </head>
 
 <body>
     <!-- HEADER -->
     <?php
-  require '../../lib/common/header.php';
+    require '../../lib/common/header.php';
     ?>
     <!-- HEADER -->
     <!-- BREADCRUMB -->
@@ -89,12 +90,12 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                 <table class="table tabled-bordered table-sm" id="tablaUsuario">
                     <thead>
                         <tr>
-                            <th>Código</th>
-                            <th>Nombre</th>
-                            <th>Marca</th>
-                            <th>Modelo</th>
-                            <th>Serie</th>
-                            <th>Fecha de eliminación</th>
+                            <th scope="col" id="codigoLbl">Código</th>
+                            <th scope="col" id="nombreActivoLbl">Nombre</th>
+                            <th scope="col" id="nombreMarcaLbl">Marca</th>
+                            <th scope="col" id="modeloLbl">Modelo</th>
+                            <th scope="col" id="serieLbl">Serie</th>
+                            <th scope="col" id="fechaHistoricoLbl">Fecha de eliminación</th>
                             <th class="th-text-align-right">Acciones</th>
                         </tr>
                     </thead>
@@ -110,6 +111,10 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
             </div>
         </div>
     </div>
-    <!-- Gestionar  -->
-
+    <!-- Mobile Display Table -->
+    <script src="../../assets/js/popupMobileDisplayTable.js"></script>
+    <?php
+    require '../../lib/common/popupMobileDisplayTable.php';
+    ?>
+    <!-- Mobile Display Table -->
 </html>

@@ -6,7 +6,39 @@ $(document).ready(function () {
   Consultar();
   EscucharConsulta();
   BloquearBotones(true);
+
+  // Mobile Display Table
+  displayLabels(isMobile);
 });
+
+// Mobile Display Table
+function displayLabels(isMobile) {
+  const idOficinaLbl = document.getElementById("idOficinaLbl");
+  const nombreOficinaLbl = document.getElementById("nombreOficinaLbl");
+  const descripcionOficinaLbl = document.getElementById(
+    "descripcionOficinaLbl"
+  );
+  const latitudOficinaLbl = document.getElementById("latitudOficinaLbl");
+  const longitudOficinaLbl = document.getElementById("longitudOficinaLbl");
+  const radioValidoMetrosLbl = document.getElementById("radioValidoMetrosLbl");
+
+  if (isMobile) {
+    // Comentar para mantener
+    // idOficinaLbl.style.display = "none";
+    // nombreOficinaLbl.style.display = "none";
+    descripcionOficinaLbl.style.display = "none";
+    latitudOficinaLbl.style.display = "none";
+    longitudOficinaLbl.style.display = "none";
+    radioValidoMetrosLbl.style.display = "none";
+  } else {
+    // idOficinaLbl.style.display = "table-cell";
+    // nombreOficinaLbl.style.display = "table-cell";
+    descripcionOficinaLbl.style.display = "table-cell";
+    latitudOficinaLbl.style.display = "table-cell";
+    longitudOficinaLbl.style.display = "table-cell";
+    radioValidoMetrosLbl.style.display = "table-cell";
+  }
+}
 
 function Consultar() {
   registrosTotales = false;
@@ -28,30 +60,35 @@ function Consultar() {
         html += "<tr>";
         html += "<td>" + data.id_oficina + "</td>";
         html += "<td>" + data.nombre_oficina + "</td>";
-        html += "<td>" + data.descripcion_oficina + "</td>";
-        html += "<td>" + data.latitud_oficina + "</td>";
-        html += "<td>" + data.longitud_oficina + "</td>";
-        html += "<td>" + data.radio_valido_metros + "</td>";
+        html += isMobile ? "" : "<td>" + data.descripcion_oficina + "</td>";
+        html += isMobile ? "" : "<td>" + data.latitud_oficina + "</td>";
+        html += isMobile ? "" : "<td>" + data.longitud_oficina + "</td>";
+        html += isMobile ? "" : "<td>" + data.radio_valido_metros + "</td>";
         html += "<td style='text-align: right;'>";
         html +=
-          "<button class='btn btn-info mr-1' onclick='verHorarios(" +
+          "<button class='btn btn-info mr-1 min-btn-action' onclick='verHorarios(" +
           data.id_oficina +
           ");'><span class='fa fa-calendar'></span></button>";
         html +=
-          "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+          "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
           data.id_oficina +
           ");'><span class='fa fa-edit'></span></button>";
         html +=
-          "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+          "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
           data.id_oficina +
           ");'><span class='fa fa-trash'></span></button>";
+        html += isMobile
+          ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+            JSON.stringify(data) +
+            ");'><span class='fa fa-info'></span></button>"
+          : "";
         html += "</td>";
         html += "</tr>";
       });
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -78,30 +115,35 @@ function EscucharConsulta() {
             html += "<tr>";
             html += "<td>" + data.id_oficina + "</td>";
             html += "<td>" + data.nombre_oficina + "</td>";
-            html += "<td>" + data.descripcion_oficina + "</td>";
-            html += "<td>" + data.latitud_oficina + "</td>";
-            html += "<td>" + data.longitud_oficina + "</td>";
-            html += "<td>" + data.radio_valido_metros + "</td>";
+            html += isMobile ? "" : "<td>" + data.descripcion_oficina + "</td>";
+            html += isMobile ? "" : "<td>" + data.latitud_oficina + "</td>";
+            html += isMobile ? "" : "<td>" + data.longitud_oficina + "</td>";
+            html += isMobile ? "" : "<td>" + data.radio_valido_metros + "</td>";
             html += "<td style='text-align: right;'>";
             html +=
-              "<button class='btn btn-info mr-1' onclick='verHorarios(" +
+              "<button class='btn btn-info mr-1 min-btn-action' onclick='verHorarios(" +
               data.id_oficina +
               ");'><span class='fa fa-calendar'></span></button>";
             html +=
-              "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+              "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
               data.id_oficina +
               ");'><span class='fa fa-edit'></span></button>";
             html +=
-              "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+              "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
               data.id_oficina +
               ");'><span class='fa fa-trash'></span></button>";
+            html += isMobile
+              ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+                JSON.stringify(data) +
+                ");'><span class='fa fa-info'></span></button>"
+              : "";
             html += "</td>";
             html += "</tr>";
           });
           document.getElementById("datos").innerHTML = html;
         })
         .fail(function (error) {
-          console.log(error);
+          console.log(error.responseText);
         });
     }
   });
@@ -144,7 +186,7 @@ function ConsultarPorId(idOficina) {
             BloquearBotones(false);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -153,7 +195,8 @@ function ConsultarPorId(idOficina) {
 }
 
 function verHorarios(idOficina) {
-  window.location.href = "horarioOficina.php?idOficina=" + idOficina;
+  window.location.href =
+    "../horarioOficina/horarioOficina.php?idOficina=" + idOficina;
 }
 
 function Guardar() {
@@ -174,7 +217,7 @@ function Guardar() {
         Consultar();
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -203,7 +246,7 @@ function Modificar() {
         Consultar();
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -256,7 +299,7 @@ function Eliminar(idOficina) {
                   Consultar();
                 })
                 .fail(function (error) {
-                  console.log(error);
+                  console.log(error.responseText);
                 });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
               swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -295,7 +338,7 @@ function Eliminar(idOficina) {
                   Consultar();
                 })
                 .fail(function (error) {
-                  console.log(error);
+                  console.log(error.responseText);
                 });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
               swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -306,7 +349,7 @@ function Eliminar(idOficina) {
       Limpiar();
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 

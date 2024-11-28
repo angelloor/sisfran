@@ -1,0 +1,149 @@
+/* POPUP */
+
+.overlay {
+	background: rgba(0, 0, 0, 0.3);
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	visibility: hidden;
+	overflow-y: auto;
+}	
+
+.overlay.active {
+	visibility: visible;
+}
+
+.popup {
+	background: #23376f;
+	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+	font-family: 'Montserrat', sans-serif;
+	padding: 20px;
+	text-align: center;
+	width: 90%;
+	transition: 0.3s ease all;
+	transform: scale(0.7);
+	opacity: 0;
+	border-radius: 5px;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.popup .btn-cerrar-popup {
+	font-size: 25px;
+	line-height: 16px;
+	display: block;
+	text-align: right;
+	float: right;
+	padding: 3px;
+	transition: 0.3s ease all;
+	color: white;
+}
+
+.popup .btn-cerrar-popup:hover {
+	color: #ffdb00;
+}
+
+.popup h3 {
+	font-size: 36px;
+	font-weight: 600;
+	margin-bottom: 10px;
+	opacity: 0;
+	color: white;
+}
+
+.popup h4 {
+	font-size: 18px;
+	font-weight: 300;
+	opacity: 0;
+	color: white;
+}
+
+.popup .form .contenedor-inputs {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	opacity: 0;
+}
+
+.popup .form .contenedor-inputs .containerRow {
+	width: 90%;
+	background-color: white;
+	border-radius: 5px;
+	margin-bottom: 5px;
+	font-size: 15px;
+	text-align: center;
+}
+
+.popup .form .contenedor-inputs .containerRow .key {
+	width: 100%;
+	background-color: #27428b;
+	color: white;
+	font-weight: 700;
+	border-radius: 4px 4px 0px 0px;
+}
+
+.popup .form .contenedor-inputs .containerRow .value {
+	width: 100%;
+	background-color: white;
+	font-weight: 300;
+	border-radius: 5px;
+	word-wrap: break-word; /* Compatibilidad antigua */
+  	overflow-wrap: break-word; /* Recomendado */
+}
+
+
+/* ANIMACIONES */
+
+.popup.active {
+	transform: scale(1);
+	opacity: 1;
+}
+
+.popup.active h3 {
+	animation: entradaTitulo 0s ease 0s forwards;
+}
+
+.popup.active h4 {
+	animation: entradaSubtitulo 0s ease 0s forwards;
+}
+
+.popup.active .contenedor-inputs {
+	animation: entradaInputs 0s linear 0s forwards;
+}
+
+@keyframes entradaTitulo {
+	from {
+		opacity: 0;
+		transform: translateY(-25px);
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes entradaSubtitulo {
+	from {
+		opacity: 0;
+		transform: translateY(25px);
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes entradaInputs {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

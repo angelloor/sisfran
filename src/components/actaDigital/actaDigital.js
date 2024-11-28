@@ -100,7 +100,7 @@ function Generar() {
       }
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -112,14 +112,14 @@ function validarCheckbox(idCheck) {
   function validar() {
     var checked = checkbox.checked;
     if (checked) {
-      document.getElementById("usuario" + idCheck.id).disabled = false;
-      document.getElementById("clave" + idCheck.id).disabled = false;
+      enabledInput("usuario" + idCheck.id);
+      enabledInput("clave" + idCheck.id);
       document.getElementById("usuario" + idCheck.id).focus();
     } else {
       clearInput("usuario" + idCheck.id);
       clearInput("clave" + idCheck.id);
-      document.getElementById("usuario" + idCheck.id).disabled = true;
-      document.getElementById("clave" + idCheck.id).disabled = true;
+      disabledInput("usuario" + idCheck.id);
+      disabledInput("clave" + idCheck.id);
     }
   }
 }
@@ -165,7 +165,7 @@ function cargarSistemas() {
       document.getElementById("sistemas").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -189,6 +189,6 @@ function listarFuncionario() {
       document.getElementById("idPersona").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }

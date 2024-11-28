@@ -37,14 +37,15 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
     <!-- SCRIPTS -->
     <script src="../../assets/js/all.min.js"></script>
     <script src="./activo.js"></script>
-    <script src="../../lib/common/utils.js"></script>
+    <script src="../../assets/js/utils.js"></script>
     <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/popupMobileDisplayTable.css">
 </head>
 
 <body>
     <!-- HEADER -->
     <?php
-  require '../../lib/common/header.php';
+    require '../../lib/common/header.php';
     ?>
     <!-- HEADER -->
     <!-- BREADCRUMB -->
@@ -170,15 +171,15 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                 <table class="table tabled-bordered table-sm" id="tablaActivo">
                     <thead>
                         <tr>
-                            <th scope="col">Código</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Categoría</th>
-                            <th scope="col">Característica</th>
-                            <th scope="col">Marca</th>
-                            <th scope="col">Modelo</th>
-                            <th scope="col">Serie</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">CI</th>
+                            <th scope="col" id="codigoLbl">Código</th>
+                            <th scope="col" id="nombreLbl">Nombre</th>
+                            <th scope="col" id="categoriaIdLbl">Categoría</th>
+                            <th scope="col" id="caracteristicaLbl">Característica</th>
+                            <th scope="col" id="marcaIdLbl">Marca</th>
+                            <th scope="col" id="modeloLbl">Modelo</th>
+                            <th scope="col" id="serieLbl">Serie</th>
+                            <th scope="col" id="estadoIdLbl">Estado</th>
+                            <th scope="col" id="comprobacionInventarioLbl">CI</th>
                             <th scope="col" class="btn-center-objet">Acciones</th>
                         </tr>
                     </thead>
@@ -195,7 +196,11 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
             </div>
         </div>
     </div>
-    <!-- Gestionar  -->
 </body>
-
+<!-- Mobile Display Table -->
+<script src="../../assets/js/popupMobileDisplayTable.js"></script>
+<?php
+require '../../lib/common/popupMobileDisplayTable.php';
+?>
+<!-- Mobile Display Table -->
 </html>

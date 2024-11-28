@@ -26,16 +26,17 @@ if (!$_SESSION['user']) {
   <script src="../../assets/js/sweetalert2.min.js"></script>
   <!-- SCRIPTS -->
   <script src="../../assets/js/all.min.js"></script>
-  <script src="../../lib/common/utils.js"></script>
+  <script src="../../assets/js/utils.js"></script>
   <script src="./reporteHoras.js"></script>
   <link rel="stylesheet" href="../../assets/css/main.css">
   <link rel="stylesheet" href="../../assets/css/popup.css">
+  <link rel="stylesheet" href="../../assets/css/popupMobileDisplayTable.css">
 </head>
 
 <body style="height: 100vh;">
   <!-- HEADER -->
   <?php
-require '../../lib/common/header.php';
+  require '../../lib/common/header.php';
   ?>
   <!-- HEADER -->
   <div class="container-fluid text-center">
@@ -89,13 +90,14 @@ require '../../lib/common/header.php';
         <table class="table tabled-bordered table-sm" id="tablaActivo">
           <thead>
             <tr>
-              <th>Funcionario</th>
-              <th>Oficina</th>
-              <th>Fecha Entrada</th>
-              <th>Hora Entrada</th>
-              <th>Fecha Salida</th>
-              <th>Hora Salida</th>
-              <th>Horas Jornada</th>
+              <th scope="col" id="nombrePersonaLbl">Funcionario</th>
+              <th scope="col" id="nombreOficinaLbl">Oficina</th>
+              <th scope="col" id="fechaEAsistenciaLbl">Fecha Entrada</th>
+              <th scope="col" id="horaEAsistenciaLbl">Hora Entrada</th>
+              <th scope="col" id="fechaSAsistenciaLbl">Fecha Salida</th>
+              <th scope="col" id="horaSAsistenciaLbl">Hora Salida</th>
+              <th scope="col" id="tiempoFinalLbl">Horas Jornada</th>
+              <th class="th-text-align-right">Acciones</th>
             </tr>
           </thead>
           <tbody id="datos">
@@ -110,5 +112,10 @@ require '../../lib/common/header.php';
     </div>
   </div>
 </body>
-
+<!-- Mobile Display Table -->
+<script src="../../assets/js/popupMobileDisplayTable.js"></script>
+<?php
+require '../../lib/common/popupMobileDisplayTable.php';
+?>
+<!-- Mobile Display Table -->
 </html>

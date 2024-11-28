@@ -5,6 +5,7 @@ var urlControllerFuncionario = "../funcionario/funcionario.controller.php";
 let idPersona;
 let rolUsuario;
 let person;
+let idPersonaHorarioOficinaModify;
 
 let timeoutID;
 
@@ -28,7 +29,31 @@ $(document).ready(function () {
     let idOficina = this.value;
     listarHorarioOficina(idOficina);
   });
+
+  // Mobile Display Table
+  displayLabels(isMobile);
 });
+
+// Mobile Display Table
+function displayLabels(isMobile) {
+  const fechaLbl = document.getElementById("fechaLbl");
+  const oficinaLbl = document.getElementById("oficinaLbl");
+  const horarioLbl = document.getElementById("horarioLbl");
+  const notaLbl = document.getElementById("notaLbl");
+
+  if (isMobile) {
+    // Comentar para mantener
+    // fechaLbl.style.display = "none";
+    // oficinaLbl.style.display = "none";
+    horarioLbl.style.display = "none";
+    notaLbl.style.display = "none";
+  } else {
+    // fechaLbl.style.display = "table-cell";
+    // oficinaLbl.style.display = "table-cell";
+    horarioLbl.style.display = "table-cell";
+    notaLbl.style.display = "table-cell";
+  }
+}
 
 function ConsultarPersonPorId(idPersona) {
   $.ajax({
@@ -43,7 +68,7 @@ function ConsultarPersonPorId(idPersona) {
         response.nombre_persona;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -66,19 +91,31 @@ function ConsultarPorIdPerson(idPersona) {
       $.each(response, function (index, data) {
         html += "<tr>";
         html +=
-          "<td>" + formatearFecha(data.fecha_persona_horario_oficina) + "</td>";
+          "<td>" +
+          ajustarFecha(
+            data.fecha_persona_horario_oficina
+          ).toLocaleDateString() +
+          "</td>";
         html += "<td>" + data.nombre_oficina + "</td>";
-        html += "<td>" + data.hora_entrada + " - " + data.hora_salida + "</td>";
-        html += "<td>" + data.nota_persona_horario_oficina + "</td>";
-
+        html += isMobile
+          ? ""
+          : "<td>" + data.hora_entrada + " - " + data.hora_salida + "</td>";
+        html += isMobile
+          ? ""
+          : "<td>" + data.nota_persona_horario_oficina + "</td>";
+        html += "<td style='text-align: right;'>";
+        html += isMobile
+          ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+            JSON.stringify(data) +
+            ");'><span class='fa fa-info'></span></button>"
+          : "";
         if (rolUsuario != "ASISTENTE") {
-          html += "<td style='text-align: right;'>";
           html +=
-            "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+            "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
             data.id_persona_horario_oficina +
             ");'><span class='fa fa-edit'></span></button>";
           html +=
-            "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+            "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
             data.id_persona_horario_oficina +
             ");'><span class='fa fa-trash'></span></button>";
           html += "</td>";
@@ -88,7 +125,7 @@ function ConsultarPorIdPerson(idPersona) {
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -106,12 +143,16 @@ function listarOficina() {
           listarHorarioOficina(data.id_oficina);
         }
         html +=
-          "<option value=" + data.id_oficina + ">" + data.nombre_oficina + "</option>";
+          "<option value=" +
+          data.id_oficina +
+          ">" +
+          data.nombre_oficina +
+          "</option>";
       });
       document.getElementById("idOficina").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -137,12 +178,11 @@ function listarHorarioOficina(idOficina) {
       document.getElementById("idHorarioOficina").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
 function Guardar() {
-  console.log(retornarDatos("GUARDAR"));
   if (Validar()) {
     $.ajax({
       url: urlController,
@@ -160,7 +200,7 @@ function Guardar() {
         ConsultarPorIdPerson(idPersona);
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -193,10 +233,8 @@ function ConsultarPorId(idPersonaHorarioOficina) {
           dataType: "json",
         })
           .done(function (response) {
-            setValue(
-              "idPersonaHorarioOficina",
-              response.id_persona_horario_oficina
-            );
+            // establecer el id a editar
+            idPersonaHorarioOficinaModify = response.id_persona_horario_oficina;
             setValue(
               "fechaPersonaHorarioOficina",
               response.fecha_persona_horario_oficina
@@ -210,13 +248,13 @@ function ConsultarPorId(idPersonaHorarioOficina) {
             listarHorarioOficina(response.id_oficina);
 
             timeoutID = setTimeout(function () {
-              setValue("idHorarioOficina");
-            }, 1000);
+              setValue("idHorarioOficina", response.horario_oficina_id);
+            }, 10);
 
             BloquearBotones(false);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -244,7 +282,7 @@ function Modificar() {
         ConsultarPorIdPerson(idPersona);
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -256,115 +294,52 @@ function Modificar() {
 }
 
 function Eliminar(idPersonaHorarioOficina) {
-  var registros = 0;
-
-  $.ajax({
-    url: urlController,
-    data: {
-      id_horario_oficina: idPersonaHorarioOficina,
-      accion: "CONSULTAR_REGISTROS",
-    },
-    type: "POST",
-    dataType: "json",
-  })
-    .done(function (response) {
-      registros = response.registros;
-      if (registros == 0) {
-        swalWithBootstrapButtons
-          .fire({
-            title: "¿Estas seguro de eliminar la oficina?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Si",
-            cancelButtonText: "Cancelar",
-            reverseButtons: true,
-          })
-          .then((result) => {
-            if (result.isConfirmed) {
-              $.ajax({
-                url: urlController,
-                data: {
-                  id_horario_oficina: idPersonaHorarioOficina,
-                  accion: "ELIMINAR",
-                },
-                type: "POST",
-                dataType: "json",
-              })
-                .done(function (response) {
-                  if (response == "OK") {
-                    swalWithBootstrapButtons.fire(
-                      "",
-                      "Registro eliminado",
-                      "success"
-                    );
-                  } else {
-                    swalWithBootstrapButtons.fire("", response, "error");
-                  }
-                  ConsultarPorIdPerson(idPersona);
-                })
-                .fail(function (error) {
-                  console.log(error);
-                });
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-              swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
-            }
-          });
-      } else {
-        swalWithBootstrapButtons
-          .fire({
-            title:
-              "¿Estas seguro de eliminar la oficina? Contiene registros en las tablas asociadas",
-            text: "Nota: no es recomendable, se perderán todos los registros que se encuentren asociados a esta oficina",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Si",
-            cancelButtonText: "Cancelar",
-            reverseButtons: true,
-          })
-          .then((result) => {
-            if (result.isConfirmed) {
-              $.ajax({
-                url: urlController,
-                data: {
-                  id_horario_oficina: idPersonaHorarioOficina,
-                  accion: "ELIMINAR",
-                },
-                type: "POST",
-                dataType: "json",
-              })
-                .done(function (response) {
-                  if (response == "OK") {
-                    swalWithBootstrapButtons.fire(
-                      "",
-                      "Registro eliminado",
-                      "success"
-                    );
-                  } else {
-                    swalWithBootstrapButtons.fire("", response, "error");
-                  }
-                  ConsultarPorIdPerson(idPersona);
-                })
-                .fail(function (error) {
-                  console.log(error);
-                });
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-              swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
-            }
-          });
-      }
-
-      Limpiar();
+  swalWithBootstrapButtons
+    .fire({
+      title: "¿Estas seguro de eliminar la oficina?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Si",
+      cancelButtonText: "Cancelar",
+      reverseButtons: true,
     })
-    .fail(function (error) {
-      console.log(error);
+    .then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: urlController,
+          data: {
+            id_persona_horario_oficina: idPersonaHorarioOficina,
+            accion: "ELIMINAR",
+          },
+          type: "POST",
+          dataType: "json",
+        })
+          .done(function (response) {
+            if (response == "OK") {
+              swalWithBootstrapButtons.fire(
+                "",
+                "Registro eliminado",
+                "success"
+              );
+            } else {
+              swalWithBootstrapButtons.fire("", response, "error");
+            }
+            ConsultarPorIdPerson(idPersona);
+          })
+          .fail(function (error) {
+            console.log(error.responseText);
+          });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
+      }
     });
 }
 
 function EscucharConsulta() {
   registrosTotales = false;
-  $("#idPersonaHorarioOficinaQuery").change(function () {
-    if ($("#idPersonaHorarioOficinaQuery").val()) {
-      let fecha = $("#idPersonaHorarioOficinaQuery").val();
+  $("#idPersonaHorarioOficina").change(function () {
+    if ($("#idPersonaHorarioOficina").val()) {
+      let fecha = $("#idPersonaHorarioOficina").val();
       $.ajax({
         data: {
           id_persona: idPersona,
@@ -387,33 +362,40 @@ function EscucharConsulta() {
             html += "<tr>";
             html +=
               "<td>" +
-              formatearFecha(data.fecha_persona_horario_oficina) +
+              ajustarFecha(
+                data.fecha_persona_horario_oficina
+              ).toLocaleDateString() +
               "</td>";
             html += "<td>" + data.nombre_oficina + "</td>";
-            html +=
-              "<td>" + data.hora_entrada + " - " + data.hora_salida + "</td>";
-            html += "<td>" + data.nota_persona_horario_oficina + "</td>";
-
+            html += isMobile
+              ? ""
+              : "<td>" + data.hora_entrada + " - " + data.hora_salida + "</td>";
+            html += isMobile
+              ? ""
+              : "<td>" + data.nota_persona_horario_oficina + "</td>";
+            html += "<td style='text-align: right;'>";
+            html += isMobile
+              ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+                JSON.stringify(data) +
+                ");'><span class='fa fa-info'></span></button>"
+              : "";
             if (rolUsuario != "ASISTENTE") {
-              html += "<td style='text-align: right;'>";
               html +=
-                "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+                "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
                 data.id_persona_horario_oficina +
                 ");'><span class='fa fa-edit'></span></button>";
               html +=
-                "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+                "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
                 data.id_persona_horario_oficina +
                 ");'><span class='fa fa-trash'></span></button>";
               html += "</td>";
             }
             html += "</tr>";
-
-            html += "</tr>";
           });
           document.getElementById("datos").innerHTML = html;
         })
         .fail(function (error) {
-          console.log(error);
+          console.log(error.responseText);
         });
     }
   });
@@ -439,7 +421,7 @@ function retornarDatos(accion) {
     horario_oficina_id: getValue("idHorarioOficina"),
     nota_persona_horario_oficina: getValue("notaPersonaHorarioOficina"),
     accion: accion,
-    id_persona_horario_oficina: getValue("idPersonaHorarioOficina"),
+    id_persona_horario_oficina: idPersonaHorarioOficinaModify,
   };
 }
 
@@ -486,16 +468,6 @@ function regresarFuncionario() {
   window.location.href = "../funcionario/funcionario.php";
 }
 
-function formatearFecha(fechaISO) {
-  const fecha = new Date(fechaISO);
-  const opciones = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  const fechaFormateada = new Intl.DateTimeFormat("es-ES", opciones).format(
-    fecha
-  );
-  return fechaFormateada;
+function regresarMain() {
+  window.location.href = "../main/main.php";
 }

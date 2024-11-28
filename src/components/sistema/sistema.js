@@ -11,7 +11,25 @@ $(document).ready(function () {
     letras = ta.val().replace(/ /g, "");
     ta.val(letras);
   });
+
+  // Mobile Display Table
+  displayLabels(isMobile);
 });
+
+// Mobile Display Table
+function displayLabels(isMobile) {
+  const nombresistemaLbl = document.getElementById("nombresistemaLbl");
+  const direccionLbl = document.getElementById("direccionLbl");
+
+  if (isMobile) {
+    // Comentar para mantener
+    // nombresistemaLbl.style.display = "none";
+    direccionLbl.style.display = "none";
+  } else {
+    // nombresistemaLbl.style.display = "table-cell";
+    direccionLbl.style.display = "table-cell";
+  }
+}
 
 function Consultar() {
   registrosTotales = false;
@@ -32,23 +50,28 @@ function Consultar() {
       $.each(response, function (index, data) {
         html += "<tr>";
         html += "<td>" + data.nombre_sistema + "</td>";
-        html += "<td>" + data.direccion_sistema + "</td>";
+        html += isMobile ? "" : "<td>" + data.direccion_sistema + "</td>";
         html += "<td style='text-align: right;'>";
         html +=
-          "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+          "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
           data.id_sistema +
           ");'><span class='fa fa-edit'></span></button>";
         html +=
-          "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
-          data.id_sistema +
+          "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
+          data.id_cargo +
           ");'><span class='fa fa-trash'></span></button>";
+        html += isMobile
+          ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+            JSON.stringify(data) +
+            ");'><span class='fa fa-info'></span></button>"
+          : "";
         html += "</td>";
         html += "</tr>";
       });
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -74,23 +97,28 @@ function EscucharConsulta() {
           $.each(response, function (index, data) {
             html += "<tr>";
             html += "<td>" + data.nombre_sistema + "</td>";
-            html += "<td>" + data.direccion_sistema + "</td>";
+            html += isMobile ? "" : "<td>" + data.direccion_sistema + "</td>";
             html += "<td style='text-align: right;'>";
             html +=
-              "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+              "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
               data.id_sistema +
               ");'><span class='fa fa-edit'></span></button>";
             html +=
-              "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
-              data.id_sistema +
+              "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
+              data.id_cargo +
               ");'><span class='fa fa-trash'></span></button>";
+            html += isMobile
+              ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+                JSON.stringify(data) +
+                ");'><span class='fa fa-info'></span></button>"
+              : "";
             html += "</td>";
             html += "</tr>";
           });
           document.getElementById("datos").innerHTML = html;
         })
         .fail(function (error) {
-          console.log(error);
+          console.log(error.responseText);
         });
     }
   });
@@ -121,7 +149,7 @@ function ConsultarPorId(idSistema) {
             BloquearBotones(false);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -147,7 +175,7 @@ function Guardar() {
         Consultar();
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -176,7 +204,7 @@ function Modificar() {
         Consultar();
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -218,7 +246,7 @@ function Eliminar(idSistema) {
             Consultar();
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");

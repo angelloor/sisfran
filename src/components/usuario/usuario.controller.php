@@ -14,7 +14,8 @@ if ($_POST) {
             $personaId = $_POST["personaId"];
             $nombre = $_POST["nombre"];
             $clave = $_POST["clave"];
-            $rol = $_POST["rol"];
+            $rolUsuarioId = $_POST["rolUsuarioId"];
+
             if (!$personaId) {
                 echo json_encode("Ingresar la persona asignada para este usuario");
                 return;
@@ -27,18 +28,18 @@ if ($_POST) {
                 echo json_encode("Ingresar la clave del usuario");
                 return;
             }
-            if (!$rol) {
+            if (!$rolUsuarioId) {
                 echo json_encode("Ingresar el rol del usuario");
                 return;
             }
-            $respuesta = $usuario->Guardar($personaId, $nombre, $clave, $rol);
+            $respuesta = $usuario->Guardar($personaId, $nombre, $clave, $rolUsuarioId);
             echo json_encode($respuesta);
             break;
         case "MODIFICAR":
             $personaId = $_POST["personaId"];
             $nombre = $_POST["nombre"];
             $clave = $_POST["clave"];
-            $rol = $_POST["rol"];
+            $rolUsuarioId = $_POST["rolUsuarioId"];
             $idUsuario = $_POST["idUsuario"];
             if (!$personaId) {
                 echo json_encode("Ingresar la persona asignada para este usuario");
@@ -52,11 +53,11 @@ if ($_POST) {
                 echo json_encode("Ingresar la clave del usuario");
                 return;
             }
-            if (!$rol) {
+            if (!$rolUsuarioId) {
                 echo json_encode("Ingresar el rol del usuario");
                 return;
             }
-            $respuesta = $usuario->Modificar($idUsuario, $personaId, $nombre, $clave, $rol);
+            $respuesta = $usuario->Modificar($idUsuario, $personaId, $nombre, $clave, $rolUsuarioId);
             echo json_encode($respuesta);
             break;
         case "ELIMINAR":

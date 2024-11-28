@@ -7,7 +7,40 @@ var registrosTotales = false;
 $(document).ready(function () {
   cargaInicial();
   listarFuncionario();
+
+  // Mobile Display Table
+  displayLabels(isMobile);
 });
+
+// Mobile Display Table
+function displayLabels(isMobile) {
+  const nombrePersonaLbl = document.getElementById("nombrePersonaLbl");
+  const nombreOficinaLbl = document.getElementById("nombreOficinaLbl");
+  const fechaEAsistenciaLbl = document.getElementById("fechaEAsistenciaLbl");
+  const horaEAsistenciaLbl = document.getElementById("horaEAsistenciaLbl");
+  const fechaSAsistenciaLbl = document.getElementById("fechaSAsistenciaLbl");
+  const horaSAsistenciaLbl = document.getElementById("horaSAsistenciaLbl");
+  const tiempoFinalLbl = document.getElementById("tiempoFinalLbl");
+
+  if (isMobile) {
+    // Comentar para mantener
+    nombrePersonaLbl.style.display = "none";
+    // nombreOficinaLbl.style.display = "none";
+    // fechaEAsistenciaLbl.style.display = "none";
+    horaEAsistenciaLbl.style.display = "none";
+    fechaSAsistenciaLbl.style.display = "none";
+    horaSAsistenciaLbl.style.display = "none";
+    tiempoFinalLbl.style.display = "none";
+  } else {
+    nombrePersonaLbl.style.display = "table-cell";
+    // nombreOficinaLbl.style.display = "table-cell";
+    // fechaEAsistenciaLbl.style.display = "table-cell";
+    horaEAsistenciaLbl.style.display = "table-cell";
+    fechaSAsistenciaLbl.style.display = "table-cell";
+    horaSAsistenciaLbl.style.display = "table-cell";
+    tiempoFinalLbl.style.display = "table-cell";
+  }
+}
 
 function cargaInicial() {
   registrosTotales = false;
@@ -32,7 +65,7 @@ function cargaInicial() {
           data.fecha_s_asistencia,
           data.hora_s_asistencia
         );
-        let tiempoFinal =
+        let tiempoTotal =
           tiempoTrabajado.horas === 0
             ? `${tiempoTrabajado.minutos}m`
             : `${tiempoTrabajado.horas}h ${tiempoTrabajado.minutos}m`;
@@ -44,23 +77,30 @@ function cargaInicial() {
             data.fecha_s_asistencia == null ? "S/R" : data.fecha_s_asistencia,
           hora_s_asistencia:
             data.hora_s_asistencia == null ? "S/R" : data.hora_s_asistencia,
+          tiempo_total: tiempoTotal,
         };
 
         html += "<tr>";
-        html += "<td>" + data.nombre_persona + "</td>";
+        html += isMobile ? "" : "<td>" + data.nombre_persona + "</td>";
         html += "<td>" + data.nombre_oficina + "</td>";
         html += "<td>" + data.fecha_e_asistencia + "</td>";
-        html += "<td>" + data.hora_e_asistencia + "</td>";
-        html += "<td>" + data.fecha_s_asistencia + "</td>";
-        html += "<td>" + data.hora_s_asistencia + "</td>";
-        html += "<td>" + tiempoFinal + "</td>";
+        html += isMobile ? "" : "<td>" + data.hora_e_asistencia + "</td>";
+        html += isMobile ? "" : "<td>" + data.fecha_s_asistencia + "</td>";
+        html += isMobile ? "" : "<td>" + data.hora_s_asistencia + "</td>";
+        html += isMobile ? "" : "<td>" + tiempoTotal + "</td>";
+        html += "<td style='text-align: right;'>";
+        html += isMobile
+          ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+            JSON.stringify(data) +
+            ");'><span class='fa fa-info'></span></button>"
+          : "";
         html += "</tr>";
       });
 
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -84,7 +124,7 @@ function listarFuncionario() {
       document.getElementById("idPersona").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -122,7 +162,7 @@ function consultar() {
             data.fecha_s_asistencia,
             data.hora_s_asistencia
           );
-          let tiempoFinal =
+          let tiempoTotal =
             tiempoTrabajado.horas === 0
               ? `${tiempoTrabajado.minutos}m`
               : `${tiempoTrabajado.horas}h ${tiempoTrabajado.minutos}m`;
@@ -134,23 +174,30 @@ function consultar() {
               data.fecha_s_asistencia == null ? "S/R" : data.fecha_s_asistencia,
             hora_s_asistencia:
               data.hora_s_asistencia == null ? "S/R" : data.hora_s_asistencia,
+            tiempo_total: tiempoTotal,
           };
 
           html += "<tr>";
-          html += "<td>" + data.nombre_persona + "</td>";
+          html += isMobile ? "" : "<td>" + data.nombre_persona + "</td>";
           html += "<td>" + data.nombre_oficina + "</td>";
           html += "<td>" + data.fecha_e_asistencia + "</td>";
-          html += "<td>" + data.hora_e_asistencia + "</td>";
-          html += "<td>" + data.fecha_s_asistencia + "</td>";
-          html += "<td>" + data.hora_s_asistencia + "</td>";
-          html += "<td>" + tiempoFinal + "</td>";
+          html += isMobile ? "" : "<td>" + data.hora_e_asistencia + "</td>";
+          html += isMobile ? "" : "<td>" + data.fecha_s_asistencia + "</td>";
+          html += isMobile ? "" : "<td>" + data.hora_s_asistencia + "</td>";
+          html += isMobile ? "" : "<td>" + tiempoTotal + "</td>";
+          html += "<td style='text-align: right;'>";
+          html += isMobile
+            ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+              JSON.stringify(data) +
+              ");'><span class='fa fa-info'></span></button>"
+            : "";
           html += "</tr>";
         });
 
         document.getElementById("datos").innerHTML = html;
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   }
 }
@@ -196,13 +243,16 @@ function pdf() {
             fechaFin +
             "&accion=" +
             accion;
-          window.open("../reportes/reporteHoras.template.php?" + urlGet, "_blank");
+          window.open(
+            "../reportes/reporteHoras.template.php?" + urlGet,
+            "_blank"
+          );
         }
       }
     })
     .fail(function (error) {
       MostrarAlerta("", "Hubo un error al generar el pdf", "error");
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -247,13 +297,16 @@ function excel() {
             fechaFin +
             "&accion=" +
             accion;
-          window.open("../reportes/reporteHoras.template.php?" + urlGet, "_blank");
+          window.open(
+            "../reportes/reporteHoras.template.php?" + urlGet,
+            "_blank"
+          );
         }
       }
     })
     .fail(function (error) {
       MostrarAlerta("", "Hubo un error al generar el pdf", "error");
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 

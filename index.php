@@ -27,12 +27,12 @@ if (isset($_GET['logout'])) {
   <script src="src/assets/js/all.min.js"></script>
   <script src="src/assets/js/jquery.js"></script>
   <script src="src/components/index/index.js"></script>
-  <script src="src/lib/common/utils.js"></script>
+  <script src="src/assets/js/utils.js"></script>
   <link rel="stylesheet" href="src/assets/css/main.css">
 </head>
 
-<body class="bg-branding center-body">
-  <div class="container mt-18vw">
+<body class="bg-branding center-body" id="index">
+  <div class="container">
     <div class="row">
       <div class="col text-center">
         <img class="mb-4" src="src/assets/img/logo_dark.svg" alt="" height="50" />

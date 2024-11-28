@@ -7,7 +7,37 @@ $(document).ready(function () {
   cargarFechaActual();
   consultar();
   ocultarAlertaDatos();
+
+  // Mobile Display Table
+  displayLabels(isMobile);
 });
+
+// Mobile Display Table
+function displayLabels(isMobile) {
+  const codigoLbl = document.getElementById("codigoLbl");
+  const nombreActivoLbl = document.getElementById("nombreActivoLbl");
+  const nombreMarcaLbl = document.getElementById("nombreMarcaLbl");
+  const modeloLbl = document.getElementById("modeloLbl");
+  const serieLbl = document.getElementById("serieLbl");
+  const fechaHistoricoLbl = document.getElementById("fechaHistoricoLbl");
+
+  if (isMobile) {
+    // Comentar para mantener
+    // codigoLbl.style.display = "none";
+    // nombreActivoLbl.style.display = "none";
+    nombreMarcaLbl.style.display = "none";
+    modeloLbl.style.display = "none";
+    serieLbl.style.display = "none";
+    fechaHistoricoLbl.style.display = "none";
+  } else {
+    // codigoLbl.style.display = "table-cell";
+    // nombreActivoLbl.style.display = "table-cell";
+    nombreMarcaLbl.style.display = "table-cell";
+    modeloLbl.style.display = "table-cell";
+    serieLbl.style.display = "table-cell";
+    fechaHistoricoLbl.style.display = "table-cell";
+  }
+}
 
 function pdf() {
   if (comprobarFechas() == 1) {
@@ -40,7 +70,10 @@ function pdf() {
             fechaFinal +
             "&accion=" +
             accion;
-          window.open("../reportes/reporteHistorico.template.php?" + urlGet, "_blank");
+          window.open(
+            "../reportes/reporteHistorico.template.php?" + urlGet,
+            "_blank"
+          );
         }
       }
     }
@@ -78,7 +111,10 @@ function excel() {
             fechaFinal +
             "&accion=" +
             accion;
-          window.open("../reportes/reporteHistorico.template.php?" + urlGet, "_blank");
+          window.open(
+            "../reportes/reporteHistorico.template.php?" + urlGet,
+            "_blank"
+          );
         }
       }
     }
@@ -136,22 +172,27 @@ function ConsultarPorFecha() {
               html += "<tr>";
               html += "<td>" + data.codigo + "</td>";
               html += "<td>" + data.nombre_activo + "</td>";
-              html += "<td>" + data.nombre_marca + "</td>";
-              html += "<td>" + data.modelo + "</td>";
-              html += "<td>" + data.serie + "</td>";
-              html += "<td>" + data.fecha_historico + "</td>";
+              html += isMobile ? "" : "<td>" + data.nombre_marca + "</td>";
+              html += isMobile ? "" : "<td>" + data.modelo + "</td>";
+              html += isMobile ? "" : "<td>" + data.serie + "</td>";
+              html += isMobile ? "" : "<td>" + data.fecha_historico + "</td>";
               html += "<td style='text-align: center;'>";
               html +=
-                "<button class='btn btn-success' onclick='ConsultarPorId(" +
+                "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='restaurarAccion(" +
                 data.id_activo +
                 ");'><span class='fa fa-undo-alt'></span></button>";
+              html += isMobile
+                ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+                  JSON.stringify(data) +
+                  ");'><span class='fa fa-info'></span></button>"
+                : "";
               html += "</td>";
               html += "</tr>";
             });
             document.getElementById("datos").innerHTML = html;
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       }
     }
@@ -194,26 +235,31 @@ function consultar() {
         html += "<tr>";
         html += "<td>" + data.codigo + "</td>";
         html += "<td>" + data.nombre_activo + "</td>";
-        html += "<td>" + data.nombre_marca + "</td>";
-        html += "<td>" + data.modelo + "</td>";
-        html += "<td>" + data.serie + "</td>";
-        html += "<td>" + data.fecha_historico + "</td>";
+        html += isMobile ? "" : "<td>" + data.nombre_marca + "</td>";
+        html += isMobile ? "" : "<td>" + data.modelo + "</td>";
+        html += isMobile ? "" : "<td>" + data.serie + "</td>";
+        html += isMobile ? "" : "<td>" + data.fecha_historico + "</td>";
         html += "<td style='text-align: center;'>";
         html +=
-          "<button class='btn btn-success' onclick='ConsultarPorId(" +
+          "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='restaurarAccion(" +
           data.id_activo +
           ");'><span class='fa fa-undo-alt'></span></button>";
+        html += isMobile
+          ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+            JSON.stringify(data) +
+            ");'><span class='fa fa-info'></span></button>"
+          : "";
         html += "</td>";
         html += "</tr>";
       });
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
-function ConsultarPorId(idActivo) {
+function restaurarAccion(idActivo) {
   var f = new Date();
   var fechaHistorico = f.getFullYear() + "-" + mesFinal + "-" + diaFinal;
   swalWithBootstrapButtons
@@ -250,7 +296,7 @@ function ConsultarPorId(idActivo) {
             }
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");

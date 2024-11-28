@@ -37,7 +37,7 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
   <!-- SCRIPTS -->
   <script src="../../assets/js/all.min.js"></script>
   <script src="./unidad.js"></script>
-  <script src="../../lib/common/utils.js"></script>
+  <script src="../../assets/js/utils.js"></script>
   <link rel="stylesheet" href="../../assets/css/main.css">
 </head>
 

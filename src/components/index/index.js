@@ -40,8 +40,6 @@ function iniciarSesion() {
     dataType: "json",
   })
     .done(function (response) {
-      console.log(response);
-      
       if (response == "OK") {
         window.location.href = "src/components/main/main.php";
       } else {

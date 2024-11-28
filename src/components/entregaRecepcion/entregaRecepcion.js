@@ -14,7 +14,31 @@ $(document).ready(function () {
   document
     .getElementById("codigoActivo")
     .addEventListener("keypress", soloNumeros, false);
+
+  // Mobile Display Table
+  displayLabels(isMobile);
 });
+
+// Mobile Display Table
+function displayLabels(isMobile) {
+  const idPersonaLbl = document.getElementById("idPersonaLbl");
+  const codigoActivoLbl = document.getElementById("codigoActivoLbl");
+  const fechaLbl = document.getElementById("fechaLbl");
+  const comentarioLbl = document.getElementById("comentarioLbl");
+
+  if (isMobile) {
+    // Comentar para mantener
+    // idPersonaLbl.style.display = "none";
+    // codigoActivoLbl.style.display = "none";
+    fechaLbl.style.display = "none";
+    comentarioLbl.style.display = "none";
+  } else {
+    // idPersonaLbl.style.display = "table-cell";
+    // codigoActivoLbl.style.display = "table-cell";
+    fechaLbl.style.display = "table-cell";
+    comentarioLbl.style.display = "table-cell";
+  }
+}
 
 function soloNumeros(e) {
   var key = window.event ? e.which : e.keyCode;
@@ -49,16 +73,16 @@ function listarFuncionario() {
       var html = "";
       $.each(response, function (index, data) {
         html +=
-        "<option value=" +
-        data.id_persona +
-        ">" +
-        data.nombre_persona +
-        "</option>";
+          "<option value=" +
+          data.id_persona +
+          ">" +
+          data.nombre_persona +
+          "</option>";
       });
       document.getElementById("idPersona").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -77,7 +101,7 @@ function listarActivo() {
       document.getElementById("activo").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -101,24 +125,30 @@ function Consultar() {
         html += "<tr>";
         html += "<td>" + data.funcionario + "</td>";
         html += "<td>" + data.codigo + "</td>";
-        html += "<td>" + data.fecha + "</td>";
-        html += "<td>" + data.comentario + "</td>";
+        html += isMobile ? "" : "<td>" + data.fecha + "</td>";
+        html += isMobile ? "" : "<td>" + data.comentario + "</td>";
         html += "<td style='text-align: right;'>";
         html +=
-          "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+          "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
           data.id_entrega_recepcion +
           ");'><span class='fa fa-edit'></span></button>";
         html +=
-          "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+          "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
           data.id_entrega_recepcion +
           ");'><span class='fa fa-trash'></span></button>";
+
+        html += isMobile
+          ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+            JSON.stringify(data) +
+            ");'><span class='fa fa-info'></span></button>"
+          : "";
         html += "</td>";
         html += "</tr>";
       });
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -144,24 +174,30 @@ function EscucharConsulta() {
             html += "<tr>";
             html += "<td>" + data.funcionario + "</td>";
             html += "<td>" + data.codigo + "</td>";
-            html += "<td>" + data.fecha + "</td>";
-            html += "<td>" + data.comentario + "</td>";
+            html += isMobile ? "" : "<td>" + data.fecha + "</td>";
+            html += isMobile ? "" : "<td>" + data.comentario + "</td>";
             html += "<td style='text-align: right;'>";
             html +=
-              "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+              "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
               data.id_entrega_recepcion +
               ");'><span class='fa fa-edit'></span></button>";
             html +=
-              "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+              "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
               data.id_entrega_recepcion +
               ");'><span class='fa fa-trash'></span></button>";
+
+            html += isMobile
+              ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+                JSON.stringify(data) +
+                ");'><span class='fa fa-info'></span></button>"
+              : "";
             html += "</td>";
             html += "</tr>";
           });
           document.getElementById("datos").innerHTML = html;
         })
         .fail(function (error) {
-          console.log(error);
+          console.log(error.responseText);
         });
     }
   });
@@ -181,22 +217,24 @@ function ConsultarPorId(idEntregaRecepcion) {
       if (result.isConfirmed) {
         $.ajax({
           url: urlController,
-          data: { idEntregaRecepcion: idEntregaRecepcion, accion: "CONSULTAR_ID" },
+          data: {
+            idEntregaRecepcion: idEntregaRecepcion,
+            accion: "CONSULTAR_ID",
+          },
           type: "POST",
           dataType: "json",
         })
           .done(function (response) {
-            console.log(response)
             setValue("idPersona", response.persona_id);
             setValue("codigoActivo", response.codigo);
             setValue("fecha", response.fecha);
             setValue("comentario", response.comentario);
             setValue("idEntregaRecepcion", response.id_entrega_recepcion);
-            document.getElementById("codigoActivo").disabled = true;
+            disabledInput("codigoActivo");
             BloquearBotones(false);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -205,7 +243,6 @@ function ConsultarPorId(idEntregaRecepcion) {
 }
 
 function Guardar() {
-  console.log(retornarDatos("GUARDAR"))
   if (Validar()) {
     $.ajax({
       url: urlController,
@@ -252,7 +289,7 @@ function Modificar() {
         Consultar();
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -294,7 +331,7 @@ function Eliminar(idEntregaRecepcion) {
             Consultar();
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -338,7 +375,7 @@ function retornarDatosConsulta(accion) {
 function Limpiar() {
   clearInput("idEntregaRecepcion");
   clearInput("codigoActivo");
-  document.getElementById("codigoActivo").disabled = false;
+  enabledInput("codigoActivo");
   listarFuncionario();
   cargarFechaActual();
   BloquearBotones(true);

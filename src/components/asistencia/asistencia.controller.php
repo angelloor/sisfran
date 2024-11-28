@@ -70,11 +70,6 @@ if ($_POST) {
                 return;
             }
 
-            if (!$oficinaId) {
-                echo json_encode("Seleccione un oficina");
-                return;
-            }
-
             if (!$fechaAsistencia) {
                 echo json_encode("Seleccione la fecha de  asistencia");
                 return;

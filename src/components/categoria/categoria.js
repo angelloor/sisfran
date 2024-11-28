@@ -8,7 +8,30 @@ $(document).ready(function () {
   EscucharConsulta();
   listarFuncionario();
   BloquearBotones(true);
+
+  // Mobile Display Table
+  displayLabels(isMobile);
 });
+
+// Mobile Display Table
+function displayLabels(isMobile) {
+  const nombreCategoriaLbl = document.getElementById("nombreCategoriaLbl");
+  const descripcionCategoriaLbl = document.getElementById(
+    "descripcionCategoriaLbl"
+  );
+  const personaIdLbl = document.getElementById("personaIdLbl");
+
+  if (isMobile) {
+    // Comentar para mantener
+    // nombreCategoriaLbl.style.display = "none";
+    descripcionCategoriaLbl.style.display = "none";
+    personaIdLbl.style.display = "none";
+  } else {
+    // nombreCategoriaLbl.style.display = "table-cell";
+    descripcionCategoriaLbl.style.display = "table-cell";
+    personaIdLbl.style.display = "table-cell";
+  }
+}
 
 function listarFuncionario() {
   $.ajax({
@@ -30,7 +53,7 @@ function listarFuncionario() {
       document.getElementById("personaId").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -53,24 +76,29 @@ function Consultar() {
       $.each(response, function (index, data) {
         html += "<tr>";
         html += "<td>" + data.nombre_categoria + "</td>";
-        html += "<td>" + data.descripcion_categoria + "</td>";
-        html += "<td>" + data.nombre_persona + "</td>";
+        html += isMobile ? "" : "<td>" + data.descripcion_categoria + "</td>";
+        html += isMobile ? "" : "<td>" + data.nombre_persona + "</td>";
         html += "<td style='text-align: right;'>";
         html +=
-          "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+          "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
           data.id_categoria +
           ");'><span class='fa fa-edit'></span></button>";
         html +=
-          "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+          "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
           data.id_categoria +
           ");'><span class='fa fa-trash'></span></button>";
+        html += isMobile
+          ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+            JSON.stringify(data) +
+            ");'><span class='fa fa-info'></span></button>"
+          : "";
         html += "</td>";
         html += "</tr>";
       });
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -96,24 +124,31 @@ function EscucharConsulta() {
           $.each(response, function (index, data) {
             html += "<tr>";
             html += "<td>" + data.nombre_categoria + "</td>";
-            html += "<td>" + data.descripcion_categoria + "</td>";
-            html += "<td>" + data.nombre_persona + "</td>";
+            html += isMobile
+              ? ""
+              : "<td>" + data.descripcion_categoria + "</td>";
+            html += isMobile ? "" : "<td>" + data.nombre_persona + "</td>";
             html += "<td style='text-align: right;'>";
             html +=
-              "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+              "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
               data.id_categoria +
               ");'><span class='fa fa-edit'></span></button>";
             html +=
-              "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+              "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
               data.id_categoria +
               ");'><span class='fa fa-trash'></span></button>";
+            html += isMobile
+              ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+                JSON.stringify(data) +
+                ");'><span class='fa fa-info'></span></button>"
+              : "";
             html += "</td>";
             html += "</tr>";
           });
           document.getElementById("datos").innerHTML = html;
         })
         .fail(function (error) {
-          console.log(error);
+          console.log(error.responseText);
         });
     }
   });
@@ -145,7 +180,7 @@ function ConsultarPorId(idCategoria) {
             BloquearBotones(false);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -171,7 +206,7 @@ function Guardar() {
         Consultar();
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -200,7 +235,7 @@ function Modificar() {
         Consultar();
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -255,7 +290,7 @@ function Eliminar(idCategoria) {
                 Consultar();
               })
               .fail(function (error) {
-                console.log(error);
+                console.log(error.responseText);
               });
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -264,7 +299,7 @@ function Eliminar(idCategoria) {
       Limpiar();
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 

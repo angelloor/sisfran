@@ -131,6 +131,13 @@ html {
 	border: solid 1px var(--color-uno);
 }
 
+body#index {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+}
+
 body > .navbar-actdig {
 	background-color: var(--color-uno);
 }
@@ -185,12 +192,22 @@ body > div > div.container-title > nav {
 	margin-top: 18vw;
 }
 
+.min-btn-action {
+	min-width: 45px;
+}
+
 .width-card {
 	width: 18rem;
 }
 
 .pc-flex-end {
-	place-content: flex-end;
+	place-content: flex-start;
+}
+
+@media (min-width: 765px) {
+	.pc-flex-end {
+		place-content: flex-end;
+	}
 }
 
 .img-card {
@@ -244,7 +261,7 @@ body > div > div.container-title > nav {
 
 .btn-success-rc {
 	border-width: 2px;
-	color: #23376f;
+	color: white;
 }
 
 .btn-success-rc:hover {
@@ -252,4 +269,22 @@ body > div > div.container-title > nav {
 	color: #23376f;
 	border-color: #ffdb00;
 	border-width: 2px;
+}
+
+.session-info {
+	display: flex;
+	align-items: flex-start;
+	padding: 5px;
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	color: #23376f;
+	border-radius: 5px;
+	margin-right: 10px;
+}
+
+@media (min-width: 1000px) {
+	.session-info {
+		align-items: center;
+	}
 }

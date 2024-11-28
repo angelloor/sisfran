@@ -26,7 +26,7 @@ if (!$_SESSION['user']) {
     <!-- SCRIPTS -->
     <script src="../../assets/js/all.min.js"></script>
     <script src="./asistencia.js"></script>
-    <script src="../../lib/common/utils.js"></script>
+    <script src="../../assets/js/utils.js"></script>
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/popup.css">
     <!-- API GOOGLE MAPS -->
@@ -154,6 +154,8 @@ if (!$_SESSION['user']) {
                             lat: position.coords.latitude,
                             lng: position.coords.longitude,
                         };
+
+                        console.log(userLocation);
 
                         // Actualiza los inputs
                         setValue("lat", userLocation.lat);

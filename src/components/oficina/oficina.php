@@ -29,9 +29,10 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
     <!-- SCRIPTS -->
     <script src="../../assets/js/all.min.js"></script>
     <script src="./oficina.js"></script>
-    <script src="../../lib/common/utils.js"></script>
+    <script src="../../assets/js/utils.js"></script>
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/popup.css">
+    <link rel="stylesheet" href="../../assets/css/popupMobileDisplayTable.css">
     <!-- API GOOGLE MAPS -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuFNTu49oRZu6CoSfW10ocnPQjAvuxlQY&callback=initMap" async defer></script>
     <style>
@@ -45,7 +46,7 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
 <body style="height: 100vh;">
     <!-- HEADER -->
     <?php
-  require '../../lib/common/header.php';
+    require '../../lib/common/header.php';
     ?>
     <!-- HEADER -->
     <nav aria-label="breadcrumb bg-light">
@@ -76,7 +77,7 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                 </div>
             </div>
             <!-- Google Maps -->
-            <button class="btn btn-success mb-2" onclick="getCurrentLocation()">Ubicación actual</button>
+            <button class="btn btn-success mb-2 mt-2" onclick="getCurrentLocation()">Ubicación actual</button>
 
             <div id="map"></div>
             <!-- Google Maps -->
@@ -107,12 +108,12 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
             <table class="table tabled-bordered table-sm" id="tablaOficina">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Latitud</th>
-                        <th>Longitud</th>
-                        <th>Radio Válido (metros)</th>
+                        <th scope="col" id="idOficinaLbl">ID</th>
+                        <th scope="col" id="nombreOficinaLbl">Nombre</th>
+                        <th scope="col" id="descripcionOficinaLbl">Descripción</th>
+                        <th scope="col" id="latitudOficinaLbl">Latitud</th>
+                        <th scope="col" id="longitudOficinaLbl">Longitud</th>
+                        <th scope="col" id="radioValidoMetrosLbl">Radio Válido (metros)</th>
                         <th style='text-align: right;'>Acciones</th>
                     </tr>
                 </thead>
@@ -142,6 +143,7 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                 center: defaultLocation,
                 zoom: 18,
             });
+
 
             marker = new google.maps.Marker({
                 map: map,
@@ -182,7 +184,11 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
             e.target.value = e.target.value.replace(/[^0-9]/g, '');
         });
     </script>
-    <!-- Gestionar  -->
 </body>
-
+<!-- Mobile Display Table -->
+<script src="../../assets/js/popupMobileDisplayTable.js"></script>
+<?php
+require '../../lib/common/popupMobileDisplayTable.php';
+?>
+<!-- Mobile Display Table -->
 </html>

@@ -43,11 +43,11 @@ function Consultar() {
         html += "<td>" + data.nombre_color + "</td>";
         html += "<td style='text-align: right;'>";
         html +=
-          "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+          "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
           data.id_color +
           ");'><span class='fa fa-edit'></span></button>";
         html +=
-          "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+          "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
           data.id_color +
           ");'><span class='fa fa-trash'></span></button>";
         html += "</td>";
@@ -56,7 +56,7 @@ function Consultar() {
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -84,11 +84,11 @@ function EscucharConsulta() {
             html += "<td>" + data.nombre_color + "</td>";
             html += "<td style='text-align: right;'>";
             html +=
-              "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+              "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
               data.id_color +
               ");'><span class='fa fa-edit'></span></button>";
             html +=
-              "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+              "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
               data.id_color +
               ");'><span class='fa fa-trash'></span></button>";
             html += "</td>";
@@ -97,7 +97,7 @@ function EscucharConsulta() {
           document.getElementById("datos").innerHTML = html;
         })
         .fail(function (error) {
-          console.log(error);
+          console.log(error.responseText);
         });
     }
   });
@@ -127,7 +127,7 @@ function ConsultarPorId(idColor) {
             BloquearBotones(false);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -153,7 +153,7 @@ function Guardar() {
         Consultar();
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -182,7 +182,7 @@ function Modificar() {
         Consultar();
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -238,7 +238,7 @@ function Eliminar(idColor) {
                 Consultar();
               })
               .fail(function (error) {
-                console.log(error);
+                console.log(error.responseText);
               });
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -247,7 +247,7 @@ function Eliminar(idColor) {
       Limpiar();
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 

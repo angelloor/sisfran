@@ -35,7 +35,7 @@ function listarFuncionario() {
       document.getElementById("nombrePersona").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -54,7 +54,7 @@ function Consultar() {
         html += "<td>" + data.denominacion + "</td>";
         html += "<td style='text-align: right;'>";
         html +=
-          "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+          "<button class='btn btn-success mr-1 min-btn-action' onclick='ConsultarPorId(" +
           data.id_firma +
           ");'><span class='fa fa-edit'></span></button>";
         html += "</td>";
@@ -63,7 +63,7 @@ function Consultar() {
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -92,7 +92,7 @@ function ConsultarPorId(idFirma) {
             setValue("denominacion", response.denominacion);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -137,7 +137,7 @@ function Modificar() {
         }
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(

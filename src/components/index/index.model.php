@@ -22,7 +22,8 @@ class Login
             $stmt->bindValue(":usuario", $usuario, PDO::PARAM_STR);
             $stmt->execute();
             $datos = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($datos['clave'] == $clave) {
+
+            if (password_verify($clave, $datos['clave'])) {
                 $_SESSION['idPersona'] = $datos['id_persona'];
                 $_SESSION['user'] = $datos['nombre_usuario'];
                 $_SESSION['rolUsuario'] = $datos['nombre_rol_usuario'];

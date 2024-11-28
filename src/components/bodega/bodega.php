@@ -37,14 +37,15 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
   <!-- SCRIPTS -->
   <script src="../../assets/js/all.min.js"></script>
   <script src="./bodega.js"></script>
-  <script src="../../lib/common/utils.js"></script>
+  <script src="../../assets/js/utils.js"></script>
   <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/popupMobileDisplayTable.css">
 </head>
 
 <body>
   <!-- HEADER -->
   <?php
-require '../../lib/common/header.php';
+  require '../../lib/common/header.php';
   ?>
   <!-- HEADER -->
   <!-- BREADCRUMB -->
@@ -92,7 +93,7 @@ require '../../lib/common/header.php';
             <input type="text" name="ubicacion" id="ubicacion" placeholder="Ingrese la ubicación" class="form-control text-mayus">
           </div>
           <div class="col-md-4 mt-2">
-            <label for="responsable_bodega">Responsable de bodega</label>
+            <label for="personaId">Responsable de bodega</label>
             <select name="personaId" class="form-control br" id="personaId">
             </select>
           </div>
@@ -102,9 +103,9 @@ require '../../lib/common/header.php';
         <table class="table tabled-bordered table-sm" id="tablaBodega">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Ubicación</th>
-              <th>Responsable de bodega</th>
+              <th scope="col" id="nombreBodegaLbl">Nombre</th>
+              <th scope="col" id="ubicacionLbl">Ubicación</th>
+              <th scope="col" id="personaIdLbl">Responsable de bodega</th>
               <th class="th-text-align-right">Acciones</th>
             </tr>
           </thead>
@@ -120,7 +121,11 @@ require '../../lib/common/header.php';
       </div>
     </div>
   </div>
-  <!-- Gestionar  -->
 </body>
-
+<!-- Mobile Display Table -->
+<script src="../../assets/js/popupMobileDisplayTable.js"></script>
+<?php
+require '../../lib/common/popupMobileDisplayTable.php';
+?>
+<!-- Mobile Display Table -->
 </html>

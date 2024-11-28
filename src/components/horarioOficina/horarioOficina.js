@@ -1,5 +1,5 @@
 var urlController = "./horarioOficina.controller.php";
-var urlControllerOficina = "../controller/oficina.controller.php";
+var urlControllerOficina = "../oficina/oficina.controller.php";
 
 // Extraer el valor del parámetro 'id'
 let idOficina;
@@ -16,7 +16,7 @@ $(document).ready(function () {
 function ConsultarOficinaPorId(idOficina) {
   $.ajax({
     url: urlControllerOficina,
-    data: { idOficina: idOficina, accion: "CONSULTAR_ID" },
+    data: { idOficina, accion: "CONSULTAR_ID" },
     type: "POST",
     dataType: "json",
   })
@@ -26,7 +26,7 @@ function ConsultarOficinaPorId(idOficina) {
         response.nombre_oficina;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -57,20 +57,20 @@ function ConsultarHorariosPorIdOficina(idOficina) {
         html += "<td>" + data.salto_dia + "</td>";
         html += "<td style='text-align: right;'>";
         html +=
-          "<button class='btn btn-success mr-1' onclick='ConsultarPorId(" +
+          "<button class='btn btn-success mr-1 min-btn-action' onclick='ConsultarPorId(" +
           data.id_horario_oficina +
           ");'><span class='fa fa-edit'></span></button>";
         html +=
-          "<button class='btn btn-danger ml-1' onclick='Eliminar(" +
+          "<button class='btn btn-danger ml-1 min-btn-action' onclick='Eliminar(" +
           data.id_horario_oficina +
-          ");'><span class='fa fa-trash'></span></button>";
+          ");'><span class='fa fa-trash min-btn-action'></span></button>";
         html += "</td>";
         html += "</tr>";
       });
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -103,7 +103,7 @@ function ConsultarPorId(idHorarioOficina) {
             BloquearBotones(false);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -129,7 +129,7 @@ function Guardar() {
         ConsultarHorariosPorIdOficina(idOficina);
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -158,7 +158,7 @@ function Modificar() {
         ConsultarHorariosPorIdOficina(idOficina);
       })
       .fail(function (error) {
-        console.log(error);
+        console.log(error.responseText);
       });
   } else {
     swalWithBootstrapButtons.fire(
@@ -217,7 +217,7 @@ function Eliminar(idHorarioOficina) {
                   ConsultarHorariosPorIdOficina(idOficina);
                 })
                 .fail(function (error) {
-                  console.log(error);
+                  console.log(error.responseText);
                 });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
               swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -259,7 +259,7 @@ function Eliminar(idHorarioOficina) {
                   ConsultarHorariosPorIdOficina(idOficina);
                 })
                 .fail(function (error) {
-                  console.log(error);
+                  console.log(error.responseText);
                 });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
               swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -270,7 +270,7 @@ function Eliminar(idHorarioOficina) {
       Limpiar();
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -326,7 +326,7 @@ function mostrarTodo() {
 }
 
 function regresarOficinas() {
-  window.location.href = "oficina.php";
+  window.location.href = "../oficina/oficina.php";
 }
 
 function mostrarAlertaDatos() {

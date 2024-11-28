@@ -28,7 +28,7 @@ if (!$_SESSION['user']) {
   <!-- SCRIPTS -->
   <script src="../../assets/js/all.min.js"></script>
   <script src="./main.js"></script>
-  <script src="../../lib/common/utils.js"></script>
+  <script src="../../assets/js/utils.js"></script>
   <link rel="stylesheet" href="../../assets/css/main.css">
   <link rel="stylesheet" href="../../assets/css/popup.css">
 </head>
@@ -50,7 +50,7 @@ if (!$_SESSION['user']) {
       <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" <?php if ($_SESSION['rolUsuario'] == "COMPROBADOR DE INVENTARIO" || $_SESSION['rolUsuario'] == "ASISTENTE") {
                                                                 echo 'style="display:none;"';
                                                               } ?>>
-        <div class="card-sm width-card" id="card-inicio">
+        <div class="card-sm width-card ml-auto mr-auto" id="card-inicio">
           <img src="../../assets/img/ga.png" class="card-img-top mt-3 img-card" alt="Imagen">
           <div class="card-body">
             <h5 class="card-title">Generar actas</h5>
@@ -63,7 +63,7 @@ if (!$_SESSION['user']) {
       <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" <?php if ($_SESSION['rolUsuario'] == "COMPROBADOR DE INVENTARIO" || $_SESSION['rolUsuario'] == "ASISTENTE") {
                                                                 echo 'style="display:none;"';
                                                               } ?>>
-        <div class="card-sm width-card" id="card-inicio">
+        <div class="card-sm width-card ml-auto mr-auto" id="card-inicio">
           <img src="../../assets/img/au.png" class="card-img-top mt-3 img-card" alt="Imagen">
           <div class="card-body">
             <h5 class="card-title">Generar actas por funcionario</h5>
@@ -75,7 +75,7 @@ if (!$_SESSION['user']) {
       <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 mt-1" <?php if ($_SESSION['rolUsuario'] == "COMPROBADOR DE INVENTARIO" || $_SESSION['rolUsuario'] == "ASISTENTE") {
                                                                       echo 'style="display:none;"';
                                                                     } ?>>
-        <div class="card-sm width-card" id="card-inicio">
+        <div class="card-sm width-card ml-auto mr-auto" id="card-inicio">
           <img src="../../assets/img/ab.png" class="card-img-top mt-3 img-card" alt="Imagen">
           <div class="card-body">
             <h5 class="card-title">Generar actas por activo</h5>
@@ -87,7 +87,7 @@ if (!$_SESSION['user']) {
       <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" <?php if ($_SESSION['rolUsuario'] == "GENERADOR DE REPORTES Y ACTAS" || $_SESSION['rolUsuario'] == "ASISTENTE") {
                                                                 echo 'style="display:none;"';
                                                               } ?>>
-        <div class="card-sm width-card" id="card-inicio">
+        <div class="card-sm width-card ml-auto mr-auto" id="card-inicio">
           <img src="../../assets/img/ci.png" class="card-img-top mt-3 img-card" alt="Imagen">
           <div class="card-body">
             <h5 class="card-title">Comprobar inventario</h5>
@@ -99,7 +99,7 @@ if (!$_SESSION['user']) {
       <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 mt-1" <?php if ($_SESSION['rolUsuario'] == "COMPROBADOR DE INVENTARIO" || $_SESSION['rolUsuario'] == "ASISTENTE") {
                                                                       echo 'style="display:none;"';
                                                                     } ?>>
-        <div class="card-sm width-card" id="card-inicio">
+        <div class="card-sm width-card ml-auto mr-auto" id="card-inicio">
           <img src="../../assets/img/rp.png" class="card-img-top mt-3 img-card" alt="Imagen">
           <div class="card-body">
             <h5 class="card-title">Reportes</h5>
@@ -111,7 +111,7 @@ if (!$_SESSION['user']) {
       <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 mt-1" <?php if ($_SESSION['rolUsuario'] == "COMPROBADOR DE INVENTARIO" || $_SESSION['rolUsuario'] == "ASISTENTE") {
                                                                       echo 'style="display:none;"';
                                                                     } ?>>
-        <div class="card-sm width-card" id="card-inicio">
+        <div class="card-sm width-card ml-auto mr-auto" id="card-inicio">
           <img src="../../assets/img/ad.png" class="card-img-top mt-3 img-card" alt="Imagen">
           <div class="card-body">
             <h5 class="card-title">Credenciales</h5>
@@ -125,7 +125,7 @@ if (!$_SESSION['user']) {
       <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" <?php if ($_SESSION['rolUsuario'] == "GENERADOR DE REPORTES Y ACTAS") {
                                                                 echo 'style="display:none;"';
                                                               } ?>>
-        <div class="card-sm width-card" id="card-inicio">
+        <div class="card-sm width-card ml-auto mr-auto" id="card-inicio">
           <img src="../../assets/img/au.png" class="card-img-top mt-3 img-card" alt="Imagen">
           <div class="card-body">
             <h5 class="card-title">Asistencia</h5>
@@ -138,7 +138,7 @@ if (!$_SESSION['user']) {
       <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" <?php if ($_SESSION['rolUsuario'] == "GENERADOR DE REPORTES Y ACTAS") {
                                                                 echo 'style="display:none;"';
                                                               } ?>>
-        <div class="card-sm width-card" id="card-inicio">
+        <div class="card-sm width-card ml-auto mr-auto" id="card-inicio">
           <img src="../../assets/img/ab.png" class="card-img-top mt-3 img-card" alt="Imagen">
           <div class="card-body">
             <h5 class="card-title">Permisos</h5>

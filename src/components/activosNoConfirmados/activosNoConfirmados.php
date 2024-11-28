@@ -31,14 +31,15 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
     <!-- SCRIPTS -->
     <script src="../../assets/js/all.min.js"></script>
     <script src="./activosNoConfirmados.js"></script>
-    <script src="../../lib/common/utils.js"></script>
+    <script src="../../assets/js/utils.js"></script>
     <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/popupMobileDisplayTable.css">
 </head>
 
 <body>
     <!-- HEADER -->
     <?php
-  require '../../lib/common/header.php';
+    require '../../lib/common/header.php';
     ?>
     <!-- HEADER -->
     <!-- BREADCRUMB -->
@@ -75,13 +76,14 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                 <table class="table tabled-bordered table-sm" id="tablaActivos">
                     <thead>
                         <tr>
-                            <th>Código</th>
-                            <th>Nombre</th>
-                            <th>Característica</th>
-                            <th>Marca</th>
-                            <th>Modelo</th>
-                            <th>Serie</th>
-                            <th>Estado</th>
+                            <th scope="col" id="codigoLbl">Código</th>
+                            <th scope="col" id="nombreLbl">Nombre</th>
+                            <th scope="col" id="caracteristicaLbl">Característica</th>
+                            <th scope="col" id="marcaIdLbl">Marca</th>
+                            <th scope="col" id="modeloLbl">Modelo</th>
+                            <th scope="col" id="serieLbl">Serie</th>
+                            <th scope="col" id="estadoIdLbl">Estado</th>
+                            <th class="th-text-align-right">Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="datos">
@@ -96,6 +98,10 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
             </div>
         </div>
     </div>
-    <!-- Gestionar  -->
-
+    <!-- Mobile Display Table -->
+    <script src="../../assets/js/popupMobileDisplayTable.js"></script>
+    <?php
+    require '../../lib/common/popupMobileDisplayTable.php';
+    ?>
+    <!-- Mobile Display Table -->
 </html>

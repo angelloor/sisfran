@@ -1,4 +1,5 @@
 <html:5>
+  <link rel="stylesheet" href="../../assets/css/main.css">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="../main/main.php">
       <img src="../../assets/img/logo_dark.svg" class="card-img-top img-nav" alt="Imagen">
@@ -30,8 +31,8 @@
           <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Inventario</a>
           <div class="dropdown-menu" aria-labelledby="dropdown01">
             <a class="dropdown-item" href="../entregaRecepcion/entregaRecepcion.php" <?php if ($_SESSION['rolUsuario'] == "GENERADOR DE REPORTES Y ACTAS") {
-                                                              echo 'style="display:none;"';
-                                                            } ?>>Entrega Recepción</a>
+                                                                                        echo 'style="display:none;"';
+                                                                                      } ?>>Entrega Recepción</a>
             <a class="dropdown-item" href="../activo/activo.php">Activos</a>
             <a class="dropdown-item" href="../categoria/categoria.php">Categorías</a>
             <a class="dropdown-item" href="../marca/marca.php">Marcas</a>
@@ -57,11 +58,11 @@
           <a class="nav-link dropdown-toggle" href="../entregaRecepcion/entregaRecepcion.php" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Asistencia</a>
           <div class="dropdown-menu" aria-labelledby="dropdown01">
             <a class="dropdown-item" href="../oficina/oficina.php" <?php if ($_SESSION['rolUsuario'] == "ASISTENTE") {
-                                                          echo 'style="display:none;"';
-                                                        } ?>>Oficinas</a>
+                                                                      echo 'style="display:none;"';
+                                                                    } ?>>Oficinas</a>
             <a class="dropdown-item" href="../personaHorarioOficina/personaHorarioOficina.php?idPersona=<?php echo $_SESSION['idPersona'] ?>&rolUsuario=<?php echo $_SESSION['rolUsuario'] ?>" <?php if ($_SESSION['rolUsuario'] != "ASISTENTE") {
-                                                                                                                                                                  echo 'style="display:none;"';
-                                                                                                                                                                } ?>>Horarios</a>
+                                                                                                                                                                                                  echo 'style="display:none;"';
+                                                                                                                                                                                                } ?>>Horarios</a>
             <a class="dropdown-item" href="../asistencia/asistencia.php?idPersona=<?php echo $_SESSION['idPersona'] ?>">Registro de asistencia</a>
             <a class="dropdown-item" href="../permiso/permiso.php?idPersona=<?php echo $_SESSION['idPersona'] ?>&rolUsuario=<?php echo $_SESSION['rolUsuario'] ?>">Permisos</a>
           </div>
@@ -71,26 +72,26 @@
           <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reportes</a>
           <div class="dropdown-menu" href="null" aria-labelledby="dropdown01">
             <a class="dropdown-item" href="../reporteActivo/reporteActivo.php" <?php if ($_SESSION['rolUsuario'] == "COMPROBADOR DE INVENTARIO" || $_SESSION['rolUsuario'] == "ASISTENTE") {
-                                                                  echo 'style="display:none;"';
-                                                                } ?>>Activos</a>
+                                                                                  echo 'style="display:none;"';
+                                                                                } ?>>Activos</a>
             <a class="dropdown-item" href="../historico/historico.php" <?php if ($_SESSION['rolUsuario'] == "COMPROBADOR DE INVENTARIO" || $_SESSION['rolUsuario'] == "ASISTENTE") {
-                                                              echo 'style="display:none;"';
-                                                            } ?>>Histórico de activos</a>
+                                                                          echo 'style="display:none;"';
+                                                                        } ?>>Histórico de activos</a>
             <a class="dropdown-item" href="../movimientoActivo/movimientoActivo.php" <?php if ($_SESSION['rolUsuario'] == "COMPROBADOR DE INVENTARIO" || $_SESSION['rolUsuario'] == "ASISTENTE") {
-                                                                      echo 'style="display:none;"';
-                                                                    } ?>>Movimientos de activos</a>
+                                                                                        echo 'style="display:none;"';
+                                                                                      } ?>>Movimientos de activos</a>
             <a class="dropdown-item" href="../activosConfirmados/activosConfirmados.php" <?php if ($_SESSION['rolUsuario'] == "ASISTENTE") {
-                                                                              echo 'style="display:none;"';
-                                                                            } ?>>Activos confirmados</a>
+                                                                                            echo 'style="display:none;"';
+                                                                                          } ?>>Activos confirmados</a>
             <a class="dropdown-item" href="../activosNoConfirmados/activosNoConfirmados.php" <?php if ($_SESSION['rolUsuario'] == "ASISTENTE") {
-                                                                                echo 'style="display:none;"';
-                                                                              } ?>>Activos no confirmados</a>
+                                                                                                echo 'style="display:none;"';
+                                                                                              } ?>>Activos no confirmados</a>
             <a class="dropdown-item" href="../reporteHoras/reporteHoras.php">Reporte de horas</a>
           </div>
         </li>
       </ul>
       <!-- Mostrar datos usuario -->
-      <div style="display: flex; flex-direction: column; color: white;">
+      <div class="session-info">
         <h5 class="mb-0" style="font-size: 12px;"><?php echo $_SESSION['user'] ?> </h5>
         <h5 class="mb-0" style="font-size: 12px;"><?php echo $_SESSION['rolUsuario'] ?> </h5>
       </div>
@@ -100,3 +101,10 @@
     </div>
   </nav>
 </html:5>
+
+<!-- padding: 5px;
+background-color: white;
+display: flex;
+flex-direction: column;
+color: black;
+border-radius: 5px; -->

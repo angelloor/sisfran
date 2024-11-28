@@ -31,7 +31,7 @@ ActualizarParametros = () => {
 
 // Precarga del Script
 $(document).ready(function () {
-  personaId = params.get("personaId");
+  personaId = params.get("idPersona");
 
   ConsultarTodo(personaId);
   fechaActual = ActualizarParametros();
@@ -42,7 +42,7 @@ $(document).ready(function () {
 
 function listarOficina(personaId, fechaActual) {
   $.ajax({
-    data: { accion: "LISTAR_OFICINA_BY_FUNCIONARIO_DATE", personaId, fechaActual },
+    data: { accion: "LISTAR_OFICINA_BY_FUNCIONARIO_DATE", idPersona: personaId, fechaActual },
     url: urlControllerPersonaHorarioOficina,
     type: "POST",
     dataType: "json",
@@ -64,13 +64,13 @@ function listarOficina(personaId, fechaActual) {
       timeoutID = setTimeout(function () {
         document.getElementById("oficinaId").innerHTML = htmlList;
         if (contadorInterno === 0) {
-          document.getElementById("registrarEntrada").disabled = true;
+          disabledInput("registrarEntrada");
           mostrarAlertaTrabajo();
         }
       }, 1000);
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
   clearTimeout(timeoutID);
 }
@@ -136,15 +136,15 @@ function ConsultarTodo(personaId) {
       document.getElementById("datos").innerHTML = html;
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
 function EscucharConsulta() {
   registrosTotales = false;
-  $("#idAsistenciaQuery").change(function () {
-    if ($("#idAsistenciaQuery").val()) {
-      let fecha = $("#idAsistenciaQuery").val();
+  $("#idAsistencia").change(function () {
+    if ($("#idAsistencia").val()) {
+      let fecha = $("#idAsistencia").val();
       $.ajax({
         data: {
           id_persona: personaId,
@@ -208,7 +208,7 @@ function EscucharConsulta() {
           document.getElementById("datos").innerHTML = html;
         })
         .fail(function (error) {
-          console.log(error);
+          console.log(error.responseText);
         });
     }
   });
@@ -241,10 +241,10 @@ function registrarEntrada() {
             } else {
               MostrarAlerta("Error!", response, "error");
             }
-            ConsultarTodo();
+            ConsultarTodo(personaId);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
@@ -278,17 +278,17 @@ function registrarSalida(idAsistencia) {
             } else {
               MostrarAlerta("Error!", response, "error");
             }
-            ConsultarTodo();
+            ConsultarTodo(personaId);
           })
           .fail(function (error) {
-            console.log(error);
+            console.log(error.responseText);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire("", "Operación cancelada", "info");
       }
     });
 }
-
+// funcion para verificar 
 function countAsistencia(personaId, oficinaId, fechaActual, nombreOficina) {
   $.ajax({
     url: urlController,
@@ -310,7 +310,7 @@ function countAsistencia(personaId, oficinaId, fechaActual, nombreOficina) {
       }
     })
     .fail(function (error) {
-      console.log(error);
+      console.log(error.responseText);
     });
 }
 
@@ -352,7 +352,7 @@ function retornarDatos(accion) {
 function Limpiar() {}
 
 function mostrarTodo() {
-  ConsultarTodo();
+  ConsultarTodo(personaId);
   clearInput("oficinaId");
 }
 

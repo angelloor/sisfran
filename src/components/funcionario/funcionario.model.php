@@ -15,7 +15,7 @@ class Funcionario
     public function ConsultarPorId($idFuncionario)
     {
         $connection = new MySQLPDO();
-        $stmt = $connection->prepare("select p.id_persona, p.cedula, p.nombre_persona, p.direccion, p.telefono, c.nombre_cargo, u.nombre_unidad, p.tipo_contrato, p.salario_base from persona p inner join cargo c on p.cargo_id = c.id_cargo inner join unidad u on p.unidad_id = u.id_unidad where id_persona = :idFuncionario");
+        $stmt = $connection->prepare("select p.id_persona, p.cedula, p.nombre_persona, p.direccion, p.telefono, p.cargo_id, p.unidad_id, p.tipo_contrato, p.salario_base from persona p inner join cargo c on p.cargo_id = c.id_cargo inner join unidad u on p.unidad_id = u.id_unidad where id_persona = :idFuncionario");
         $stmt->bindValue(":idFuncionario", $idFuncionario, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
@@ -30,15 +30,9 @@ class Funcionario
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function Guardar($cedulaFuncionario, $nombreFuncionario, $direccionFuncionario, $telefonoFuncionario, $cargoFuncionario, $unidadFuncionario, $tipoContrato, $salarioBase)
+    public function Guardar($cedulaFuncionario, $nombreFuncionario, $direccionFuncionario, $telefonoFuncionario, $cargoId, $unidadId, $tipoContrato, $salarioBase)
     {
         $connection = new MySQLPDO();
-        $stmt = $connection->prepare("select id_cargo from cargo where nombre_cargo = :cargoFuncionario");
-        $stmt->bindValue(":cargoFuncionario", $cargoFuncionario, PDO::PARAM_STR);
-        $stmt->execute();
-        $results = $stmt->fetch(PDO::FETCH_ASSOC);
-        $idCargo = $results['id_cargo'];
-
         $stmt = $connection->prepare("select count(*) from persona where cedula = :cedulaFuncionario");
         $stmt->bindValue(":cedulaFuncionario", $cedulaFuncionario, PDO::PARAM_STR);
         $stmt->execute();
@@ -48,20 +42,14 @@ class Funcionario
         if ($existeRegistro >= 1) {
             return "El Funcionario ya existe ";
         } else {
-            $stmt = $connection->prepare("select id_unidad from unidad where nombre_unidad = :unidadFuncionario");
-            $stmt->bindValue(":unidadFuncionario", $unidadFuncionario, PDO::PARAM_STR);
-            $stmt->execute();
-            $results = $stmt->fetch(PDO::FETCH_ASSOC);
-            $idUnidad = $results['id_unidad'];
-
             $stmt = $connection->prepare("insert into `persona` (`cedula`,`nombre_persona`,`direccion`,`telefono`,`cargo_id`,`unidad_id`,`tipo_contrato`,`salario_base`) 
-                                            values (:cedulaFuncionario, :nombreFuncionario, :direccionFuncionario, :telefonoFuncionario, :cargoFuncionario, :unidadFuncionario, :tipoContrato, :salarioBase);");
+                                            values (:cedulaFuncionario, :nombreFuncionario, :direccionFuncionario, :telefonoFuncionario, :cargoId, :unidadId, :tipoContrato, :salarioBase);");
             $stmt->bindValue(":cedulaFuncionario", $cedulaFuncionario, PDO::PARAM_INT);
             $stmt->bindValue(":nombreFuncionario", $nombreFuncionario, PDO::PARAM_STR);
             $stmt->bindValue(":direccionFuncionario", $direccionFuncionario, PDO::PARAM_STR);
             $stmt->bindValue(":telefonoFuncionario", $telefonoFuncionario, PDO::PARAM_STR);
-            $stmt->bindValue(":cargoFuncionario", $idCargo, PDO::PARAM_INT);
-            $stmt->bindValue(":unidadFuncionario", $idUnidad, PDO::PARAM_INT);
+            $stmt->bindValue(":cargoId", $cargoId, PDO::PARAM_INT);
+            $stmt->bindValue(":unidadId", $unidadId, PDO::PARAM_INT);
             $stmt->bindValue(":tipoContrato", $tipoContrato, PDO::PARAM_STR);
             $stmt->bindValue(":salarioBase", $salarioBase, PDO::PARAM_STR);
             if ($stmt->execute()) {
@@ -72,7 +60,7 @@ class Funcionario
         }
     }
 
-    public function Modificar($idFuncionario, $cedulaFuncionario, $nombreFuncionario, $direccionFuncionario, $telefonoFuncionario, $cargoFuncionario, $unidadFuncionario, $tipoContrato, $salarioBase)
+    public function Modificar($idFuncionario, $cedulaFuncionario, $nombreFuncionario, $direccionFuncionario, $telefonoFuncionario, $cargoId, $unidadId, $tipoContrato, $salarioBase)
     {
         $connection = new MySQLPDO();
 
@@ -89,25 +77,13 @@ class Funcionario
         $cedulaBD = $results['cedula'];
 
         if ($cedulaFuncionario == $cedulaBD) {
-            $stmt = $connection->prepare("select id_cargo from cargo where nombre_cargo = :cargoFuncionario");
-            $stmt->bindValue(":cargoFuncionario", $cargoFuncionario, PDO::PARAM_STR);
-            $stmt->execute();
-            $results = $stmt->fetch(PDO::FETCH_ASSOC);
-            $idCargo = $results['id_cargo'];
-
-            $stmt = $connection->prepare("select id_unidad from unidad where nombre_unidad = :unidadFuncionario");
-            $stmt->bindValue(":unidadFuncionario", $unidadFuncionario, PDO::PARAM_STR);
-            $stmt->execute();
-            $results = $stmt->fetch(PDO::FETCH_ASSOC);
-            $idUnidad = $results['id_unidad'];
-
             $stmt = $connection->prepare("update `persona` 
                                                 set `cedula` = :cedulaFuncionario, 
                                                 `nombre_persona` = :nombreFuncionario,
                                                 `direccion` = :direccionFuncionario,
                                                 `telefono` = :telefonoFuncionario,
-                                                `cargo_id` = :cargoFuncionario,
-                                                `unidad_id` = :unidadFuncionario,
+                                                `cargo_id` = :cargoId,
+                                                `unidad_id` = :unidadId,
                                                 `tipo_contrato` = :tipoContrato,
                                                 `salario_base` = :salarioBase
                                                 where `id_persona` = :idFuncionario;");
@@ -115,8 +91,8 @@ class Funcionario
             $stmt->bindValue(":nombreFuncionario", $nombreFuncionario, PDO::PARAM_STR);
             $stmt->bindValue(":direccionFuncionario", $direccionFuncionario, PDO::PARAM_STR);
             $stmt->bindValue(":telefonoFuncionario", $telefonoFuncionario, PDO::PARAM_STR);
-            $stmt->bindValue(":cargoFuncionario", $idCargo, PDO::PARAM_INT);
-            $stmt->bindValue(":unidadFuncionario", $idUnidad, PDO::PARAM_INT);
+            $stmt->bindValue(":cargoId", $cargoId, PDO::PARAM_INT);
+            $stmt->bindValue(":unidadId", $unidadId, PDO::PARAM_INT);
             $stmt->bindValue(":tipoContrato", $tipoContrato, PDO::PARAM_STR);
             $stmt->bindValue(":salarioBase", $salarioBase, PDO::PARAM_STR);
             $stmt->bindValue(":idFuncionario", $idFuncionario, PDO::PARAM_INT);
@@ -129,25 +105,13 @@ class Funcionario
             if ($existeRegistro >= 1) {
                 return "El numero de cedula ya esta asignado a un funcionario";
             } else {
-                $stmt = $connection->prepare("select id_cargo from cargo where nombre_cargo = :cargoFuncionario");
-                $stmt->bindValue(":cargoFuncionario", $cargoFuncionario, PDO::PARAM_STR);
-                $stmt->execute();
-                $results = $stmt->fetch(PDO::FETCH_ASSOC);
-                $idCargo = $results['id_cargo'];
-
-                $stmt = $connection->prepare("select id_unidad from unidad where nombre_unidad = :unidadFuncionario");
-                $stmt->bindValue(":unidadFuncionario", $unidadFuncionario, PDO::PARAM_STR);
-                $stmt->execute();
-                $results = $stmt->fetch(PDO::FETCH_ASSOC);
-                $idUnidad = $results['id_unidad'];
-
                 $stmt = $connection->prepare("update `persona` 
                                                 set `cedula` = :cedulaFuncionario, 
                                                 `nombre_persona` = :nombreFuncionario,
                                                 `direccion` = :direccionFuncionario,
                                                 `telefono` = :telefonoFuncionario,
-                                                `cargo_id` = :cargoFuncionario,
-                                                `unidad_id` = :unidadFuncionario,
+                                                `cargo_id` = :cargoId,
+                                                `unidad_id` = :unidadId,
                                                 `tipo_contrato` = :tipoContrato,
                                                 `salario_base` = :salarioBase
                                                 where `id_persona` = :idFuncionario;");
@@ -155,8 +119,8 @@ class Funcionario
                 $stmt->bindValue(":nombreFuncionario", $nombreFuncionario, PDO::PARAM_STR);
                 $stmt->bindValue(":direccionFuncionario", $direccionFuncionario, PDO::PARAM_STR);
                 $stmt->bindValue(":telefonoFuncionario", $telefonoFuncionario, PDO::PARAM_STR);
-                $stmt->bindValue(":cargoFuncionario", $idCargo, PDO::PARAM_INT);
-                $stmt->bindValue(":unidadFuncionario", $idUnidad, PDO::PARAM_INT);
+                $stmt->bindValue(":cargoId", $cargoId, PDO::PARAM_INT);
+                $stmt->bindValue(":unidadId", $unidadId, PDO::PARAM_INT);
                 $stmt->bindValue(":tipoContrato", $tipoContrato, PDO::PARAM_STR);
                 $stmt->bindValue(":salarioBase", $salarioBase, PDO::PARAM_STR);
                 $stmt->bindValue(":idFuncionario", $idFuncionario, PDO::PARAM_INT);

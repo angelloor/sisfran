@@ -37,14 +37,15 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
     <!-- SCRIPTS -->
     <script src="../../assets/js/all.min.js"></script>
     <script src="./funcionario.js"></script>
-    <script src="../../lib/common/utils.js"></script>
+    <script src="../../assets/js/utils.js"></script>
     <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/popupMobileDisplayTable.css">
 </head>
 
 <body>
     <!-- HEADER -->
     <?php
-  require '../../lib/common/header.php';
+    require '../../lib/common/header.php';
     ?>
     <!-- HEADER -->
     <!-- BREADCRUMB -->
@@ -100,13 +101,13 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                         <input type="text" name="telefonoFuncionario" id="telefonoFuncionario" placeholder="Ingrese el teléfono" class="form-control text-mayus">
                     </div>
                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mt-2">
-                        <label for="cargo">Cargo</label>
-                        <select name="cargoFuncionario" class="form-control br" id="cargoFuncionario">
+                        <label for="cargoId">Cargo</label>
+                        <select name="cargoId" class="form-control br" id="cargoId">
                         </select>
                     </div>
                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mt-2">
-                        <label for="Unidad">Unidad</label>
-                        <select name="unidadFuncionario" class="form-control br" id="unidadFuncionario">
+                        <label for="unidadId">Unidad</label>
+                        <select name="unidadId" class="form-control br" id="unidadId">
                         </select>
                     </div>
                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mt-2">
@@ -126,14 +127,14 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                 <table class="table tabled-bordered table-sm" id="tablaFuncionario">
                     <thead>
                         <tr>
-                            <th scope="col">Cédula</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Dirección</th>
-                            <th scope="col">Teléfono</th>
-                            <th scope="col">Cargo</th>
-                            <th scope="col">Unidad</th>
-                            <th scope="col">Tipo contrato</th>
-                            <th scope="col">Salario base</th>
+                            <th scope="col" id="cedulaFuncionarioLbl">Cédula</th>
+                            <th scope="col" id="nombreFuncionarioLbl">Nombre</th>
+                            <th scope="col" id="direccionFuncionarioLbl">Dirección</th>
+                            <th scope="col" id="telefonoFuncionarioLbl">Teléfono</th>
+                            <th scope="col" id="cargoIdLbl">Cargo</th>
+                            <th scope="col" id="unidadIdLbl">Unidad</th>
+                            <th scope="col" id="tipoContratoLbl">Tipo contrato</th>
+                            <th scope="col" id="salarioBaseLbl">Salario base</th>
                             <th class="th-text-align-right">Acciones</th>
                         </tr>
                     </thead>
@@ -149,7 +150,11 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
             </div>
         </div>
     </div>
-    <!-- Gestionar  -->
 </body>
-
+<!-- Mobile Display Table -->
+<script src="../../assets/js/popupMobileDisplayTable.js"></script>
+<?php
+require '../../lib/common/popupMobileDisplayTable.php';
+?>
+<!-- Mobile Display Table -->
 </html>
