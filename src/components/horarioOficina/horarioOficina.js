@@ -11,7 +11,31 @@ $(document).ready(function () {
   ConsultarOficinaPorId(idOficina);
   ConsultarHorariosPorIdOficina(idOficina);
   BloquearBotones(true);
+
+  // Mobile Display Table
+  displayLabels(isMobile);
 });
+
+// Mobile Display Table
+function displayLabels(isMobile) {
+  const idOficinaLbl = document.getElementById("idOficinaLbl");
+  const horaEntradaLbl = document.getElementById("horaEntradaLbl");
+  const horaSalidaLbl = document.getElementById("horaSalidaLbl");
+  const saltoDiaLbl = document.getElementById("saltoDiaLbl");
+
+  if (isMobile) {
+    // Comentar para mantener
+    // idOficinaLbl.style.display = "none";
+    // horaEntradaLbl.style.display = "none";
+    // horaSalidaLbl.style.display = "none";
+    saltoDiaLbl.style.display = "none";
+  } else {
+    // idOficinaLbl.style.display = "table-cell";
+    // horaEntradaLbl.style.display = "table-cell";
+    // horaSalidaLbl.style.display = "table-cell";
+    saltoDiaLbl.style.display = "table-cell";
+  }
+}
 
 function ConsultarOficinaPorId(idOficina) {
   $.ajax({
@@ -54,16 +78,22 @@ function ConsultarHorariosPorIdOficina(idOficina) {
         html += "<td>" + data.id_horario_oficina + "</td>";
         html += "<td>" + data.hora_entrada + "</td>";
         html += "<td>" + data.hora_salida + "</td>";
-        html += "<td>" + data.salto_dia + "</td>";
+        html += isMobile ? "" : "<td>" + data.salto_dia + "</td>";
         html += "<td style='text-align: right;'>";
         html +=
-          "<button class='btn btn-success mr-1 min-btn-action' onclick='ConsultarPorId(" +
+          "<button class='btn btn-success mr-1 mt-1 min-btn-action' onclick='ConsultarPorId(" +
           data.id_horario_oficina +
           ");'><span class='fa fa-edit'></span></button>";
         html +=
-          "<button class='btn btn-danger ml-1 min-btn-action' onclick='Eliminar(" +
+          "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
           data.id_horario_oficina +
-          ");'><span class='fa fa-trash min-btn-action'></span></button>";
+          ");'><span class='fa fa-trash'></span></button>";
+        html += isMobile
+          ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
+            JSON.stringify(data) +
+            ");'><span class='fa fa-info'></span></button>"
+          : "";
+
         html += "</td>";
         html += "</tr>";
       });

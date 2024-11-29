@@ -32,12 +32,13 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
     <script src="../../assets/js/utils.js"></script>
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/popup.css">
+    <link rel="stylesheet" href="../../assets/css/popupMobileDisplayTable.css">
 </head>
 
 <body style="height: 100vh;">
     <!-- HEADER -->
     <?php
-  require '../../lib/common/header.php';
+    require '../../lib/common/header.php';
     ?>
     <!-- HEADER -->
     <nav aria-label="breadcrumb bg-light">
@@ -89,10 +90,10 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                 <table class="table tabled-bordered table-sm" id="tablaHorarioOficina">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Hora entrada</th>
-                            <th>Hora salida</th>
-                            <th>Salto de día</th>
+                            <th scope="col" id="idOficinaLbl">ID</th>
+                            <th scope="col" id="horaEntradaLbl">Hora entrada</th>
+                            <th scope="col" id="horaSalidaLbl">Hora salida</th>
+                            <th scope="col" id="saltoDiaLbl">Salto de día</th>
                             <th style='text-align: right;'>Acciones</th>
                         </tr>
                     </thead>
@@ -108,7 +109,11 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
             </div>
         </div>
     </div>
-    <!-- Gestionar  -->
 </body>
-
+<!-- Mobile Display Table -->
+<script src="../../assets/js/popupMobileDisplayTable.js"></script>
+<?php
+require '../../lib/common/popupMobileDisplayTable.php';
+?>
+<!-- Mobile Display Table -->
 </html>

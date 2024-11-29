@@ -106,7 +106,7 @@ class PersonaHorarioOficina
     public function listarOficinaByFuncionarioDate($idPersona, $fechaActual)
     {
         $connection = new MySQLPDO();
-        $stmt = $connection->prepare("select pho.id_persona_horario_oficina, pho.fecha_persona_horario_oficina, pho.oficina_id, o.id_oficina, o.nombre_oficina from persona_horario_oficina pho inner join oficina o on pho.oficina_id = o.id_oficina where pho.persona_id = :idPersona and pho.fecha_persona_horario_oficina = :fechaActual;");
+        $stmt = $connection->prepare("select pho.id_persona_horario_oficina, pho.fecha_persona_horario_oficina, pho.oficina_id, o.id_oficina, o.nombre_oficina, o.radio_valido_metros, o.latitud_oficina, o.longitud_oficina from persona_horario_oficina pho inner join oficina o on pho.oficina_id = o.id_oficina where pho.persona_id = :idPersona and pho.fecha_persona_horario_oficina = :fechaActual;");
         $stmt->bindValue(":idPersona", $idPersona, PDO::PARAM_INT);
         $stmt->bindValue(":fechaActual", $fechaActual, PDO::PARAM_STR);
         $stmt->execute();

@@ -93,9 +93,7 @@ function Consultar() {
         html += isMobile ? "" : "<td>" + data.nombre_unidad + "</td>";
         html += isMobile ? "" : "<td>" + data.tipo_contrato + "</td>";
         html += isMobile ? "" : "<td>" + data.salario_base + "</td>";
-        html += isMobile
-          ? "<td style='text-align: right;'>"
-          : "<td style='text-align: center;'>";
+        html += "<td style='text-align: right;'>"
         html +=
           "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verHorarios(" +
           data.id_persona +
@@ -154,9 +152,7 @@ function EscucharConsulta() {
             html += isMobile ? "" : "<td>" + data.nombre_unidad + "</td>";
             html += isMobile ? "" : "<td>" + data.tipo_contrato + "</td>";
             html += isMobile ? "" : "<td>" + data.salario_base + "</td>";
-            html += isMobile
-              ? "<td style='text-align: right;'>"
-              : "<td style='text-align: center;'>";
+            html += "<td style='text-align: right;'>";
             html +=
               "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verHorarios(" +
               data.id_persona +

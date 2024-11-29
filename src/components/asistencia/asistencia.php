@@ -25,12 +25,13 @@ if (!$_SESSION['user']) {
     <script src="../../assets/js/sweetalert2.min.js"></script>
     <!-- SCRIPTS -->
     <script src="../../assets/js/all.min.js"></script>
-    <script src="./asistencia.js"></script>
     <script src="../../assets/js/utils.js"></script>
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/popup.css">
+    <link rel="stylesheet" href="../../assets/css/popupMobileDisplayTable.css">
     <!-- API GOOGLE MAPS -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuFNTu49oRZu6CoSfW10ocnPQjAvuxlQY&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuFNTu49oRZu6CoSfW10ocnPQjAvuxlQY" async defer></script>
+    <script src="./asistencia.js"></script>
     <style>
         #map {
             height: 400px;
@@ -42,7 +43,7 @@ if (!$_SESSION['user']) {
 <body style="height: 100vh;">
     <!-- HEADER -->
     <?php
-  require '../../lib/common/header.php';
+    require '../../lib/common/header.php';
     ?>
     <!-- HEADER -->
     <nav aria-label="breadcrumb bg-light">
@@ -62,12 +63,12 @@ if (!$_SESSION['user']) {
             <div class="row mb-4">
                 <div class="col-12 col-sm-12 col-md-8 col-xl-8 mt-2">
                     <div class="btn-group-sm">
-                        <button class="btn btn-info" id="registrarEntrada" onclick="registrarEntrada();"><span class="fa fa-save"></span>&nbsp&nbspRegistrar Entrada</button>
+                        <button class="btn btn-info" id="registrarEntrada" onclick="registrarEntrada();">Registrar Entrada&nbsp&nbsp<span class="fa-solid fa-right-to-bracket"></span></button>
                     </div>
                 </div>
                 <div class="col-12 col-sm-12 col-md-4 col-xl-4 input-group mt-2">
                     <button class="btn btn-success mr-2" type="submit" onclick="mostrarTodo();"><span class="fa fa-search"></span>&nbsp&nbspMostrar todo</button>
-                    <input class="form-control" id="idAsistenciaQuery" type="date" placeholder="Buscar por fecha" aria-label="Buscar" autofocus>
+                    <input class="form-control" id="idAsistencia" type="date" aria-label="Buscar" autofocus>
                 </div>
             </div>
             <!-- Google Maps -->
@@ -76,7 +77,7 @@ if (!$_SESSION['user']) {
             <div class="row" id="cabecera">
                 <div class="col-md-6 mt-2 mt-2">
                     <label for="oficinaId">Oficina</label>
-                    <select name="oficinaId" class="form-control br" id="oficinaId">
+                    <select name="oficinaId" class="form-control br" id="oficinaId" onchange="handleChangeOficina(this.value)">
                     </select>
                 </div>
                 <div class="col-md-6 mt-2 mt-2">
@@ -99,24 +100,27 @@ if (!$_SESSION['user']) {
                     <label for="lng">Longitud</label>
                     <input type="text" name="lng" id="lng" class="form-control text-mayus" readonly>
                 </div>
+                <div class="col-md-6 mt-2 mt-2">
+                    <label for="radioValidoMetros">Radio permitido</label>
+                    <input type="text" name="radioValidoMetros" id="radioValidoMetros" class="form-control text-mayus" readonly>
+                </div>
             </div>
-            <div id="alertaTrabajo">
-                <div class="alert alert-info text-center" role="alert">
-                    No hay un horario asignado
+            <div id="alertaInfo">
+                <div class="alert alert-info text-center mt-4" role="alert" id="mensaje">
                 </div>
             </div>
         </div>
         <div class="card-footer">
             <table class="table tabled-bordered table-sm" id="tablaOficina">
                 <thead>
-                    <th>ID</th>
-                    <th>Oficina</th>
-                    <th>Tipo</th>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>Latitud</th>
-                    <th>Longigutd</th>
-                    <th>Observaciones</th>
+                    <th scope="col" id="asistenciaIdLbl">ID</th>
+                    <th scope="col" id="nombreOficinaLbl">Oficina</th>
+                    <th scope="col" id="tipoLbl">Tipo</th>
+                    <th scope="col" id="fechaLbl">Fecha</th>
+                    <th scope="col" id="horaLbl">Hora</th>
+                    <th scope="col" id="latitudLbl">Latitud</th>
+                    <th scope="col" id="longitudLbl">Longigutd</th>
+                    <th scope="col" id="observacionesLbl">Observaciones</th>
                     <th>Acciones</th>
                 </thead>
                 <tbody id="datos">
@@ -131,73 +135,11 @@ if (!$_SESSION['user']) {
         </div>
     </div>
     </div>
-    <script>
-        //Google Maps
-        let map, marker;
-
-        function initMap() {
-            // Crear el mapa centrado en una ubicación predeterminada
-            map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 15,
-                center: {
-                    lat: -34.397,
-                    lng: 150.644
-                }, // Coordenadas iniciales (puedes cambiarlo)
-                disableDefaultUI: true, // Deshabilita los controles de interfaz predeterminados
-            });
-
-            // Intentar obtener la ubicación actual del usuario
-            if (navigator.geolocation) {
-                navigator.geolocation.watchPosition(
-                    function(position) {
-                        const userLocation = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude,
-                        };
-
-                        console.log(userLocation);
-
-                        // Actualiza los inputs
-                        setValue("lat", userLocation.lat);
-                        setValue("lng", userLocation.lng);
-
-                        // Actualizar la ubicación del mapa y el marcador
-                        if (!marker) {
-                            // Crear el marcador en la ubicación actual del usuario
-                            marker = new google.maps.Marker({
-                                position: userLocation,
-                                map: map,
-                                title: "Tu ubicación",
-                                draggable: false, // Deshabilitar el arrastre del marcador
-                            });
-                        } else {
-                            // Actualizar la posición del marcador si ya existe
-                            marker.setPosition(userLocation);
-                        }
-
-                        // Centrar el mapa en la nueva ubicación
-                        map.setCenter(userLocation);
-                    },
-                    function() {
-                        // Manejar errores o denegación de acceso a la ubicación
-                        handleLocationError(true, map.getCenter());
-                    }
-                );
-            } else {
-                // Navegador no soporta geolocalización
-                handleLocationError(false, map.getCenter());
-            }
-        }
-
-        function handleLocationError(browserHasGeolocation, pos) {
-            alert(
-                browserHasGeolocation ?
-                "Error: La geolocalización falló." :
-                "Error: Tu navegador no soporta la geolocalización."
-            );
-        }
-    </script>
-    <!-- Gestionar  -->
 </body>
-
+<!-- Mobile Display Table -->
+<script src="../../assets/js/popupMobileDisplayTable.js"></script>
+<?php
+require '../../lib/common/popupMobileDisplayTable.php';
+?>
+<!-- Mobile Display Table -->
 </html>

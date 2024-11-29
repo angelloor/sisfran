@@ -9,31 +9,42 @@ $(document).ready(function () {
   popupMDT = document.getElementById("popupMDT");
 });
 
-function verMas(data) {
-  var html = "";
-  // Iterar sobre las claves y valores de la data
-  for (const [key, value] of Object.entries(data)) {
-    let finalKey = key
-    let finalValue = value
+function verMas(data, orden = false, ordenClaves = []) {
+  let html = "";
 
-    // remplazar valores sensibles o valores nulos
-    if (key == 'clave') {
-      finalValue = '******';
-    } else if (value == '') {
-      finalValue = "S/D"
+  // Determinar las claves que se van a iterar
+  let keys = Object.keys(data);
+
+  // Aplicar el orden si `orden` es true
+  if (orden && Array.isArray(ordenClaves) && ordenClaves.length > 0) {
+    keys = ordenClaves.filter((key) => keys.includes(key)); // Ordenar según las claves definidas en `ordenClaves`
+  }
+
+  // Iterar sobre las claves y valores de la data
+  for (const key of keys) {
+    let finalKey = key;
+    let finalValue = data[key];
+
+    // Reemplazar valores sensibles o valores nulos
+    if (key === "clave") {
+      finalValue = "******";
+    } else if (finalValue === "") {
+      finalValue = "S/D";
     }
 
-    // remplazar _ por espacio en blanco
+    // Reemplazar _ por espacio en blanco
     finalKey = key.replace(/_/g, " ");
 
     // Solo renderizar las claves que no sean un ID
-    if (!finalKey.endsWith("id")) {
+    if (!finalKey.toLowerCase().endsWith("id")) {
       html += "<div class='containerRow'>";
       html += "<div class='key'>" + finalKey.toUpperCase() + "</div>";
       html += "<div class='value'>" + finalValue + "</div>";
       html += "</div>";
     }
   }
+
+  // Insertar el HTML generado en el contenedor
   document.getElementById("datosMDT").innerHTML = html;
 
   callPopupFrame();

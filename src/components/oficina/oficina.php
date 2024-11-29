@@ -144,7 +144,6 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                 zoom: 18,
             });
 
-
             marker = new google.maps.Marker({
                 map: map,
                 draggable: true,
