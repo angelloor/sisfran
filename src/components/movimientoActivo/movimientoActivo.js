@@ -20,6 +20,7 @@ function displayLabels(isMobile) {
   const codigoLbl = document.getElementById("codigoLbl");
   const nombreFuncionarioLbl = document.getElementById("nombreFuncionarioLbl");
   const fechaMovimientoLbl = document.getElementById("fechaMovimientoLbl");
+  const acciones = document.getElementById("acciones");
 
   if (isMobile) {
     // Comentar para mantener
@@ -32,6 +33,7 @@ function displayLabels(isMobile) {
     // codigoLbl.style.display = "table-cell";
     nombreFuncionarioLbl.style.display = "table-cell";
     // fechaMovimientoLbl.style.display = "table-cell";
+    acciones.style.display = "none";
   }
 }
 

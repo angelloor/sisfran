@@ -103,7 +103,7 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                             <th scope="col" id="modeloLbl">Modelo</th>
                             <th scope="col" id="serieLbl">Serie</th>
                             <th scope="col" id="nombreEstadoLbl">Estado</th>
-                            <th class="th-text-align-right">Acciones</th>
+                            <th id="acciones" class="th-text-align-right">Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="datos">

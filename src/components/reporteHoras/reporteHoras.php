@@ -97,7 +97,7 @@ if (!$_SESSION['user']) {
               <th scope="col" id="fechaSAsistenciaLbl">Fecha Salida</th>
               <th scope="col" id="horaSAsistenciaLbl">Hora Salida</th>
               <th scope="col" id="tiempoFinalLbl">Horas Jornada</th>
-              <th class="th-text-align-right">Acciones</th>
+              <th  id="acciones" class="th-text-align-right">Acciones</th>
             </tr>
           </thead>
           <tbody id="datos">

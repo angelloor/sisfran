@@ -19,6 +19,7 @@ function displayLabels(isMobile) {
   const modeloLbl = document.getElementById("modeloLbl");
   const serieLbl = document.getElementById("serieLbl");
   const estadoIdLbl = document.getElementById("estadoIdLbl");
+  const acciones = document.getElementById("acciones");
 
   if (isMobile) {
     // Comentar para mantener
@@ -37,6 +38,7 @@ function displayLabels(isMobile) {
     modeloLbl.style.display = "table-cell";
     serieLbl.style.display = "table-cell";
     estadoIdLbl.style.display = "table-cell";
+    acciones.style.display = "none";
   }
 }
 

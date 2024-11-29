@@ -21,6 +21,7 @@ function displayLabels(isMobile) {
   const fechaSAsistenciaLbl = document.getElementById("fechaSAsistenciaLbl");
   const horaSAsistenciaLbl = document.getElementById("horaSAsistenciaLbl");
   const tiempoFinalLbl = document.getElementById("tiempoFinalLbl");
+  const acciones = document.getElementById("acciones");
 
   if (isMobile) {
     // Comentar para mantener
@@ -39,6 +40,7 @@ function displayLabels(isMobile) {
     fechaSAsistenciaLbl.style.display = "table-cell";
     horaSAsistenciaLbl.style.display = "table-cell";
     tiempoFinalLbl.style.display = "table-cell";
+    acciones.style.display = "none";
   }
 }
 
