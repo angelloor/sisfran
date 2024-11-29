@@ -32,7 +32,7 @@ function listarFuncionario() {
         data.nombre_persona +
         "</option>";
       });
-      document.getElementById("nombrePersona").innerHTML = html;
+      document.getElementById("personaId").innerHTML = html;
     })
     .fail(function (error) {
       console.log(error.responseText);
@@ -88,7 +88,7 @@ function ConsultarPorId(idFirma) {
         })
           .done(function (response) {
             BloquearBotones(false);
-            setValue("nombrePersona", response.nombre_persona);
+            setValue("personaId", response.id_persona);
             setValue("denominacion", response.denominacion);
           })
           .fail(function (error) {
@@ -101,10 +101,10 @@ function ConsultarPorId(idFirma) {
 }
 
 function Validar() {
-  nombrePersona = getValue("nombrePersona");
+  personaId = getValue("personaId");
   denominacion = getValue("denominacion");
 
-  if (!nombrePersona || !denominacion) {
+  if (!personaId || !denominacion) {
     return false;
   }
 
@@ -113,14 +113,14 @@ function Validar() {
 
 function Modificar() {
   if (Validar()) {
-    nombrePersona = getValue("nombrePersona");
+    personaId = getValue("personaId");
     denominacion = getValue("denominacion").toUpperCase();
 
     $.ajax({
       url: urlController,
       data: {
         idFirma: idFirmaActualizar,
-        nombrePersona: nombrePersona,
+        personaId: personaId,
         denominacion: denominacion,
         accion: "MODIFICAR",
       },
@@ -152,12 +152,12 @@ function BloquearBotones(guardar) {
   if (guardar) {
     disabledInput("modificar");
     disabledInput("cancelar");
-    disabledInput("nombrePersona");
+    disabledInput("personaId");
     disabledInput("denominacion");
   } else {
     enabledInput("modificar");
     enabledInput("cancelar");
-    enabledInput("nombrePersona");
+    enabledInput("personaId");
     enabledInput("denominacion");
   }
 }

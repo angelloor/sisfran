@@ -57,13 +57,14 @@ Para el desarrollo de la Aplicación Integral de Control de Inventario y Asisten
    - **Desarrollo de Prototipos**: Se crearon prototipos funcionales que permitieron a la empresa visualizar y probar las características de la Aplicación en desarrollo.
    - **Feedback y Retroalimentación**: Tras cada iteración, se realizaron demostraciones de la Aplicación a la empresa, recopilando feedback crucial que permitió ajustar y mejorar las funcionalidades antes de la siguiente iteración.
 
-3. **Arquitectura de la Aplicación: Modelo-Vista-Controlador (MVC)**
+3. **Arquitectura de la Aplicación: Orientada a Componentes**
 
-   La arquitectura del proyecto se basó en el patrón de diseño Modelo-Vista-Controlador (MVC), lo que facilitó la separación de las preocupaciones y mejoró la mantenibilidad y escalabilidad del código. La implementación de esta arquitectura se detalló de la siguiente manera:
+La arquitectura del proyecto se basa en un enfoque orientado a componentes, lo que permite una modularidad más granular y un desarrollo más ágil. Este enfoque facilita la reutilización, el mantenimiento y la escalabilidad del código al dividir la aplicación en componentes independientes y reutilizables. La implementación de esta arquitectura se detalla de la siguiente manera:
 
-   - **Modelo (Model)**: Representa la lógica de negocio y los datos de la Aplicación. En el contexto de SISFRAN, el modelo maneja todas las operaciones relacionadas con el inventario, las credenciales digitales, la asistencia.
-   - **Vista (View)**: Es la interfaz de usuario de la Aplicación. Se desarrollaron vistas intuitivas y amigables que permiten a los usuarios interactuar fácilmente con la Aplicación y acceder a la información necesaria.
-   - **Controlador (Controller)**: Actúa como intermediario entre el modelo y la vista. Los controladores gestionan las entradas del usuario, procesan las solicitudes, y determinan las vistas adecuadas para presentar la información.
+- **Componentes Independientes**: Cada funcionalidad o unidad de la aplicación se encapsula en un componente autónomo que incluye su lógica, interfaz de usuario y estilos. Por ejemplo, un componente puede manejar tareas como el manejo del inventario, el registro de asistencia o la gestión de credenciales digitales.
+- **Comunicación a través de Interfaces**: Los componentes interactúan entre sí mediante interfaces bien definidas, lo que garantiza una integración robusta y evita dependencias directas. Esto mejora la mantenibilidad y simplifica los procesos de pruebas y actualizaciones.
+- **Reutilización y Flexibilidad**: Los componentes pueden ser reutilizados en diferentes partes de la aplicación o incluso en otros proyectos con ajustes mínimos, reduciendo el esfuerzo de desarrollo y promoviendo la estandarización.
+- **Separación de Preocupaciones Interna**: Cada componente sigue un modelo interno de separación de responsabilidades, combinando datos, lógica y representación de manera aislada dentro del propio componente. Esto mejora la claridad del código y facilita el trabajo en equipo.
 
 4. **Validación y Pruebas**
 
@@ -118,5 +119,3 @@ Para subir la base de datos, primero debe ser creada utilizando herramientas de 
 - La Aplicación Integral de Control de Inventario y Asistencia (SISFRAN) está diseñada para funcionar eficientemente con requerimientos tecnológicos accesibles, tanto en entornos Windows como Linux. Las especificaciones mínimas, que incluyen un procesador Core i3, 4 GB de RAM y 50 GB de almacenamiento para el servidor, aseguran una implementación sin contratiempos y un rendimiento óptimo.
 - La facilidad de acceso mediante una URL desde cualquier navegador y la compatibilidad con infraestructuras modestas garantizan que SISFRAN pueda ser adoptado rápidamente por la empresa. En resumen, SISFRAN ofrece una solución integral y eficiente, adecuada para cualquier organización que busque mejorar su gestión de inventario y control de asistencia con recursos tecnológicos básicos.
 - La Aplicación Integral de Control de Inventario y Asistencia (SISFRAN) ha demostrado ser una solución versátil y eficiente que puede ser instalada en un entorno de hosting compartido utilizando cPanel. Esta capacidad de implementación facilita la accesibilidad y reduce costos, permitiendo a las empresas beneficiarse de sus funcionalidades avanzadas sin necesidad de invertir en infraestructura dedicada.
-
-AIzaSyDuFNTu49oRZu6CoSfW10ocnPQjAvuxlQY

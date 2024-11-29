@@ -3,13 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:8889
--- Tiempo de generación: 05-11-2024 a las 19:15:27
+-- Tiempo de generación: 29-11-2024 a las 17:50:29
 -- Versión del servidor: 5.7.44
 -- Versión de PHP: 8.2.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = '-05:00';
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -272,14 +272,14 @@ CREATE TABLE `bodega` (
   `ID_BODEGA` int(11) NOT NULL,
   `NOMBRE_BODEGA` varchar(100) DEFAULT NULL,
   `UBICACION` varchar(100) DEFAULT NULL,
-  `RESPONSABLE_BODEGA` int(11) DEFAULT NULL
+  `PERSONA_ID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `bodega`
 --
 
-INSERT INTO `bodega` (`ID_BODEGA`, `NOMBRE_BODEGA`, `UBICACION`, `RESPONSABLE_BODEGA`) VALUES
+INSERT INTO `bodega` (`ID_BODEGA`, `NOMBRE_BODEGA`, `UBICACION`, `PERSONA_ID`) VALUES
 (1, 'BODEGA PRINCIPAL DE BIENES', 'OFICINA MATRIZ - PUYO', 1);
 
 -- --------------------------------------------------------
@@ -785,7 +785,7 @@ ALTER TABLE `asistencia`
 --
 ALTER TABLE `bodega`
   ADD PRIMARY KEY (`ID_BODEGA`),
-  ADD KEY `FK_BODEGA_REF_PERSONA` (`RESPONSABLE_BODEGA`);
+  ADD KEY `FK_BODEGA_REF_PERSONA` (`PERSONA_ID`);
 
 --
 -- Indices de la tabla `cargo`
@@ -799,7 +799,7 @@ ALTER TABLE `cargo`
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`ID_CATEGORIA`),
   ADD KEY `FK_CATEGORIA_REF_PERSONA` (`PERSONA_ID`);
-  
+
 --
 -- Indices de la tabla `color`
 --
@@ -824,7 +824,8 @@ ALTER TABLE `estado`
 -- Indices de la tabla `firma`
 --
 ALTER TABLE `firma`
-  ADD PRIMARY KEY (`ID_FIRMA`);
+  ADD PRIMARY KEY (`ID_FIRMA`),
+  ADD KEY `FK_FIRMA_REF_PERSONA` (`PERSONA_ID`);
 
 --
 -- Indices de la tabla `horario_oficina`
@@ -843,7 +844,9 @@ ALTER TABLE `marca`
 -- Indices de la tabla `movimiento_activo`
 --
 ALTER TABLE `movimiento_activo`
-  ADD PRIMARY KEY (`ID_MOVIMIENTO_ACTIVO`);
+  ADD PRIMARY KEY (`ID_MOVIMIENTO_ACTIVO`),
+  ADD KEY `FK_MOVIMIENTO_ACTIVO_REF_ACTIVO` (`ACTIVO_ID`),
+  ADD KEY `FK_MOVIMIENTO_ACTIVO_REF_PERSONA` (`PERSONA_ID`);
 
 --
 -- Indices de la tabla `oficina`
@@ -872,6 +875,7 @@ ALTER TABLE `persona`
 ALTER TABLE `persona_horario_oficina`
   ADD PRIMARY KEY (`ID_PERSONA_HORARIO_OFICINA`),
   ADD KEY `FK_PERSONA_HORARIO_OFICINA_REF_PERSONA` (`PERSONA_ID`),
+  ADD KEY `FK_PERSONA_HORARIO_OFICINA_REF_OFICINA` (`OFICINA_ID`),
   ADD KEY `FK_PERSONA_HORARIO_OFICINA_REF_HORARIO_OFICINA` (`HORARIO_OFICINA_ID`);
 
 --
@@ -1049,21 +1053,39 @@ ALTER TABLE `asistencia`
 -- Filtros para la tabla `bodega`
 --
 ALTER TABLE `bodega`
-  ADD CONSTRAINT `bodega_ibfk_1` FOREIGN KEY (`RESPONSABLE_BODEGA`) REFERENCES `persona` (`ID_PERSONA`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `bodega_ibfk_1` FOREIGN KEY (`PERSONA_ID`) REFERENCES `persona` (`ID_PERSONA`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+--
+-- Filtros para la tabla `categoria`
+--
+ALTER TABLE `categoria`
+  ADD CONSTRAINT `categoria_ibfk_1` FOREIGN KEY (`PERSONA_ID`) REFERENCES `persona` (`ID_PERSONA`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `entrega_recepcion`
 --
 ALTER TABLE `entrega_recepcion`
-  ADD CONSTRAINT `entrega_recepcion_ibfk_3` FOREIGN KEY (`ACTIVO_ID`) REFERENCES `activo` (`ID_ACTIVO`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `entrega_recepcion_ibfk_4` FOREIGN KEY (`PERSONA_ID`) REFERENCES `persona` (`ID_PERSONA`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `entrega_recepcion_ibfk_1` FOREIGN KEY (`ACTIVO_ID`) REFERENCES `activo` (`ID_ACTIVO`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `entrega_recepcion_ibfk_2` FOREIGN KEY (`PERSONA_ID`) REFERENCES `persona` (`ID_PERSONA`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `firma`
+--
+ALTER TABLE `firma`
+  ADD CONSTRAINT `firma_ibfk_1` FOREIGN KEY (`PERSONA_ID`) REFERENCES `persona` (`ID_PERSONA`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `horario_oficina`
 --
 ALTER TABLE `horario_oficina`
   ADD CONSTRAINT `horario_oficina_ibfk_1` FOREIGN KEY (`OFICINA_ID`) REFERENCES `oficina` (`ID_OFICINA`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `movimiento_activo`
+--
+ALTER TABLE `movimiento_activo`
+  ADD CONSTRAINT `movimiento_activo_ibfk_1` FOREIGN KEY (`ACTIVO_ID`) REFERENCES `activo` (`ID_ACTIVO`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `movimiento_activo_ibfk_2` FOREIGN KEY (`PERSONA_ID`) REFERENCES `persona` (`ID_PERSONA`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `permiso`
@@ -1083,14 +1105,15 @@ ALTER TABLE `persona`
 --
 ALTER TABLE `persona_horario_oficina`
   ADD CONSTRAINT `persona_horario_oficina_ibfk_1` FOREIGN KEY (`PERSONA_ID`) REFERENCES `persona` (`ID_PERSONA`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `persona_horario_oficina_ibfk_2` FOREIGN KEY (`HORARIO_OFICINA_ID`) REFERENCES `horario_oficina` (`ID_HORARIO_OFICINA`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `persona_horario_oficina_ibfk_2` FOREIGN KEY (`OFICINA_ID`) REFERENCES `oficina` (`ID_OFICINA`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `persona_horario_oficina_ibfk_3` FOREIGN KEY (`HORARIO_OFICINA_ID`) REFERENCES `horario_oficina` (`ID_HORARIO_OFICINA`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`ROL_USUARIO_ID`) REFERENCES `rol_usuario` (`ID_ROL_USUARIO`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `usuario_ibfk_3` FOREIGN KEY (`ID_USUARIO`) REFERENCES `persona` (`ID_PERSONA`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`ROL_USUARIO_ID`) REFERENCES `rol_usuario` (`ID_ROL_USUARIO`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`PERSONA_ID`) REFERENCES `persona` (`ID_PERSONA`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

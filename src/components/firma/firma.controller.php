@@ -12,9 +12,9 @@ if ($_POST) {
             break;
         case "MODIFICAR":
             $idFirma = $_POST["idFirma"];
-            $nombrePersona = $_POST["nombrePersona"];
+            $personaId = $_POST["personaId"];
             $denominacion = $_POST["denominacion"];
-            if (!$nombrePersona) {
+            if (!$personaId) {
                 echo json_encode("Seleccione un funcionario para las Firmas");
                 return;
             }
@@ -22,7 +22,7 @@ if ($_POST) {
                 echo json_encode("Ingrese la demoninación del funcionario");
                 return;
             }
-            $respuesta = $firma->Modificar($idFirma, $nombrePersona, $denominacion);
+            $respuesta = $firma->Modificar($idFirma, $personaId, $denominacion);
             echo json_encode($respuesta);
             break;
     }

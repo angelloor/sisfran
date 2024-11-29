@@ -7,7 +7,7 @@ class Bodega
     public function ConsultarTodo()
     {
         $connection = new MySQLPDO();
-        $stmt = $connection->prepare("select b.id_bodega, b.nombre_bodega, b.ubicacion, b.responsable_bodega as persona_id, p.nombre_persona from bodega b inner join persona p on b.responsable_bodega = p.id_persona order by b.id_bodega asc");
+        $stmt = $connection->prepare("select b.id_bodega, b.nombre_bodega, b.ubicacion, b.persona_id as persona_id, p.nombre_persona from bodega b inner join persona p on b.persona_id = p.id_persona order by b.id_bodega asc");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
@@ -15,7 +15,7 @@ class Bodega
     public function ConsultarPorId($idBodega)
     {
         $connection = new MySQLPDO();
-        $stmt = $connection->prepare("select b.id_bodega, b.nombre_bodega, b.ubicacion, b.responsable_bodega as persona_id, p.nombre_persona from bodega b inner join persona p on b.responsable_bodega = p.id_persona where b.id_bodega = :idBodega");
+        $stmt = $connection->prepare("select b.id_bodega, b.nombre_bodega, b.ubicacion, b.persona_id as persona_id, p.nombre_persona from bodega b inner join persona p on b.persona_id = p.id_persona where b.id_bodega = :idBodega");
         $stmt->bindValue(":idBodega", $idBodega, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
@@ -24,7 +24,7 @@ class Bodega
     public function ConsultarPorIdRow($idBodega)
     {
         $connection = new MySQLPDO();
-        $stmt = $connection->prepare("select b.id_bodega, b.nombre_bodega, b.ubicacion, b.responsable_bodega as persona_id, p.nombre_persona from bodega b inner join persona p on b.responsable_bodega = p.id_persona where b.nombre_bodega like :patron");
+        $stmt = $connection->prepare("select b.id_bodega, b.nombre_bodega, b.ubicacion, b.persona_id as persona_id, p.nombre_persona from bodega b inner join persona p on b.persona_id = p.id_persona where b.nombre_bodega like :patron");
         $stmt->bindValue(":patron", "%" . $idBodega . "%", PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -43,7 +43,7 @@ class Bodega
         if ($existeRegistro >= 1) {
             return "La bodega ya existe";
         } else {
-            $stmt = $connection->prepare("insert into `bodega` (`nombre_bodega`,`ubicacion`,`responsable_bodega`) values (:nombreBodega, :ubicacion, :personaId);");
+            $stmt = $connection->prepare("insert into `bodega` (`nombre_bodega`,`ubicacion`,`persona_id`) values (:nombreBodega, :ubicacion, :personaId);");
             $stmt->bindValue(":nombreBodega", $nombreBodega, PDO::PARAM_STR);
             $stmt->bindValue(":ubicacion", $ubicacion, PDO::PARAM_STR);
             $stmt->bindValue(":personaId", $personaId, PDO::PARAM_INT);
@@ -74,11 +74,11 @@ class Bodega
             $stmt = $connection->prepare("update `bodega` 
                                             set `nombre_bodega` = :nombreBodega,
                                             `ubicacion` = :ubicacion,
-                                            `responsable_bodega` = :responsableBodegaId
+                                            `persona_id` = :personaId
                                             where `id_bodega` = :idBodega;");
             $stmt->bindValue(":nombreBodega", $nombreBodega, PDO::PARAM_STR);
             $stmt->bindValue(":ubicacion", $ubicacion, PDO::PARAM_STR);
-            $stmt->bindValue(":responsableBodegaId", $personaId, PDO::PARAM_INT);
+            $stmt->bindValue(":personaId", $personaId, PDO::PARAM_INT);
             $stmt->bindValue(":idBodega", $idBodega, PDO::PARAM_INT);
             if ($stmt->execute()) {
                 return "OK";
@@ -92,11 +92,11 @@ class Bodega
                 $stmt = $connection->prepare("update `bodega` 
                                                 set `nombre_bodega` = :nombreBodega,
                                                 `ubicacion` = :ubicacion,
-                                                `responsable_bodega` = :responsableBodegaId
+                                                `persona_id` = :personaId
                                                 where `id_bodega` = :idBodega;");
                 $stmt->bindValue(":nombreBodega", $nombreBodega, PDO::PARAM_STR);
                 $stmt->bindValue(":ubicacion", $ubicacion, PDO::PARAM_STR);
-                $stmt->bindValue(":responsableBodegaId", $personaId, PDO::PARAM_INT);
+                $stmt->bindValue(":personaId", $personaId, PDO::PARAM_INT);
                 $stmt->bindValue(":idBodega", $idBodega, PDO::PARAM_INT);
                 if ($stmt->execute()) {
                     return "OK";
