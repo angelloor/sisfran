@@ -37,11 +37,11 @@ function cargarCategoria() {
       var html = "";
       $.each(response, function (index, data) {
         html +=
-        "<option value=" +
-        data.id_categoria +
-        ">" +
-        data.nombre_categoria +
-        "</option>";
+          "<option value=" +
+          data.id_categoria +
+          ">" +
+          data.nombre_categoria +
+          "</option>";
       });
       document.getElementById("SelectCategoria").innerHTML = html;
       document.getElementById("SelectCategoriaDos").innerHTML = html;
@@ -55,7 +55,10 @@ function listarFuncionarioPorCategoria() {
   categoria = getValue("SelectCategoriaDos");
 
   $.ajax({
-    data: { accion: "LISTAR_FUNCIONARIO_POR_CATEGORIA_MAIN", categoria: categoria },
+    data: {
+      accion: "LISTAR_FUNCIONARIO_POR_CATEGORIA_MAIN",
+      categoria: categoria,
+    },
     url: urlController,
     type: "POST",
     dataType: "json",
@@ -64,11 +67,11 @@ function listarFuncionarioPorCategoria() {
       var html = "";
       $.each(response, function (index, data) {
         html +=
-        "<option value=" +
-        data.id_persona +
-        ">" +
-        data.nombre_persona +
-        "</option>";
+          "<option value=" +
+          data.id_persona +
+          ">" +
+          data.nombre_persona +
+          "</option>";
       });
       document.getElementById("SelectFuncionario").innerHTML = html;
     })
@@ -87,7 +90,8 @@ function listarActivo() {
     .done(function (response) {
       var html = "";
       $.each(response, function (index, data) {
-        html += "<option>" + data.activo + "</option>";
+        html +=
+          "<option value=" + data.activo + ">" + data.activo + "</option>";
       });
       document.getElementById("activo").innerHTML = html;
     })
@@ -118,7 +122,10 @@ function GenerarPorFuncionario() {
     funcionario +
     "&saltoLinea=" +
     saltoLinea;
-  window.open("../reportes/actaPorFuncionario.template.php?" + urlGet, "_blank");
+  window.open(
+    "../reportes/actaPorFuncionario.template.php?" + urlGet,
+    "_blank"
+  );
   clearInput("saltoLineaDos");
   close();
   clear();

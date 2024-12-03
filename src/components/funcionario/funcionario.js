@@ -255,7 +255,6 @@ function ConsultarPorId(idFuncionario) {
           dataType: "json",
         })
           .done(function (response) {
-            console.log(response);
             setValue("cedulaFuncionario", response.cedula);
             setValue("nombreFuncionario", response.nombre_persona);
             setValue("direccionFuncionario", response.direccion);

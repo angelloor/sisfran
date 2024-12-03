@@ -96,7 +96,8 @@ function listarActivo() {
     .done(function (response) {
       var html = "";
       $.each(response, function (index, data) {
-        html += "<option>" + data.activo + "</option>";
+        html +=
+          "<option value=" + data.activo + ">" + data.activo + "</option>";
       });
       document.getElementById("activo").innerHTML = html;
     })

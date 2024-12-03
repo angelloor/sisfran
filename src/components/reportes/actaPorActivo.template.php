@@ -94,7 +94,6 @@ $stmt->execute();
 $results = $stmt->fetch(PDO::FETCH_ASSOC);
 $categoria = $results['nombre_categoria'];
 
-
 $stmt = $connection->prepare("select nombre_categoria from categoria where id_categoria= 1;");
 $stmt->execute();
 $results = $stmt->fetch(PDO::FETCH_ASSOC);

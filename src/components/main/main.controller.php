@@ -13,8 +13,8 @@ if ($_POST) {
             echo json_encode($respuesta);
             break;
         case "LISTAR_FUNCIONARIO_POR_CATEGORIA_MAIN":
-            $categoria = $_POST['categoria'];
-            $respuesta = $main->listarFuncionarioPorCategoriaMain($categoria);
+            $idCategoria = $_POST['categoria'];
+            $respuesta = $main->listarFuncionarioPorCategoriaMain($idCategoria);
             echo json_encode($respuesta);
             break;
     }

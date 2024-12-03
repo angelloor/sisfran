@@ -3,7 +3,7 @@ require('../../lib/fpdf/wrapper.php');
 require('../../lib/connectios/MySQLPDO.php');
 require('../../lib/common/utils.php');
 
-$categoria = $_GET['categoria'];
+$idCategoria = $_GET['categoria'];
 
 //TRAER DATOS DEL FUNCIONARIO QUE ENTREGA
 $stmt = $connection->prepare("select f.denominacion ,p.nombre_persona, c.nombre_cargo, u.nombre_unidad from firma f inner join persona p on f.persona_id = p.id_persona inner join cargo c on p.cargo_id = c.id_cargo inner join unidad u on p.unidad_id = u.id_unidad  where f.id_firma = 1;");
@@ -13,6 +13,7 @@ $nombreEntregaCompleto = $results['nombre_persona'];
 $cargoEntregaUno = $results['nombre_cargo'];
 $denominacion = $results['denominacion'];
 $nombreUnidadUno = $results['nombre_unidad'];
+
 
 function nombreMasDenominacion($nombreEntregaCompleto, $denominacion)
 {
@@ -31,6 +32,8 @@ $denominacionDos = $results['denominacion'];
 $nombreUnidadDos = $results['nombre_unidad'];
 
 $nombreEntregaDos = nombreMasDenominacion($nombreEntregaCompletoDos, $denominacionDos);
+
+
 
 class PDF extends Wrapper
 {
@@ -75,27 +78,15 @@ class PDF extends Wrapper
     }
 }
 
-$stmt = $connection->prepare("select nombre_categoria from categoria where id_categoria= 1;");
-$stmt->execute();
-$results = $stmt->fetch(PDO::FETCH_ASSOC);
-$nombreCategoriaInformatica = $results['nombre_categoria'];
-
-
-$stmt = $connection->prepare("select nombre_categoria from categoria where id_categoria= 2;");
-$stmt->execute();
-$results = $stmt->fetch(PDO::FETCH_ASSOC);
-$nombreCategoria = $results['nombre_categoria'];
-
-if ($categoria == $nombreCategoria) {
+if ($idCategoria == 2) {
     $pdf = new PDF();
     $pdf->SetRightMargin(25);
     $pdf->SetLeftMargin(25);
     $pdf->AliasNbPages();
     $pdf->SetAutoPageBreak(true, 35);
 
-    // nombreCategoria
-    $stmt = $connection->prepare("select distinct p.id_persona from entrega_recepcion er inner join persona p on er.persona_id = p.id_persona inner join activo a on er.activo_id = a.id_activo inner join categoria ca on a.categoria_id = ca.id_categoria where ca.nombre_categoria = :nombreCategoria order by p.id_persona asc;");
-    $stmt->bindValue(":nombreCategoria", $nombreCategoria, PDO::PARAM_STR);
+    $stmt = $connection->prepare("select distinct p.id_persona from entrega_recepcion er inner join persona p on er.persona_id = p.id_persona inner join activo a on er.activo_id = a.id_activo inner join categoria ca on a.categoria_id = ca.id_categoria where ca.id_categoria = :idCategoria order by p.id_persona asc;");
+    $stmt->bindValue(":idCategoria", $idCategoria, PDO::PARAM_STR);
     $stmt->execute();
     $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -116,9 +107,9 @@ if ($categoria == $nombreCategoria) {
         $pdf->SetTextColor(0, 0, 0);
         $pdf->parrafo("En la ciudad de Puyo, a los $dia días del mes de $mes del $año, se procede a realizar el acta de entrega entre $nombreEntregaDos, $cargoEntregaDos, $nombreUnidadDos y $nombreFuncionario con C.I. $cedula, $cargoFuncionario,  de los siguientes bienes inmuebles:");
 
-        $stmt = $connection->prepare("select a.codigo, a.nombre_activo, m.nombre_marca, a.modelo, a.caracteristica, a.serie from entrega_recepcion er inner join activo a on er.activo_id = a.id_activo inner join categoria ca on a.categoria_id = ca.id_categoria inner join marca m on a.marca_id = m.id_marca where (er.persona_id = :idPersona) and (ca.nombre_categoria = :nombreCategoria);");
+        $stmt = $connection->prepare("select a.codigo, a.nombre_activo, m.nombre_marca, a.modelo, a.caracteristica, a.serie from entrega_recepcion er inner join activo a on er.activo_id = a.id_activo inner join categoria ca on a.categoria_id = ca.id_categoria inner join marca m on a.marca_id = m.id_marca where (er.persona_id = :idPersona) and (ca.id_categoria = :idCategoria);");
         $stmt->bindValue(":idPersona", $row['id_persona'], PDO::PARAM_INT);
-        $stmt->bindValue(":nombreCategoria", $nombreCategoria, PDO::PARAM_STR);
+        $stmt->bindValue(":idCategoria", $idCategoria, PDO::PARAM_STR);
         $stmt->execute();
         $datosActivos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         // Cabecera de la tabla
@@ -160,18 +151,19 @@ if ($categoria == $nombreCategoria) {
         $pdf->MultiCell(0, 5, mb_convert_encoding("$nombreFuncionario \n $cargoFuncionario", 'ISO-8859-1', 'UTF-8'), 0, 'C');
     }
 } else {
-    if ($categoria == $nombreCategoriaInformatica) {
+    if ($idCategoria == 1) {
         $pdf = new PDF();
         $pdf->SetRightMargin(25);
         $pdf->SetLeftMargin(25);
         $pdf->AliasNbPages();
         $pdf->SetAutoPageBreak(true, 35);
 
-        // nombreCategoria
-        $stmt = $connection->prepare("select distinct p.id_persona from entrega_recepcion er inner join persona p on er.persona_id = p.id_persona inner join activo a on er.activo_id = a.id_activo inner join categoria ca on a.categoria_id = ca.id_categoria where ca.nombre_categoria = :nombreCategoria order by p.id_persona asc;");
-        $stmt->bindValue(":nombreCategoria", $categoria, PDO::PARAM_STR);
+        $stmt = $connection->prepare("select distinct p.id_persona from entrega_recepcion er inner join persona p on er.persona_id = p.id_persona inner join activo a on er.activo_id = a.id_activo inner join categoria ca on a.categoria_id = ca.id_categoria where ca.id_categoria = :idCategoria order by p.id_persona asc;");
+        $stmt->bindValue(":idCategoria", $idCategoria, PDO::PARAM_STR);
         $stmt->execute();
         $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 
         foreach ($datos as $row) {
             $stmt = $connection->prepare("select p.nombre_persona, p.cedula, c.nombre_cargo from persona p inner join cargo c on p.cargo_id = c.id_cargo where p.id_persona = :idPersona;");
@@ -190,9 +182,9 @@ if ($categoria == $nombreCategoria) {
             $pdf->SetTextColor(0, 0, 0);
             $pdf->parrafo("En la ciudad de Puyo, a los $dia días del mes de $mes del $año, se procede a realizar el acta de entrega entre $nombreEntregaUno, $cargoEntregaUno, $nombreUnidadUno y $nombreFuncionario con C.I. $cedula, $cargoFuncionario,  de los siguientes equipos  informáticos:");
 
-            $stmt = $connection->prepare("select a.codigo, a.nombre_activo, m.nombre_marca, a.modelo, a.caracteristica, a.serie from entrega_recepcion er inner join activo a on er.activo_id = a.id_activo inner join categoria ca on a.categoria_id = ca.id_categoria inner join marca m on a.marca_id = m.id_marca where (er.persona_id = :idPersona) and (ca.nombre_categoria = :nombreCategoria);");
+            $stmt = $connection->prepare("select a.codigo, a.nombre_activo, m.nombre_marca, a.modelo, a.caracteristica, a.serie from entrega_recepcion er inner join activo a on er.activo_id = a.id_activo inner join categoria ca on a.categoria_id = ca.id_categoria inner join marca m on a.marca_id = m.id_marca where (er.persona_id = :idPersona) and (ca.id_categoria = :idCategoria);");
             $stmt->bindValue(":idPersona", $row['id_persona'], PDO::PARAM_INT);
-            $stmt->bindValue(":nombreCategoria", $categoria, PDO::PARAM_STR);
+            $stmt->bindValue(":idCategoria", $idCategoria, PDO::PARAM_STR);
             $stmt->execute();
             $datosActivos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             // Cabecera de la tabla
@@ -242,9 +234,8 @@ if ($categoria == $nombreCategoria) {
         $pdf->AliasNbPages();
         $pdf->SetAutoPageBreak(true, 35);
 
-        // nombreCategoria
-        $stmt = $connection->prepare("select distinct p.id_persona from entrega_recepcion er inner join persona p on er.persona_id = p.id_persona inner join activo a on er.activo_id = a.id_activo inner join categoria ca on a.categoria_id = ca.id_categoria where ca.nombre_categoria = :nombreCategoria order by p.id_persona asc;");
-        $stmt->bindValue(":nombreCategoria", $categoria, PDO::PARAM_STR);
+        $stmt = $connection->prepare("select distinct p.id_persona from entrega_recepcion er inner join persona p on er.persona_id = p.id_persona inner join activo a on er.activo_id = a.id_activo inner join categoria ca on a.categoria_id = ca.id_categoria where ca.id_categoria = :idCategoria order by p.id_persona asc;");
+        $stmt->bindValue(":idCategoria", $idCategoria, PDO::PARAM_STR);
         $stmt->execute();
         $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -265,9 +256,9 @@ if ($categoria == $nombreCategoria) {
             $pdf->SetTextColor(0, 0, 0);
             $pdf->parrafo("En la ciudad de Puyo, a los $dia días del mes de $mes del $año, se procede a realizar el acta de entrega entre $nombreEntregaUno, $cargoEntregaUno, $nombreUnidadUno y $nombreFuncionario con C.I. $cedula, $cargoFuncionario,  de los siguientes activos:");
 
-            $stmt = $connection->prepare("select a.codigo, a.nombre_activo, m.nombre_marca, a.modelo, a.caracteristica, a.serie from entrega_recepcion er inner join activo a on er.activo_id = a.id_activo inner join categoria ca on a.categoria_id = ca.id_categoria inner join marca m on a.marca_id = m.id_marca where (er.persona_id = :idPersona) and (ca.nombre_categoria = :nombreCategoria);");
+            $stmt = $connection->prepare("select a.codigo, a.nombre_activo, m.nombre_marca, a.modelo, a.caracteristica, a.serie from entrega_recepcion er inner join activo a on er.activo_id = a.id_activo inner join categoria ca on a.categoria_id = ca.id_categoria inner join marca m on a.marca_id = m.id_marca where (er.persona_id = :idPersona) and (ca.id_categoria = :idCategoria);");
             $stmt->bindValue(":idPersona", $row['id_persona'], PDO::PARAM_INT);
-            $stmt->bindValue(":nombreCategoria", $categoria, PDO::PARAM_STR);
+            $stmt->bindValue(":idCategoria", $idCategoria, PDO::PARAM_STR);
             $stmt->execute();
             $datosActivos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             // Cabecera de la tabla

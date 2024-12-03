@@ -110,7 +110,6 @@ function cargarValor() {
 
 function listaValor() {
   campo = getValue("campo");
-  console.log(campo);
 
   $.ajax({
     data: { accion: "LISTAR_VALOR", campo: campo },

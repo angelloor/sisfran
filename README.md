@@ -109,7 +109,16 @@ Para subir la base de datos, primero debe ser creada utilizando herramientas de 
 
 3. Ya realizado esto, nos queda configurar las variables de conexión dentro del proyecto. Para esto, nos dirigimos al File Manager y entramos a nuestro proyecto en la siguiente ruta:
 
+Cambiar el cotejamiento de la base de datos a UTF8MB4_spanish_ci
+
 /home/sisfranc/public_html/src/lib/connections/ConnectionData.php
+/home/sisfranc/public_html/src/lib/connections/MySQLPDO.php
+
+una vez realizado esto hay que verificar los permisos de acceso se encuentren bien establecidos Cpanel/Administrador de archivos
+755 -> Carpetas
+644 -> Archivos
+
+Despues tenemos que
 
 4. Modificamos el archivo con las correspondientes credenciales de la base de datos, y listo.
 

@@ -16,7 +16,6 @@ if (isset($_GET['logout'])) {
   <link rel="icon" type="image/png" href="src/assets/img/logo.png" />
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="src/assets/css/bootstrap.min.css">
-  <script src="src/assets/js/jquery.js"></script>
   <script src="src/assets/js/bootstrap.min.js"></script>
   <!-- FONTAWESOME -->
   <link rel="stylesheet" href="src/assets/css/all.min.css">
