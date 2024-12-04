@@ -28,7 +28,12 @@ function displayLabels(isMobile) {
     "fechaInicioPermisoLbl"
   );
   const fechaFinPermisoLbl = document.getElementById("fechaFinPermisoLbl");
-  const nombrePersonaLbl = document.getElementById("nombrePersonaLbl");
+
+  let nombrePersonaLbl;
+  if (rolUsuario === "ADMINISTRADOR") {
+    nombrePersonaLbl = document.getElementById("nombrePersonaLbl");
+  }
+
   const estadoPermisoLbl = document.getElementById("estadoPermisoLbl");
   const observacionesPermisoLbl = document.getElementById(
     "observacionesPermisoLbl"
@@ -42,7 +47,9 @@ function displayLabels(isMobile) {
     idPermisoLbl.style.display = "none";
     // fechaInicioPermisoLbl.style.display = "none";
     // fechaFinPermisoLbl.style.display = "none";
-    nombrePersonaLbl.style.display = "none";
+    if (rolUsuario === "ADMINISTRADOR") {
+      nombrePersonaLbl.style.display = "none";
+    }
     estadoPermisoLbl.style.display = "none";
     observacionesPermisoLbl.style.display = "none";
     documentacionPermisoLbl.style.display = "none";
@@ -50,7 +57,9 @@ function displayLabels(isMobile) {
     idPermisoLbl.style.display = "table-cell";
     // fechaInicioPermisoLbl.style.display = "table-cell";
     // fechaFinPermisoLbl.style.display = "table-cell";
-    nombrePersonaLbl.style.display = "table-cell";
+    if (rolUsuario === "ADMINISTRADOR") {
+      nombrePersonaLbl.style.display = "table-cell";
+    }
     estadoPermisoLbl.style.display = "table-cell";
     observacionesPermisoLbl.style.display = "table-cell";
     documentacionPermisoLbl.style.display = "table-cell";

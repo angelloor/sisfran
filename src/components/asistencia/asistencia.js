@@ -249,6 +249,7 @@ function listarOficina(personaId, fechaActual) {
     dataType: "json",
   })
     .done(function (oficinasConHorario) {
+      console.log(oficinasConHorario)
       oficinasConHorarioList = oficinasConHorario;
       if (oficinasConHorario.length == 0) {
         displayCabecera(false);
