@@ -200,6 +200,7 @@ if (!$_SESSION['user']) {
           <a class="btn btn-submit col-12 mb-3" href="../movimientoActivo/movimientoActivo.php">Movimientos de activos</a>
           <a class="btn btn-submit col-12 mb-3" href="../activosConfirmados/activosConfirmados.php">Activos Confirmados</a>
           <a class="btn btn-submit col-12 mb-3" href="../activosNoConfirmados/activosNoConfirmados.php">Activos No Confirmados</a>
+          <a class="btn btn-submit col-12 mb-3" href="../reporteHoras/reporteHoras.php">Reporte de horas</a>
         </div>
       </div>
       <div id="popupBodyActaDigital" class="popupBody">

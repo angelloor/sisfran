@@ -29,6 +29,7 @@ $(document).ready(function () {
   fechaActual = ActualizarParametros();
   listarOficina(personaId, fechaActual);
   displayCabecera(true);
+  displayMap(true)
   AlertaInfo(false);
   EscucharConsulta();
 
@@ -251,6 +252,7 @@ function listarOficina(personaId, fechaActual) {
       oficinasConHorarioList = oficinasConHorario;
       if (oficinasConHorario.length == 0) {
         displayCabecera(false);
+        displayMap(false);
         AlertaInfo(true, "No hay un horario asignado");
       }
 
@@ -264,7 +266,7 @@ function listarOficina(personaId, fechaActual) {
         );
       });
 
-      let radioValidoInicial = oficinasConHorario[0].radio_valido_metros;
+      let radioValidoInicial = (oficinasConHorario[0]) ? oficinasConHorario[0].radio_valido_metros : 0 ;
 
       // Renderizar la lista despues de 1/10 de segundo para evitar la no carga
       timeoutID = setTimeout(function () {
@@ -678,5 +680,14 @@ function displayCabecera(display = true) {
     cabecera.style.display = "flex";
   } else {
     cabecera.style.display = "none";
+  }
+}
+
+function displayMap(display = true) {
+  var map = document.getElementById("map");
+  if (display) {
+    map.style.display = "flex";
+  } else {
+    map.style.display = "none";
   }
 }

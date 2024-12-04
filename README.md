@@ -26,7 +26,7 @@ La Aplicación Integral de Control de Inventario y Asistencia (SISFRAN) es una s
 
 ### Desarrollo
 
-- StarUML (Diagramación de Base de datos)
+- MySQLWorkbench (Diagramación de Base de datos)
 - Visual Studio Code (Editor de código)
 - Servidor WAMP Versión 3.2.3
   - Apache 2.4.46

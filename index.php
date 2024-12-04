@@ -16,6 +16,7 @@ if (isset($_GET['logout'])) {
   <link rel="icon" type="image/png" href="src/assets/img/logo.png" />
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="src/assets/css/bootstrap.min.css">
+  <script src="src/assets/js/jquery.js"></script>
   <script src="src/assets/js/bootstrap.min.js"></script>
   <!-- FONTAWESOME -->
   <link rel="stylesheet" href="src/assets/css/all.min.css">
@@ -24,7 +25,6 @@ if (isset($_GET['logout'])) {
   <script src="src/assets/js/sweetalert2.min.js"></script>
   <!-- SCRIPTS -->
   <script src="src/assets/js/all.min.js"></script>
-  <script src="src/assets/js/jquery.js"></script>
   <script src="src/components/index/index.js"></script>
   <script src="src/assets/js/utils.js"></script>
   <link rel="stylesheet" href="src/assets/css/main.css">
@@ -39,7 +39,7 @@ if (isset($_GET['logout'])) {
     </div>
     <div class="row">
       <div class="col text-center">
-        <h1 class="h3 mb-3 font-weight-medium text-color-white">Iniciar Sesión</h1>
+        <h1 class="h3 mb-3 font-weight-medium text-color-white">Iniciar Sesion</h1>
       </div>
     </div>
     <div class="row">
