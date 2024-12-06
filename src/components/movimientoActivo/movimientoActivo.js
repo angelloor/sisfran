@@ -234,7 +234,7 @@ function cargarFechaActual() {
   if (f.getMonth() + 1 <= 9) {
     mesFinal = "0" + (f.getMonth() + 1);
   } else {
-    mesFinal = f.getMonth();
+    mesFinal = f.getMonth() + 1;
   }
   if (f.getDate() <= 9) {
     diaFinal = "0" + f.getDate();

@@ -86,7 +86,7 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mt-2">
                         <label for="Cedula">Cédula</label>
-                        <input type="text" name="cedulaFuncionario" id="cedulaFuncionario" placeholder="Ingrese su número de cédula" class="form-control text-mayus">
+                        <input type="text" name="cedulaFuncionario" id="cedulaFuncionario" maxlength="10" placeholder="Ingrese su número de cédula" class="form-control text-mayus">
                     </div>
                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mt-2">
                         <label for="nombreCompleto">Nombre completo</label>
@@ -98,7 +98,7 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                     </div>
                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mt-2">
                         <label for="Teléfono">Teléfono</label>
-                        <input type="text" name="telefonoFuncionario" id="telefonoFuncionario" placeholder="Ingrese el teléfono" class="form-control text-mayus">
+                        <input type="text" name="telefonoFuncionario" id="telefonoFuncionario" maxlength="15" placeholder="Ingrese el teléfono" class="form-control text-mayus">
                     </div>
                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mt-2">
                         <label for="cargoId">Cargo</label>
@@ -119,7 +119,7 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                     </div>
                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mt-2">
                         <label for="salarioBase">Salario base</label>
-                        <input type="text" name="salarioBase" id="salarioBase" placeholder="Ingrese el salario base" class="form-control text-mayus">
+                        <input type="text" name="salarioBase" id="salarioBase" maxlength="10" placeholder="Ingrese el salario base" class="form-control text-mayus">
                     </div>
                 </div>
             </div>

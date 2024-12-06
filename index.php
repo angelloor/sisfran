@@ -49,7 +49,7 @@ if (isset($_GET['logout'])) {
     </div>
     <div class="row">
       <div class="col-8 col-sm-8 col-md-4 col-xl-4 text-center" class="input-center">
-        <input type="password" id="clave" name="clave" class="form-control mt-20" placeholder="Contraseña" onkeypress="enter(2)">
+        <input type="password" id="clave" name="clave" class="form-control mt-20" placeholder="Clave" onkeypress="enter(2)">
       </div>
     </div>
     <div class="row pt-3">

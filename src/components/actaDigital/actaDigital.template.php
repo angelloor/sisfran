@@ -121,11 +121,11 @@ for ($i = 0; $i < $totalSistemas; $i++) {
 }
 
 $pdf->Ln();
-$pdf->parrafo("a $nombrePersona con numero de cedula $cedula, cuyo cargo es $nombreCargo para uso laboral del año $periodo, El funcionario receptor de las credenciales está obligado al complimiento de:");
+$pdf->parrafo("a $nombrePersona con numero de cedula $cedula, cuyo cargo es $nombreCargo para uso laboral del año $periodo, El funcionario receptor de las credenciales está obligado al cumplimiento de:");
 $pdf->Ln();
 $pdf->parrafo("1. Las credenciales entregadas al funcionario para el manejo de los sistemas antes mencionados son para uso institucional e intransferible, y su utilización es de exclusiva responsabilidad del funcionario.\n2. El funcionario $nombrePersona, se compromete a la no divulgación y buen uso de la información facilitada por la institución con total confidencialidad, de incumplir con este compromiso será responsable de las consecuencias establecida en el artículo 190.- 'Apropiación fraudulenta por medios electrónicos' del COIP.\n3. En caso de pérdida, olvido o sustracción del usuario y/o clave de acceso para el manejo de los sistemas, el funcionario deberá comunicar al área de tecnología de la Cooperativa De Transporte Touris San Francisco Oriental, de manera inmediata. \n4. Las credenciales de acceso serán entregadas de manera persona al funcionario responsable de la misma.");
 $pdf->Ln();
-$pdf->parrafo("Para la constancia de la actuado y en fe de conformidad y aceptación, se suscribe la presente acta en dos originales de igual valor y efecto para las personas que intervienen en esta diligencia, en la ciudad de $ciudad, a los $dia días del mes de $mes del $año.");
+$pdf->parrafo("Para la constancia de lo actuado y en fe de conformidad y aceptación, se suscribe la presente acta en dos originales de igual valor y efecto para las personas que intervienen en esta diligencia, en la ciudad de $ciudad, a los $dia días del mes de $mes del $año.");
 $pdf->SetTextColor(0, 0, 0);
 //Firmas de las actas
 $pdf->SetFont('Times', 'B', 10);

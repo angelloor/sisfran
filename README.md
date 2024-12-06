@@ -57,7 +57,7 @@ Para el desarrollo de la Aplicación Integral de Control de Inventario y Asisten
    - **Desarrollo de Prototipos**: Se crearon prototipos funcionales que permitieron a la empresa visualizar y probar las características de la Aplicación en desarrollo.
    - **Feedback y Retroalimentación**: Tras cada iteración, se realizaron demostraciones de la Aplicación a la empresa, recopilando feedback crucial que permitió ajustar y mejorar las funcionalidades antes de la siguiente iteración.
 
-3. **Arquitectura de la Aplicación: Orientada a Componentes**
+3. **Arquitectura del proyecto: Orientada a Componentes**
 
 La arquitectura del proyecto se basa en un enfoque orientado a componentes, lo que permite una modularidad más granular y un desarrollo más ágil. Este enfoque facilita la reutilización, el mantenimiento y la escalabilidad del código al dividir la aplicación en componentes independientes y reutilizables. La implementación de esta arquitectura se detalla de la siguiente manera:
 

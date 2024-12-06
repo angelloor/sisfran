@@ -103,7 +103,7 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                         <label for="activo">Activo</label>
                         <datalist id="activo" name="activo">
                         </datalist>
-                        <input id="codigoActivo" list="activo" class="form-control br">
+                        <input id="codigoActivo" maxlength="9" list="activo" class="form-control br">
                     </div>
                     <div class="col-md-6 mt-2">
                         <label for="fecha">Fecha de entrega</label>
@@ -122,7 +122,7 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                             <th scope="col" id="idPersonaLbl">Funcionario</th>
                             <th scope="col" id="codigoActivoLbl">Activo</th>
                             <th scope="col" id="fechaLbl">Fecha de entrega</th>
-                            <th scope="col" id="comentarioLbl">Comentario/th>
+                            <th scope="col" id="comentarioLbl">Comentario</th>
                             <th class="th-text-align-right">Acciones</th>
                         </tr>
                     </thead>

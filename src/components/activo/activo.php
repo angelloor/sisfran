@@ -128,7 +128,7 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                     </div>
                     <div class="col-12 col-sm-12- col-md-4 col-lg-3 col-xl-3 mt-2">
                         <label for="codigo"><strong>Código</strong></label>
-                        <input type="text" name="codigo" id="codigo" placeholder="Ingrese el código" class="form-control">
+                        <input type="text" name="codigo" id="codigo" maxlength="9" placeholder="Ingrese el código" class="form-control">
                     </div>
                     <div class="col-12 col-sm-12- col-md-4 col-lg-3 col-xl-3 mt-2">
                         <label for="nombre">Nombre</label>
@@ -143,7 +143,7 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                         <input type="text" name="serie" id="serie" placeholder="Ingrese la serie" class="form-control">
                     </div>
                     <div class="col-12 col-sm-12- col-md-4 col-lg-3 col-xl-3 mt-2">
-                        <label for="ubicacionIngreso">Ubicación del activo</label>
+                        <label for="ubicacionIngreso">Origen del activo</label>
                         <input type="text" name="ubicacionIngreso" id="ubicacionIngreso" placeholder="Ingrese el origen del activo" class="form-control">
                     </div>
                     <div class="col-12 col-sm-12- col-md-4 col-lg-3 col-xl-3 mt-2">

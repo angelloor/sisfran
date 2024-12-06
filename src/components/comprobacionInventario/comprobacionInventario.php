@@ -78,7 +78,7 @@ if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                 <div class="row">
                     <div class="col-md-6 mt-2">
                         <label for="codigo">Codigo</label>
-                        <input type="text" name="codigo" id="codigo" placeholder="Codigo" class="form-control">
+                        <input type="text" name="codigo" id="codigo" maxlength="9" placeholder="Codigo" class="form-control">
                     </div>
                     <div class="col-md-6 mt-2">
                         <label for="estadoId">Estado</label>

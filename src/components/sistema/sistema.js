@@ -58,7 +58,7 @@ function Consultar() {
           ");'><span class='fa fa-edit'></span></button>";
         html +=
           "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
-          data.id_cargo +
+          data.id_sistema +
           ");'><span class='fa fa-trash'></span></button>";
         html += isMobile
           ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +
@@ -105,7 +105,7 @@ function EscucharConsulta() {
               ");'><span class='fa fa-edit'></span></button>";
             html +=
               "<button class='btn btn-danger mr-1 mt-1 min-btn-action' onclick='Eliminar(" +
-              data.id_cargo +
+              data.id_sistema +
               ");'><span class='fa fa-trash'></span></button>";
             html += isMobile
               ? "<button class='btn btn-info mr-1 mt-1 min-btn-action' onclick='verMas(" +

@@ -122,7 +122,7 @@ if (!$_SESSION['user']) {
       </div>
 
       <!-- Asistencia -->
-      <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" <?php if ($_SESSION['rolUsuario'] == "GENERADOR DE REPORTES Y ACTAS") {
+      <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" <?php if ($_SESSION['rolUsuario'] == "GENERADOR DE REPORTES Y ACTAS" || $_SESSION['rolUsuario'] == "COMPROBADOR DE INVENTARIO") {
                                                                 echo 'style="display:none;"';
                                                               } ?>>
         <div class="card-sm width-card ml-auto mr-auto" id="card-inicio">
@@ -135,7 +135,7 @@ if (!$_SESSION['user']) {
         </div>
       </div>
       <!-- Permiso -->
-      <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" <?php if ($_SESSION['rolUsuario'] == "GENERADOR DE REPORTES Y ACTAS") {
+      <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" <?php if ($_SESSION['rolUsuario'] == "GENERADOR DE REPORTES Y ACTAS" || $_SESSION['rolUsuario'] == "COMPROBADOR DE INVENTARIO") {
                                                                 echo 'style="display:none;"';
                                                               } ?>>
         <div class="card-sm width-card ml-auto mr-auto" id="card-inicio">
@@ -200,7 +200,9 @@ if (!$_SESSION['user']) {
           <a class="btn btn-submit col-12 mb-3" href="../movimientoActivo/movimientoActivo.php">Movimientos de activos</a>
           <a class="btn btn-submit col-12 mb-3" href="../activosConfirmados/activosConfirmados.php">Activos Confirmados</a>
           <a class="btn btn-submit col-12 mb-3" href="../activosNoConfirmados/activosNoConfirmados.php">Activos No Confirmados</a>
-          <a class="btn btn-submit col-12 mb-3" href="../reporteHoras/reporteHoras.php">Reporte de horas</a>
+          <a class="btn btn-submit col-12 mb-3" href="../reporteHoras/reporteHoras.php" <?php if ($_SESSION['rolUsuario'] == "GENERADOR DE REPORTES Y ACTAS") {
+                                                                        echo 'style="display:none;"';
+                                                                      } ?>>Reporte de horas</a>
         </div>
       </div>
       <div id="popupBodyActaDigital" class="popupBody">

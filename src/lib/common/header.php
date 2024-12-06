@@ -52,7 +52,7 @@
           </div>
         </li>
         <!-- Asistencia  -->
-        <li class="nav-item dropdown" <?php if ($_SESSION['rolUsuario'] == "COMPROBADOR DE INVENTARIO") {
+        <li class="nav-item dropdown" <?php if ($_SESSION['rolUsuario'] == "COMPROBADOR DE INVENTARIO" || $_SESSION['rolUsuario'] == "GENERADOR DE REPORTES Y ACTAS") {
                                         echo 'style="display:none;"';
                                       } ?>>
           <a class="nav-link dropdown-toggle" href="../entregaRecepcion/entregaRecepcion.php" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Asistencia</a>
@@ -86,7 +86,9 @@
             <a class="dropdown-item" href="../activosNoConfirmados/activosNoConfirmados.php" <?php if ($_SESSION['rolUsuario'] == "ASISTENTE") {
                                                                                                 echo 'style="display:none;"';
                                                                                               } ?>>Activos no confirmados</a>
-            <a class="dropdown-item" href="../reporteHoras/reporteHoras.php">Reporte de horas</a>
+            <a class="dropdown-item" href="../reporteHoras/reporteHoras.php" <?php if ($_SESSION['rolUsuario'] == "COMPROBADOR DE INVENTARIO" || $_SESSION['rolUsuario'] == "GENERADOR DE REPORTES Y ACTAS") {
+                                                                                echo 'style="display:none;"';
+                                                                              } ?>>Reporte de horas</a>
           </div>
         </li>
       </ul>
